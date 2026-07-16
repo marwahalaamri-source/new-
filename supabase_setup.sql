@@ -65,3 +65,41 @@ create policy "tmc_companies anon delete"
   on public.tmc_companies for delete
   to anon, authenticated
   using (true);
+
+-- ============================================================
+-- Storage: "attachments" bucket for company files
+-- (If this insert is not permitted on your project, create a
+--  PUBLIC bucket named "attachments" in Dashboard → Storage
+--  instead — the policies below still apply.)
+-- ============================================================
+insert into storage.buckets (id, name, public)
+values ('attachments', 'attachments', true)
+on conflict (id) do update set public = true;
+
+-- The app runs without authentication for now, so the anon
+-- (publishable) key needs to read, upload, and delete objects
+-- in this bucket. Tighten when authentication is added.
+drop policy if exists "attachments anon read" on storage.objects;
+create policy "attachments anon read"
+  on storage.objects for select
+  to anon, authenticated
+  using (bucket_id = 'attachments');
+
+drop policy if exists "attachments anon insert" on storage.objects;
+create policy "attachments anon insert"
+  on storage.objects for insert
+  to anon, authenticated
+  with check (bucket_id = 'attachments');
+
+drop policy if exists "attachments anon update" on storage.objects;
+create policy "attachments anon update"
+  on storage.objects for update
+  to anon, authenticated
+  using (bucket_id = 'attachments')
+  with check (bucket_id = 'attachments');
+
+drop policy if exists "attachments anon delete" on storage.objects;
+create policy "attachments anon delete"
+  on storage.objects for delete
+  to anon, authenticated
+  using (bucket_id = 'attachments');

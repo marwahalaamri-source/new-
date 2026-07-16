@@ -919,6 +919,7 @@ async function loadData(){
     toast('Could not connect to the database — working from local backup', false);
   }
   renderAll();
+  if(loaded) migrateInlineFilesToStorage(); // background: move inline attachments to Storage
 }
 let saveTimeout=null;
 async function persist(showToast){
@@ -1285,15 +1286,61 @@ function renderFileList(c, scope){
         <div class="fi-meta">${fileSizeStr(f.size)} · ${fmtDateShort(f.date)}</div>
       </div>
       <div class="fi-actions">
-        ${f.data ? `<button class="fi-btn" title="Preview" onclick="previewFile('${f.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></button>` : ''}
-        ${f.data ? `<button class="fi-btn" title="Download" onclick="downloadFile('${f.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg></button>` : ''}
+        ${(f.url || f.data) ? `<button class="fi-btn" title="Preview" onclick="previewFile('${f.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></button>` : ''}
+        ${(f.path || f.url || f.data) ? `<button class="fi-btn" title="Download" onclick="downloadFile('${f.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg></button>` : ''}
         <button class="fi-btn" title="Replace" onclick="replaceFile('${f.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M4 9a9 9 0 0114.7-4.3M20 15a9 9 0 01-14.7 4.3"/></svg></button>
         <button class="fi-btn" title="Delete" onclick="deleteFile('${f.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/></svg></button>
       </div>
     </div>`).join('');
 }
 
-const MAX_EMBED = 1.8 * 1024 * 1024; // ~1.8MB per file cap for inline storage
+const MAX_EMBED = 1.8 * 1024 * 1024; // ~1.8MB per file cap for inline fallback storage
+const ATTACHMENTS_BUCKET = 'attachments';
+function storagePathFor(companyId, fileName){
+  const safe = (fileName||'file').replace(/[^\w.\-]+/g,'_').slice(-80);
+  return companyId + '/' + uid('att') + '_' + safe;
+}
+async function uploadToStorage(companyId, file){
+  if(!db) return null;
+  const path = storagePathFor(companyId, file.name);
+  const { error } = await db.storage.from(ATTACHMENTS_BUCKET)
+    .upload(path, file, { contentType: file.type || 'application/octet-stream', upsert: false });
+  if(error) throw error;
+  const { data } = db.storage.from(ATTACHMENTS_BUCKET).getPublicUrl(path);
+  return { path, url: data.publicUrl };
+}
+async function removeFromStorage(paths){
+  if(!db) return;
+  const list = (Array.isArray(paths)?paths:[paths]).filter(Boolean);
+  if(list.length===0) return;
+  try{
+    const { error } = await db.storage.from(ATTACHMENTS_BUCKET).remove(list);
+    if(error) throw error;
+  }catch(e){ console.error('Storage delete failed', e); }
+}
+// One-time background migration: move inline (data-url) attachments into
+// Supabase Storage so they are available on every device. Safe to re-run —
+// inline data is only cleared after a successful upload.
+async function migrateInlineFilesToStorage(){
+  if(!db) return;
+  let changed = false;
+  for(const c of companies){
+    for(const f of (c.files||[])){
+      if(f.data && !f.path){
+        try{
+          const blob = await (await fetch(f.data)).blob();
+          const stored = await uploadToStorage(c.id, new File([blob], f.name || 'file', { type: f.type || blob.type }));
+          if(stored){ f.path = stored.path; f.url = stored.url; f.data = null; changed = true; }
+        }catch(e){
+          console.error('Attachment migration to Storage failed for', f.name, e);
+          if(changed) await persist();
+          return; // likely offline — retry on next launch
+        }
+      }
+    }
+  }
+  if(changed) await persist();
+}
 function triggerUpload(scope){
   editingFileFor = { mode:'new', scope };
   document.getElementById('fileInput').click();
@@ -1308,8 +1355,15 @@ document.getElementById('fileInput').addEventListener('change', async function(e
   const c = findCompany(activePanelId);
   c.files = c.files || [];
   for(const file of files){
-    let dataUrl = null;
-    if(file.size <= MAX_EMBED){
+    // Upload the actual file to Supabase Storage; if that fails (offline),
+    // fall back to inline storage for small files so nothing is lost.
+    let stored = null, dataUrl = null;
+    try{
+      stored = await uploadToStorage(c.id, file);
+    }catch(err){
+      console.error('Storage upload failed', err);
+    }
+    if(!stored && file.size <= MAX_EMBED){
       dataUrl = await new Promise(res=>{
         const r = new FileReader();
         r.onload = ()=>res(r.result);
@@ -1320,14 +1374,21 @@ document.getElementById('fileInput').addEventListener('change', async function(e
     if(editingFileFor && editingFileFor.mode==='replace'){
       const idx = c.files.findIndex(f=>f.id===editingFileFor.fid);
       if(idx>-1){
-        c.files[idx] = {...c.files[idx], name:file.name, size:file.size, date: nowISO(), data:dataUrl, type:file.type};
+        const oldPath = c.files[idx].path;
+        if(oldPath && (!stored || stored.path !== oldPath)) removeFromStorage(oldPath);
+        c.files[idx] = {...c.files[idx], name:file.name, size:file.size, date: nowISO(), type:file.type,
+                        data:dataUrl, path: stored?stored.path:null, url: stored?stored.url:null};
       }
       c.activity.unshift({id:uid('a'), type:'note', text:'File replaced: '+file.name, date: nowISO()});
     } else {
-      c.files.unshift({id:uid('fl'), name:file.name, size:file.size, type:file.type, date: nowISO(), data:dataUrl, scope: editingFileFor?.scope || 'design'});
+      c.files.unshift({id:uid('fl'), name:file.name, size:file.size, type:file.type, date: nowISO(),
+                       data:dataUrl, path: stored?stored.path:null, url: stored?stored.url:null,
+                       scope: editingFileFor?.scope || 'design'});
       c.activity.unshift({id:uid('a'), type:'note', text:'File uploaded: '+file.name, date: nowISO()});
     }
-    if(!dataUrl && file.size > MAX_EMBED){
+    if(!stored && dataUrl){
+      toast('Cloud upload failed — '+file.name+' kept locally', false);
+    } else if(!stored && !dataUrl){
       toast(file.name+' is large — metadata saved, content not stored inline', false);
     }
   }
@@ -1340,18 +1401,38 @@ document.getElementById('fileInput').addEventListener('change', async function(e
 function findFile(fid){ const c = findCompany(activePanelId); return (c.files||[]).find(f=>f.id===fid); }
 function previewFile(fid){
   const f = findFile(fid);
+  if(f && f.url){ window.open(f.url, '_blank'); return; }
   if(!f || !f.data){ toast('No preview available for this file', false); return; }
   window.open(f.data, '_blank');
 }
-function downloadFile(fid){
+async function downloadFile(fid){
   const f = findFile(fid);
-  if(!f || !f.data){ toast('No content stored for this file', false); return; }
+  if(!f || (!f.path && !f.url && !f.data)){ toast('No content stored for this file', false); return; }
+  if(f.path && db){
+    try{
+      const { data, error } = await db.storage.from(ATTACHMENTS_BUCKET).download(f.path);
+      if(error) throw error;
+      const objUrl = URL.createObjectURL(data);
+      const a = document.createElement('a');
+      a.href = objUrl; a.download = f.name; a.click();
+      setTimeout(()=>URL.revokeObjectURL(objUrl), 5000);
+      return;
+    }catch(e){
+      console.error('Storage download failed', e);
+      if(f.url){ window.open(f.url, '_blank'); return; }
+      toast('Could not download file — check your connection', false);
+      return;
+    }
+  }
+  if(f.url){ window.open(f.url, '_blank'); return; }
   const a = document.createElement('a');
   a.href = f.data; a.download = f.name; a.click();
 }
 function deleteFile(fid){
   if(!confirm('Delete this file? This cannot be undone.')) return;
   const c = findCompany(activePanelId);
+  const f = (c.files||[]).find(x=>x.id===fid);
+  if(f && f.path) removeFromStorage(f.path);
   c.files = c.files.filter(f=>f.id!==fid);
   c.activity.unshift({id:uid('a'), type:'note', text:'File deleted', date: nowISO()});
   touch(c);
@@ -1458,6 +1539,8 @@ function saveEdit(){
 }
 function deleteCompany(){
   if(!confirm('Delete this company and all its data? This cannot be undone.')) return;
+  const doomed = companies.find(c=>c.id===activePanelId);
+  if(doomed) removeFromStorage((doomed.files||[]).map(f=>f.path));
   companies = companies.filter(c=>c.id!==activePanelId);
   closePanel();
   renderAll();
