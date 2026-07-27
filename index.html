@@ -1,0 +1,2441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Study Tracker - 7 Day Plan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --neutral-dark: #1e293b;
+            --neutral-light: #f8fafc;
+            --border: #e2e8f0;
+            --text: #334155;
+            --text-light: #64748b;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            color: var(--text);
+        }
+
+        nav button:hover {
+            background: var(--neutral-light);
+        }
+
+        nav button.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+
+        .stat-card.secondary {
+            border-left-color: var(--secondary);
+        }
+
+        .stat-card.success {
+            border-left-color: var(--success);
+        }
+
+        .stat-card.warning {
+            border-left-color: var(--warning);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--neutral-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-subtext {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        /* Timer Display */
+        .timer-display {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .timer-label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .timer-time {
+            font-size: 3.5rem;
+            font-weight: 700;
+            font-family: 'Monaco', 'Courier New', monospace;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .timer-progress {
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .timer-progress-bar {
+            height: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--neutral-light);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Days Grid */
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .day-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .day-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .day-card.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .day-card.completed {
+            border-color: var(--success);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+        }
+
+        .day-card.completed .day-number {
+            color: var(--success);
+        }
+
+        .day-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .day-title {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .day-time {
+            font-size: 0.875rem;
+            opacity: 0.7;
+        }
+
+        /* Activity Grid */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .activity-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .activity-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .activity-badge.success {
+            background: var(--success);
+        }
+
+        .activity-timer {
+            background: var(--neutral-light);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .activity-timer-display {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 0.75rem;
+            background: var(--neutral-light);
+            border-radius: 0.375rem;
+        }
+
+        .stat-name {
+            color: var(--text-light);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-time {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .activity-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+
+        .activity-controls.two-col {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* Progress Ring */
+        .progress-ring-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+
+        .progress-ring-svg {
+            width: 120px;
+            height: 120px;
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.5s ease;
+            stroke: var(--primary);
+        }
+
+        .progress-ring-bg {
+            stroke: var(--border);
+        }
+
+        .progress-ring-text {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Tasks List */
+        .tasks-list {
+            margin-bottom: 2rem;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .task-item:hover {
+            background: var(--neutral-light);
+        }
+
+        .task-item.completed {
+            background: rgba(16, 185, 129, 0.05);
+            border-color: var(--success);
+        }
+
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 0.375rem;
+            margin-right: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .task-item.completed .task-checkbox {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .task-text {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: var(--text-light);
+        }
+
+        .task-time {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        /* Remaining Today */
+        .remaining-section {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.05) 0%, rgba(236, 72, 153, 0.02) 100%);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .remaining-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .remaining-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .remaining-item:last-child {
+            border-bottom: none;
+        }
+
+        .remaining-label {
+            font-weight: 500;
+        }
+
+        .remaining-time {
+            color: var(--secondary);
+            font-weight: 700;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .remaining-time.completed {
+            color: var(--success);
+        }
+
+        .remaining-total {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        /* Session Notes */
+        .session-notes {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--neutral-dark);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        /* History Table */
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th {
+            background: var(--neutral-light);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+        }
+
+        .history-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .history-table tr:hover {
+            background: var(--neutral-light);
+        }
+
+        .history-action {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .history-action button {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .history-action button:hover {
+            background: var(--neutral-light);
+        }
+
+        /* 7-Day Progress */
+        .progress-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-day {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .progress-day.completed {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border-color: var(--success);
+        }
+
+        .progress-day.current {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%);
+            border-color: var(--primary);
+        }
+
+        .progress-day-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-day-status {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-day-time {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .progress-day.completed .progress-day-time {
+            color: var(--success);
+        }
+
+        .progress-bar-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+        }
+
+        .progress-bar-label {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-bar-fill {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar-fill-inner {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success) 0%, var(--primary) 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-bar-text {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        /* Skill Progress */
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-stat {
+            padding: 0.75rem;
+            background: var(--neutral-light);
+            border-radius: 0.375rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .skill-stat-label {
+            color: var(--text-light);
+            font-size: 0.75rem;
+        }
+
+        .skill-stat-value {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        /* Journey Section */
+        .journey-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .journey-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .journey-label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .journey-value {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .journey-subtext {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        /* Streak */
+        .streak-display {
+            background: linear-gradient(135deg, var(--warning) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .streak-icon {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Calendar */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-light);
+            padding: 0.5rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid var(--border);
+        }
+
+        .calendar-day.empty {
+            background: var(--neutral-light);
+            cursor: default;
+            border-color: transparent;
+        }
+
+        .calendar-day.completed {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .calendar-day.partial {
+            background: var(--warning);
+            color: white;
+            border-color: var(--warning);
+        }
+
+        .calendar-day.today {
+            border-width: 2px;
+            border-color: var(--primary);
+        }
+
+        .calendar-day:hover:not(.empty) {
+            transform: scale(1.05);
+        }
+
+        /* Review Later */
+        .review-items {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .review-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .review-text {
+            flex: 1;
+            margin-right: 1rem;
+        }
+
+        .review-text-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .review-text-category {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .review-status {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .review-status button {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .review-status button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-light);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state-text {
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timer-time {
+                font-size: 2.5rem;
+            }
+
+            .dashboard-header {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .days-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav .container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            nav ul {
+                justify-content: center;
+            }
+
+            .activity-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .activity-controls {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timer-controls {
+                gap: 0.5rem;
+            }
+
+            .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <h1>🎯 English Study Tracker</h1>
+            <ul>
+                <li><button class="nav-btn active" data-page="dashboard">Dashboard</button></li>
+                <li><button class="nav-btn" data-page="today">Today's Plan</button></li>
+                <li><button class="nav-btn" data-page="progress">7-Day Progress</button></li>
+                <li><button class="nav-btn" data-page="skills">Skills</button></li>
+                <li><button class="nav-btn" data-page="journey">Journey</button></li>
+                <li><button class="nav-btn" data-page="history">History</button></li>
+                <li><button class="nav-btn" data-page="review">Review Later</button></li>
+                <li><button class="nav-btn" data-page="settings">Settings</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <!-- DASHBOARD PAGE -->
+            <div class="page active" id="dashboard">
+                <div class="dashboard-header">
+                    <div class="stat-card">
+                        <div class="stat-label">Current Day</div>
+                        <div class="stat-value"><span id="current-day-display">1</span> / 7</div>
+                        <div class="stat-subtext">7-Day English Plan</div>
+                    </div>
+                    <div class="stat-card secondary">
+                        <div class="stat-label">Today's Study Time</div>
+                        <div class="stat-value"><span id="todays-total">00:00:00</span></div>
+                        <div class="stat-subtext">Active Time</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-label">Completion %</div>
+                        <div class="stat-value"><span id="today-percentage">0</span>%</div>
+                        <div class="stat-subtext">Today's Progress</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-label">Current Streak</div>
+                        <div class="stat-value">🔥 <span id="streak-count">0</span></div>
+                        <div class="stat-subtext">Consecutive Days</div>
+                    </div>
+                </div>
+
+                <div class="timer-display">
+                    <div class="timer-label">TODAY'S STUDY TIME</div>
+                    <div class="timer-time"><span id="timer-display">00:00:00</span></div>
+                    <div class="timer-progress">
+                        <div class="timer-progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="timer-controls">
+                        <button class="btn btn-primary" id="start-session-btn">Start Session</button>
+                        <button class="btn btn-secondary" id="pause-session-btn" disabled>Pause</button>
+                        <button class="btn btn-secondary" id="resume-session-btn" disabled>Resume</button>
+                        <button class="btn btn-success" id="finish-session-btn" disabled>Finish Session</button>
+                    </div>
+                </div>
+
+                <h2 style="margin: 2rem 0 1rem; font-size: 1.5rem;">Select Day</h2>
+                <div class="days-grid" id="days-grid"></div>
+
+                <h2 style="margin: 2rem 0 1rem; font-size: 1.5rem;">Today's Activities</h2>
+                <div class="activities-grid" id="activities-grid"></div>
+
+                <div class="streak-display">
+                    <span class="streak-icon">🔥</span>
+                    <span id="streak-display">0 Day Streak</span>
+                </div>
+
+                <h2 style="margin: 2rem 0 1rem; font-size: 1.5rem;">7-Day Progress</h2>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-label">
+                        <span>7-Day Plan Progress</span>
+                        <span><span id="completed-days">0</span> / 7 Days Completed</span>
+                    </div>
+                    <div class="progress-bar-fill">
+                        <div class="progress-bar-fill-inner" id="overall-progress" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-bar-text"><span id="overall-percentage">0</span>% Complete</div>
+                </div>
+
+                <h2 style="margin: 2rem 0 1rem; font-size: 1.5rem;">Skill Progress</h2>
+                <div class="skill-grid" id="skill-grid"></div>
+            </div>
+
+            <!-- TODAY'S PLAN PAGE -->
+            <div class="page" id="today">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="font-size: 1.5rem;">Today's Plan</h2>
+                    <div style="text-align: right;">
+                        <div style="font-size: 0.875rem; color: var(--text-light); text-transform: uppercase; margin-bottom: 0.25rem;">Progress</div>
+                        <div style="font-size: 1.5rem; font-weight: 700;"><span id="today-tasks-completed">0</span> / <span id="today-tasks-total">0</span></div>
+                    </div>
+                </div>
+
+                <div class="progress-ring-container">
+                    <svg class="progress-ring-svg" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="54" class="progress-ring-bg" fill="none" stroke-width="4" stroke-linecap="round" />
+                        <circle cx="60" cy="60" r="54" class="progress-ring progress-ring-circle" fill="none" stroke-width="4" stroke-linecap="round" style="stroke-dasharray: 339.29; stroke-dashoffset: 339.29;" />
+                    </svg>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem; font-size: 1.25rem;" id="today-day-title">Day 1 - Self Introduction</h3>
+                <div class="tasks-list" id="today-tasks-list"></div>
+
+                <h3 style="margin: 2rem 0 1rem; font-size: 1.25rem;">What is Left Today?</h3>
+                <div class="remaining-section" id="today-remaining"></div>
+
+                <h3 style="margin: 2rem 0 1rem; font-size: 1.25rem;">Add Session Notes</h3>
+                <div class="session-notes">
+                    <form id="session-notes-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Which activity?</label>
+                                <select id="notes-activity">
+                                    <option value="">Select Activity</option>
+                                    <option value="Reading">Reading</option>
+                                    <option value="Listening">Listening</option>
+                                    <option value="Writing">Writing</option>
+                                    <option value="Speaking">Speaking</option>
+                                    <option value="Grammar">Grammar / Vocabulary</option>
+                                    <option value="Interview">Interview / Work Practice</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Duration (minutes)</label>
+                                <input type="number" id="notes-duration" min="0" max="999" placeholder="45">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>What did I study?</label>
+                            <input type="text" id="notes-topic" placeholder="e.g., Present Simple Tense">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Material / Source used</label>
+                            <input type="text" id="notes-material" placeholder="e.g., YouTube, Book, Article">
+                        </div>
+
+                        <div class="form-group">
+                            <label>What did I learn?</label>
+                            <textarea id="notes-learned" placeholder="Write down key learnings..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mistakes I made</label>
+                            <textarea id="notes-mistakes" placeholder="What mistakes did you notice?"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>New vocabulary</label>
+                            <textarea id="notes-vocabulary" placeholder="New words learned..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>What should I review later?</label>
+                            <textarea id="notes-review" placeholder="Mark points for review..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Session Notes</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 7-DAY PROGRESS PAGE -->
+            <div class="page" id="progress">
+                <h2 style="margin-bottom: 2rem; font-size: 1.5rem;">7-Day Progress Overview</h2>
+                <div class="progress-overview" id="progress-overview"></div>
+
+                <div class="progress-bar-container">
+                    <div class="progress-bar-label">
+                        <span>7-Day Plan Progress</span>
+                        <span><span id="total-completed-days">0</span> / 7 Days Completed</span>
+                    </div>
+                    <div class="progress-bar-fill">
+                        <div class="progress-bar-fill-inner" id="total-progress" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-bar-text"><span id="total-percentage">0</span>% Complete</div>
+                </div>
+            </div>
+
+            <!-- SKILLS PAGE -->
+            <div class="page" id="skills">
+                <h2 style="margin-bottom: 2rem; font-size: 1.5rem;">Skill Progress</h2>
+                <div class="skill-grid" id="detailed-skill-grid"></div>
+            </div>
+
+            <!-- JOURNEY PAGE -->
+            <div class="page" id="journey">
+                <h2 style="margin-bottom: 2rem; font-size: 1.5rem;">My English Journey</h2>
+                <div class="journey-container">
+                    <div class="journey-card">
+                        <div class="journey-label">Starting Level</div>
+                        <div class="journey-value">A2+</div>
+                        <div class="journey-subtext">24 July 2024</div>
+                    </div>
+                    <div class="journey-card">
+                        <div class="journey-label">Baseline Score</div>
+                        <div class="journey-value">5.1</div>
+                        <div class="journey-subtext">/ 10</div>
+                    </div>
+                    <div class="journey-card">
+                        <div class="journey-label">Current Level</div>
+                        <div class="journey-value" id="current-level">A2+</div>
+                        <div class="journey-subtext">Based on progress</div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem; font-size: 1.25rem;">Goal: B1 Practical English</h3>
+                <div class="card">
+                    <h4 style="font-weight: 600; margin-bottom: 1rem;">Final Target</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Speak more confidently and fluently</li>
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Form sentences correctly</li>
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Improve grammar</li>
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Write correct professional emails</li>
+                        <li style="padding: 0.75rem 0; display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Answer interview questions successfully</li>
+                    </ul>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem; font-size: 1.25rem;">Test Results</h3>
+                <div class="card">
+                    <div class="form-group">
+                        <label>Baseline Score (24 July)</label>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--warning);">5.1 / 10</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Day 7 Test Score</label>
+                        <div style="display: flex; gap: 0.75rem;">
+                            <input type="number" id="test-score" min="0" max="10" step="0.1" placeholder="e.g., 7.5" style="flex: 1;">
+                            <button class="btn btn-primary btn-small" id="save-test-score">Save</button>
+                        </div>
+                    </div>
+
+                    <div id="test-results-container"></div>
+                </div>
+            </div>
+
+            <!-- HISTORY PAGE -->
+            <div class="page" id="history">
+                <h2 style="margin-bottom: 2rem; font-size: 1.5rem;">Study History</h2>
+                <div style="overflow-x: auto;">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Day</th>
+                                <th>Activity</th>
+                                <th>Duration</th>
+                                <th>Material</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-tbody">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 2rem;">No study sessions yet. Start studying!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- REVIEW LATER PAGE -->
+            <div class="page" id="review">
+                <h2 style="margin-bottom: 2rem; font-size: 1.5rem;">Review Later</h2>
+
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h3 style="font-weight: 600; margin-bottom: 1rem;">Add Item for Review</h3>
+                    <form id="add-review-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select id="review-category">
+                                    <option value="Vocabulary">Vocabulary</option>
+                                    <option value="Grammar Mistake">Grammar Mistake</option>
+                                    <option value="Writing Mistake">Writing Mistake</option>
+                                    <option value="Interview Question">Interview Question</option>
+                                    <option value="Useful Sentence">Useful Sentence</option>
+                                    <option value="Pronunciation">Pronunciation Note</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Item Text</label>
+                                <input type="text" id="review-text" placeholder="What needs review?" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add to Review</button>
+                    </form>
+                </div>
+
+                <div id="review-items-container"></div>
+            </div>
+
+            <!-- SETTINGS PAGE -->
+            <div class="page" id="settings">
+                <h2 style="margin-bottom: 2rem; font-size: 1.5rem;">Settings</h2>
+
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <h3 style="font-weight: 600; margin-bottom: 1rem;">Daily Targets</h3>
+                    <p style="color: var(--text-light); margin-bottom: 1rem;">Adjust your daily study time targets</p>
+
+                    <div class="form-group">
+                        <label>Reading (minutes)</label>
+                        <input type="number" id="target-reading" min="0" max="999" value="30">
+                    </div>
+                    <div class="form-group">
+                        <label>Grammar / Vocabulary (minutes)</label>
+                        <input type="number" id="target-grammar" min="0" max="999" value="45">
+                    </div>
+                    <div class="form-group">
+                        <label>Listening (minutes)</label>
+                        <input type="number" id="target-listening" min="0" max="999" value="45">
+                    </div>
+                    <div class="form-group">
+                        <label>Writing (minutes)</label>
+                        <input type="number" id="target-writing" min="0" max="999" value="60">
+                    </div>
+                    <div class="form-group">
+                        <label>Speaking (minutes)</label>
+                        <input type="number" id="target-speaking" min="0" max="999" value="90">
+                    </div>
+                    <div class="form-group">
+                        <label>Interview / Work Practice (minutes)</label>
+                        <input type="number" id="target-interview" min="0" max="999" value="0">
+                    </div>
+
+                    <button class="btn btn-primary" id="save-targets-btn">Save Targets</button>
+                </div>
+
+                <div class="card">
+                    <h3 style="font-weight: 600; margin-bottom: 1rem;">Data Management</h3>
+                    <p style="color: var(--text-light); margin-bottom: 1rem;">Manage your study data</p>
+
+                    <button class="btn btn-secondary" id="export-data-btn" style="margin-bottom: 0.75rem;">Export Data (JSON)</button>
+                    <button class="btn btn-danger" id="reset-data-btn" style="background: var(--danger); color: white;">Reset All Data</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ============================================================================
+        // CONSTANTS & DATA STRUCTURE
+        // ============================================================================
+
+        const ACTIVITIES = {
+            'Reading': 30,
+            'Grammar': 45,
+            'Listening': 45,
+            'Writing': 60,
+            'Speaking': 90,
+            'Interview': 0,
+        };
+
+        const DAY_PLANS = [
+            {
+                day: 1,
+                title: 'Self Introduction',
+                focus: 'Sentence Building + Speaking + Present/Past',
+                topics: [
+                    'Basic sentence building',
+                    'Present Simple',
+                    'Past Simple',
+                    'Answering questions about myself',
+                    'Speaking practice',
+                    'Self introduction',
+                    'Work experience'
+                ],
+                interview: 'Tell me about yourself and your experience.',
+                tasks: [
+                    'Speaking practice - 45 min',
+                    'Present Simple exercises',
+                    'Past Simple exercises',
+                    'Self introduction recording',
+                    'Answer questions about yourself',
+                    'Interview practice: Self introduction'
+                ]
+            },
+            {
+                day: 2,
+                title: 'Calendar & Scheduling',
+                focus: 'Questions & Answers + Listening',
+                topics: [
+                    'Common interview questions',
+                    'Understanding short conversations',
+                    'Answering questions correctly',
+                    'Listening practice'
+                ],
+                interview: 'Calendar & Scheduling Questions',
+                tasks: [
+                    'Listening practice - 45 min',
+                    'Common questions exercises',
+                    'Short conversation listening',
+                    'Q&A practice',
+                    'Calendar vocabulary',
+                    'Interview practice: Scheduling'
+                ]
+            },
+            {
+                day: 3,
+                title: 'Emails & Follow-ups',
+                focus: 'Writing + Spelling + Email Vocabulary',
+                topics: [
+                    'Writing formal emails',
+                    'Common work email phrases',
+                    'Email vocabulary',
+                    'Spelling correction',
+                    'Writing follow-ups'
+                ],
+                interview: 'Emails & Follow-ups',
+                tasks: [
+                    'Writing practice - 60 min',
+                    'Email vocabulary',
+                    'Spelling exercises',
+                    'Write professional email',
+                    'Email correction',
+                    'Interview practice: Email scenarios'
+                ]
+            },
+            {
+                day: 4,
+                title: 'Situational Questions',
+                focus: 'Past Tense + Storytelling',
+                topics: [
+                    'Past Simple',
+                    'Past Continuous',
+                    'Tell me about a time...',
+                    'Organizing ideas before speaking',
+                    'Describing previous situations and experiences'
+                ],
+                interview: 'Situational questions and previous experience',
+                tasks: [
+                    'Past Simple exercises',
+                    'Past Continuous exercises',
+                    'Storytelling practice',
+                    'Organize ideas exercise',
+                    'Experience description',
+                    'Interview practice: Situational questions'
+                ]
+            },
+            {
+                day: 5,
+                title: 'Meetings & Priorities',
+                focus: 'Speaking Speed + Vocabulary',
+                topics: [
+                    'Meeting vocabulary',
+                    'Work vocabulary',
+                    'Priorities',
+                    'Agenda',
+                    'Giving short professional answers',
+                    'Speaking faster and more naturally'
+                ],
+                interview: 'Meetings, Agenda & Priorities',
+                tasks: [
+                    'Speaking practice - 90 min',
+                    'Meeting vocabulary',
+                    'Work vocabulary',
+                    'Priority discussion',
+                    'Agenda practice',
+                    'Interview practice: Meetings'
+                ]
+            },
+            {
+                day: 6,
+                title: 'Manager/Employee Situations',
+                focus: 'Listening + Reading',
+                topics: [
+                    'Faster listening practice',
+                    'Reading practical English texts',
+                    'Finding information quickly',
+                    'Understanding workplace situations'
+                ],
+                interview: 'Manager / employee situations and workplace understanding',
+                tasks: [
+                    'Listening practice - 45 min',
+                    'Reading practice - 30 min',
+                    'Workplace listening',
+                    'Practical text reading',
+                    'Quick information finding',
+                    'Interview practice: Workplace scenarios'
+                ]
+            },
+            {
+                day: 7,
+                title: 'Full Skills Test + Mock Interview',
+                focus: 'All Skills Test',
+                topics: [
+                    'Listening test',
+                    'Reading test',
+                    'Writing test',
+                    'Speaking test',
+                    'Full mock interview',
+                    'Review mistakes',
+                    'Create next week plan'
+                ],
+                interview: 'Full mock interview',
+                tasks: [
+                    'Listening test - 45 min',
+                    'Reading test - 30 min',
+                    'Writing test - 60 min',
+                    'Speaking test - 90 min',
+                    'Full mock interview',
+                    'Review mistakes',
+                    'Plan next week'
+                ]
+            }
+        ];
+
+        // ============================================================================
+        // STATE MANAGEMENT
+        // ============================================================================
+
+        let appState = {
+            currentDay: 1,
+            sessionActive: false,
+            sessionPaused: false,
+            sessionStartTime: null,
+            sessionPauseTime: null,
+            totalPausedTime: 0,
+
+            activityTimers: {
+                'Reading': 0,
+                'Grammar': 0,
+                'Listening': 0,
+                'Writing': 0,
+                'Speaking': 0,
+                'Interview': 0,
+            },
+
+            activitySessionActive: {},
+            activitySessionPaused: {},
+            activitySessionStartTime: {},
+            activitySessionPauseTime: {},
+            activityTotalPausedTime: {},
+
+            completedDays: new Set(),
+            completedTasks: {},
+            reviewItems: [],
+            studySessions: [],
+            testScore: null,
+
+            targets: { ...ACTIVITIES },
+
+            lastStudyDate: null,
+            streak: 0,
+        };
+
+        // ============================================================================
+        // UTILITY FUNCTIONS
+        // ============================================================================
+
+        function formatTime(seconds) {
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        function getToday() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem('appState');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                appState = {
+                    ...appState,
+                    ...parsed,
+                    completedDays: new Set(parsed.completedDays || []),
+                    activitySessionActive: parsed.activitySessionActive || {},
+                    activitySessionPaused: parsed.activitySessionPaused || {},
+                    activitySessionStartTime: parsed.activitySessionStartTime || {},
+                    activitySessionPauseTime: parsed.activitySessionPauseTime || {},
+                    activityTotalPausedTime: parsed.activityTotalPausedTime || {},
+                };
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem('appState', JSON.stringify({
+                ...appState,
+                completedDays: Array.from(appState.completedDays),
+                activitySessionActive: appState.activitySessionActive,
+                activitySessionPaused: appState.activitySessionPaused,
+                activitySessionStartTime: appState.activitySessionStartTime,
+                activitySessionPauseTime: appState.activitySessionPauseTime,
+                activityTotalPausedTime: appState.activityTotalPausedTime,
+            }));
+        }
+
+        // ============================================================================
+        // TIMER LOGIC
+        // ============================================================================
+
+        function getTodaysTotalTime() {
+            const today = getToday();
+            const todaySessions = appState.studySessions.filter(s => s.date === today);
+            return todaySessions.reduce((sum, s) => sum + s.duration, 0);
+        }
+
+        function getActivityTodayTime(activity) {
+            const today = getToday();
+            const sessions = appState.studySessions.filter(s => s.date === today && s.activity === activity);
+            return sessions.reduce((sum, s) => sum + s.duration, 0);
+        }
+
+        function startTimer() {
+            if (!appState.sessionActive) {
+                appState.sessionActive = true;
+                appState.sessionPaused = false;
+                appState.sessionStartTime = Date.now();
+                appState.sessionPauseTime = null;
+                appState.totalPausedTime = 0;
+                updateTimerButtons();
+                saveState();
+            }
+        }
+
+        function pauseTimer() {
+            if (appState.sessionActive && !appState.sessionPaused) {
+                appState.sessionPaused = true;
+                appState.sessionPauseTime = Date.now();
+                updateTimerButtons();
+                saveState();
+            }
+        }
+
+        function resumeTimer() {
+            if (appState.sessionActive && appState.sessionPaused) {
+                appState.totalPausedTime += Date.now() - appState.sessionPauseTime;
+                appState.sessionPauseTime = null;
+                appState.sessionPaused = false;
+                updateTimerButtons();
+                saveState();
+            }
+        }
+
+        function finishTimer() {
+            if (appState.sessionActive) {
+                const elapsed = Math.floor((Date.now() - appState.sessionStartTime - appState.totalPausedTime) / 1000);
+                if (elapsed > 0) {
+                    appState.studySessions.push({
+                        date: getToday(),
+                        day: appState.currentDay,
+                        activity: 'General',
+                        duration: elapsed,
+                        material: '',
+                        notes: '',
+                        status: 'completed'
+                    });
+                }
+                appState.sessionActive = false;
+                appState.sessionPaused = false;
+                appState.sessionStartTime = null;
+                appState.sessionPauseTime = null;
+                appState.totalPausedTime = 0;
+                updateTimerButtons();
+                updateStreakIfNeeded();
+                saveState();
+                render();
+            }
+        }
+
+        function updateTimerButtons() {
+            const startBtn = document.getElementById('start-session-btn');
+            const pauseBtn = document.getElementById('pause-session-btn');
+            const resumeBtn = document.getElementById('resume-session-btn');
+            const finishBtn = document.getElementById('finish-session-btn');
+
+            startBtn.disabled = appState.sessionActive;
+            pauseBtn.disabled = !appState.sessionActive || appState.sessionPaused;
+            resumeBtn.disabled = !appState.sessionActive || !appState.sessionPaused;
+            finishBtn.disabled = !appState.sessionActive;
+        }
+
+        // ============================================================================
+        // ACTIVITY TIMER LOGIC
+        // ============================================================================
+
+        function startActivityTimer(activity) {
+            if (!appState.activitySessionActive[activity]) {
+                appState.activitySessionActive[activity] = true;
+                appState.activitySessionPaused[activity] = false;
+                appState.activitySessionStartTime[activity] = Date.now();
+                appState.activitySessionPauseTime[activity] = null;
+                appState.activityTotalPausedTime[activity] = appState.activityTotalPausedTime[activity] || 0;
+                saveState();
+                render();
+            }
+        }
+
+        function pauseActivityTimer(activity) {
+            if (appState.activitySessionActive[activity] && !appState.activitySessionPaused[activity]) {
+                appState.activitySessionPaused[activity] = true;
+                appState.activitySessionPauseTime[activity] = Date.now();
+                saveState();
+                render();
+            }
+        }
+
+        function resumeActivityTimer(activity) {
+            if (appState.activitySessionActive[activity] && appState.activitySessionPaused[activity]) {
+                appState.activityTotalPausedTime[activity] += Date.now() - appState.activitySessionPauseTime[activity];
+                appState.activitySessionPauseTime[activity] = null;
+                appState.activitySessionPaused[activity] = false;
+                saveState();
+                render();
+            }
+        }
+
+        function finishActivityTimer(activity) {
+            if (appState.activitySessionActive[activity]) {
+                const elapsed = Math.floor((Date.now() - appState.activitySessionStartTime[activity] - appState.activityTotalPausedTime[activity]) / 1000);
+                if (elapsed > 0) {
+                    appState.activityTimers[activity] += elapsed;
+                    appState.studySessions.push({
+                        date: getToday(),
+                        day: appState.currentDay,
+                        activity: activity,
+                        duration: elapsed,
+                        material: '',
+                        notes: '',
+                        status: 'completed'
+                    });
+                }
+                appState.activitySessionActive[activity] = false;
+                appState.activitySessionPaused[activity] = false;
+                appState.activitySessionStartTime[activity] = null;
+                appState.activitySessionPauseTime[activity] = null;
+                appState.activityTotalPausedTime[activity] = 0;
+                updateStreakIfNeeded();
+                saveState();
+                render();
+            }
+        }
+
+        function resetActivityTimer(activity) {
+            appState.activityTimers[activity] = 0;
+            appState.activitySessionActive[activity] = false;
+            appState.activitySessionPaused[activity] = false;
+            appState.activitySessionStartTime[activity] = null;
+            appState.activitySessionPauseTime[activity] = null;
+            appState.activityTotalPausedTime[activity] = 0;
+            saveState();
+            render();
+        }
+
+        function getActivityCurrentTime(activity) {
+            let elapsed = appState.activityTimers[activity] || 0;
+            if (appState.activitySessionActive[activity]) {
+                const paused = appState.activitySessionPaused[activity];
+                const now = paused ? appState.activitySessionPauseTime[activity] : Date.now();
+                elapsed += Math.floor((now - appState.activitySessionStartTime[activity] - appState.activityTotalPausedTime[activity]) / 1000);
+            }
+            return elapsed;
+        }
+
+        // ============================================================================
+        // STREAK LOGIC
+        // ============================================================================
+
+        function updateStreakIfNeeded() {
+            const today = getToday();
+            if (appState.lastStudyDate !== today) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+                if (appState.lastStudyDate === yesterdayStr) {
+                    appState.streak++;
+                } else {
+                    appState.streak = 1;
+                }
+                appState.lastStudyDate = today;
+            }
+        }
+
+        // ============================================================================
+        // RENDER FUNCTIONS
+        // ============================================================================
+
+        function render() {
+            updateNavigation();
+            updateDashboard();
+            updateTodaysPlan();
+            updateProgressPage();
+            updateSkillsPage();
+            updateHistoryTable();
+            updateReviewItems();
+            updateTestResults();
+        }
+
+        function updateNavigation() {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.page === 'dashboard') {
+                    btn.classList.add('active');
+                }
+            });
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('dashboard').classList.add('active');
+        }
+
+        function updateDashboard() {
+            // Calculate today's total time
+            let todaysTotal = 0;
+            if (appState.sessionActive) {
+                const paused = appState.sessionPaused;
+                const now = paused ? appState.sessionPauseTime : Date.now();
+                todaysTotal = Math.floor((now - appState.sessionStartTime - appState.totalPausedTime) / 1000);
+            }
+
+            // Add activity times
+            Object.keys(appState.activityTimers).forEach(activity => {
+                todaysTotal += getActivityCurrentTime(activity);
+            });
+
+            // Update timer display
+            document.getElementById('timer-display').textContent = formatTime(todaysTotal);
+            const targetTotal = Object.values(appState.targets).reduce((a, b) => a + b, 0) * 60;
+            const progress = targetTotal > 0 ? Math.min((todaysTotal / targetTotal) * 100, 100) : 0;
+            document.querySelector('.timer-progress-bar').style.width = progress + '%';
+
+            // Update stat cards
+            document.getElementById('current-day-display').textContent = appState.currentDay;
+            document.getElementById('todays-total').textContent = formatTime(todaysTotal);
+            document.getElementById('today-percentage').textContent = Math.floor(progress);
+            document.getElementById('streak-count').textContent = appState.streak;
+            document.getElementById('streak-display').textContent = `${appState.streak} Day Streak`;
+
+            // Days grid
+            const daysGrid = document.getElementById('days-grid');
+            daysGrid.innerHTML = '';
+            DAY_PLANS.forEach(plan => {
+                const card = document.createElement('div');
+                card.className = 'day-card';
+                if (plan.day === appState.currentDay) card.classList.add('active');
+                if (appState.completedDays.has(plan.day)) card.classList.add('completed');
+
+                const dayTime = appState.studySessions
+                    .filter(s => s.day === plan.day)
+                    .reduce((sum, s) => sum + s.duration, 0);
+
+                card.innerHTML = `
+                    <div class="day-number">${plan.day}</div>
+                    <div class="day-title">${plan.title}</div>
+                    <div class="day-time">${formatTime(dayTime)}</div>
+                `;
+                card.addEventListener('click', () => {
+                    appState.currentDay = plan.day;
+                    saveState();
+                    render();
+                });
+                daysGrid.appendChild(card);
+            });
+
+            // Activities grid
+            const activitiesGrid = document.getElementById('activities-grid');
+            activitiesGrid.innerHTML = '';
+            Object.keys(appState.targets).forEach(activity => {
+                const target = appState.targets[activity] * 60;
+                const completed = getActivityCurrentTime(activity);
+                const remaining = Math.max(0, target - completed);
+                const progressPercent = target > 0 ? Math.min((completed / target) * 100, 100) : 0;
+
+                const card = document.createElement('div');
+                card.className = 'activity-card';
+                card.innerHTML = `
+                    <div class="activity-header">
+                        <div class="activity-title">${activity}</div>
+                        ${target > 0 ? `<div class="activity-badge">${Math.floor(progressPercent)}%</div>` : ''}
+                    </div>
+                    <div class="activity-timer">
+                        <div class="activity-timer-display">${formatTime(completed)}</div>
+                        <div style="font-size: 0.875rem; color: var(--text-light);">Active Time</div>
+                    </div>
+                    <div class="activity-stats">
+                        <div class="stat">
+                            <div class="stat-name">Target</div>
+                            <div class="stat-time">${appState.targets[activity]}'</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-name">Completed</div>
+                            <div class="stat-time">${Math.floor(completed / 60)}'</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-name">Remaining</div>
+                            <div class="stat-time">${Math.floor(remaining / 60)}'</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                    </div>
+                    <div class="activity-controls">
+                        <button class="btn btn-small btn-primary" id="start-${activity}">Start</button>
+                        <button class="btn btn-small btn-secondary" id="pause-${activity}">Pause</button>
+                        <button class="btn btn-small btn-secondary" id="finish-${activity}">Finish</button>
+                    </div>
+                `;
+
+                card.querySelector(`#start-${activity}`).addEventListener('click', () => {
+                    startActivityTimer(activity);
+                });
+                card.querySelector(`#pause-${activity}`).addEventListener('click', () => {
+                    const isRunning = appState.activitySessionActive[activity];
+                    if (isRunning && !appState.activitySessionPaused[activity]) {
+                        pauseActivityTimer(activity);
+                    } else if (isRunning && appState.activitySessionPaused[activity]) {
+                        resumeActivityTimer(activity);
+                    }
+                });
+                card.querySelector(`#finish-${activity}`).addEventListener('click', () => {
+                    finishActivityTimer(activity);
+                });
+
+                activitiesGrid.appendChild(card);
+            });
+
+            // Skill progress grid in dashboard
+            const skillGrid = document.getElementById('skill-grid');
+            skillGrid.innerHTML = '';
+            Object.keys(appState.activityTimers).forEach(skill => {
+                const totalTime = appState.studySessions
+                    .filter(s => s.activity === skill)
+                    .reduce((sum, s) => sum + s.duration, 0);
+                const sessions = appState.studySessions.filter(s => s.activity === skill).length;
+
+                const skillCard = document.createElement('div');
+                skillCard.className = 'skill-card';
+                skillCard.innerHTML = `
+                    <div class="skill-icon">${getSkillIcon(skill)}</div>
+                    <div class="skill-name">${skill}</div>
+                    <div class="skill-stat">
+                        <div class="skill-stat-label">Total Time</div>
+                        <div class="skill-stat-value">${(totalTime / 3600).toFixed(1)}h</div>
+                    </div>
+                    <div class="skill-stat">
+                        <div class="skill-stat-label">Sessions</div>
+                        <div class="skill-stat-value">${sessions}</div>
+                    </div>
+                `;
+                skillGrid.appendChild(skillCard);
+            });
+
+            // 7-day progress
+            const completedCount = appState.completedDays.size;
+            document.getElementById('completed-days').textContent = completedCount;
+            document.getElementById('overall-percentage').textContent = Math.floor((completedCount / 7) * 100);
+            document.getElementById('overall-progress').style.width = ((completedCount / 7) * 100) + '%';
+
+            updateTimerButtons();
+        }
+
+        function updateTodaysPlan() {
+            const plan = DAY_PLANS[appState.currentDay - 1];
+            document.getElementById('today-day-title').textContent = `Day ${plan.day} - ${plan.title}`;
+
+            const tasksList = document.getElementById('today-tasks-list');
+            tasksList.innerHTML = '';
+
+            if (!appState.completedTasks[appState.currentDay]) {
+                appState.completedTasks[appState.currentDay] = {};
+            }
+
+            let completedCount = 0;
+            plan.tasks.forEach((task, index) => {
+                const isCompleted = appState.completedTasks[appState.currentDay][index];
+                if (isCompleted) completedCount++;
+
+                const taskEl = document.createElement('div');
+                taskEl.className = 'task-item';
+                if (isCompleted) taskEl.classList.add('completed');
+
+                taskEl.innerHTML = `
+                    <div class="task-checkbox">${isCompleted ? '✓' : ''}</div>
+                    <div class="task-text">${task}</div>
+                `;
+
+                taskEl.addEventListener('click', () => {
+                    appState.completedTasks[appState.currentDay][index] = !isCompleted;
+                    saveState();
+                    render();
+                });
+
+                tasksList.appendChild(taskEl);
+            });
+
+            document.getElementById('today-tasks-completed').textContent = completedCount;
+            document.getElementById('today-tasks-total').textContent = plan.tasks.length;
+
+            // Update progress ring
+            const progressPercent = (completedCount / plan.tasks.length) * 100;
+            const radius = 54;
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference * (1 - progressPercent / 100);
+            document.querySelector('.progress-ring-circle').style.strokeDashoffset = offset;
+
+            // Remaining today
+            const remainingEl = document.getElementById('today-remaining');
+            remainingEl.innerHTML = '';
+
+            let totalRemaining = 0;
+            const remainingItems = [];
+
+            Object.keys(appState.targets).forEach(activity => {
+                const target = appState.targets[activity] * 60;
+                const completed = getActivityCurrentTime(activity);
+                const remaining = Math.max(0, target - completed);
+
+                if (remaining > 0) {
+                    remainingItems.push({
+                        activity,
+                        remaining,
+                        completed: completed >= target
+                    });
+                    totalRemaining += remaining;
+                } else if (target > 0) {
+                    remainingItems.push({
+                        activity,
+                        remaining: 0,
+                        completed: true
+                    });
+                }
+            });
+
+            remainingItems.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'remaining-item';
+                const timeStr = item.remaining > 0 ? `${Math.floor(item.remaining / 60)}m ${item.remaining % 60}s remaining` : 'Completed ✓';
+                const cls = item.completed ? 'completed' : '';
+                itemEl.innerHTML = `
+                    <div class="remaining-label">${item.activity}</div>
+                    <div class="remaining-time ${cls}">${timeStr}</div>
+                `;
+                remainingEl.appendChild(itemEl);
+            });
+
+            const totalEl = document.createElement('div');
+            totalEl.className = 'remaining-total';
+            totalEl.innerHTML = `
+                <span>Total Remaining:</span>
+                <span>${Math.floor(totalRemaining / 60)}h ${Math.floor(totalRemaining % 60)}m</span>
+            `;
+            remainingEl.appendChild(totalEl);
+        }
+
+        function updateProgressPage() {
+            const overview = document.getElementById('progress-overview');
+            overview.innerHTML = '';
+
+            let completedDays = 0;
+            DAY_PLANS.forEach(plan => {
+                const dayTime = appState.studySessions
+                    .filter(s => s.day === plan.day)
+                    .reduce((sum, s) => sum + s.duration, 0);
+
+                const isCompleted = appState.completedDays.has(plan.day);
+                if (isCompleted) completedDays++;
+
+                const card = document.createElement('div');
+                card.className = 'progress-day';
+                if (isCompleted) card.classList.add('completed');
+                if (plan.day === appState.currentDay) card.classList.add('current');
+
+                const status = isCompleted ? '✓ Completed' : (plan.day === appState.currentDay ? '→ Current Day' : 'Upcoming');
+                card.innerHTML = `
+                    <div class="progress-day-number">Day ${plan.day}</div>
+                    <div class="progress-day-status">${status}</div>
+                    <div class="progress-day-time">${formatTime(dayTime)}</div>
+                `;
+
+                if (plan.day === appState.currentDay) {
+                    card.style.cursor = 'pointer';
+                    card.addEventListener('click', () => {
+                        appState.completedDays.add(plan.day);
+                        saveState();
+                        render();
+                    });
+                    card.title = 'Click to mark as completed';
+                }
+
+                overview.appendChild(card);
+            });
+
+            document.getElementById('total-completed-days').textContent = completedDays;
+            document.getElementById('total-percentage').textContent = Math.floor((completedDays / 7) * 100);
+            document.getElementById('total-progress').style.width = ((completedDays / 7) * 100) + '%';
+        }
+
+        function updateSkillsPage() {
+            const grid = document.getElementById('detailed-skill-grid');
+            grid.innerHTML = '';
+
+            Object.keys(appState.activityTimers).forEach(skill => {
+                const totalTime = appState.studySessions
+                    .filter(s => s.activity === skill)
+                    .reduce((sum, s) => sum + s.duration, 0);
+                const sessions = appState.studySessions.filter(s => s.activity === skill).length;
+                const avgTime = sessions > 0 ? Math.floor(totalTime / sessions) : 0;
+
+                const card = document.createElement('div');
+                card.className = 'skill-card';
+                card.innerHTML = `
+                    <div class="skill-icon">${getSkillIcon(skill)}</div>
+                    <div class="skill-name">${skill}</div>
+                    <div class="skill-stat">
+                        <div class="skill-stat-label">Total Hours</div>
+                        <div class="skill-stat-value">${(totalTime / 3600).toFixed(1)}h</div>
+                    </div>
+                    <div class="skill-stat">
+                        <div class="skill-stat-label">Sessions</div>
+                        <div class="skill-stat-value">${sessions}</div>
+                    </div>
+                    <div class="skill-stat">
+                        <div class="skill-stat-label">Avg. Duration</div>
+                        <div class="skill-stat-value">${Math.floor(avgTime / 60)}'</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function updateHistoryTable() {
+            const tbody = document.getElementById('history-tbody');
+            if (appState.studySessions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem;">No study sessions yet. Start studying!</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = '';
+            [...appState.studySessions].reverse().forEach((session, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${session.date}</td>
+                    <td>Day ${session.day}</td>
+                    <td>${session.activity}</td>
+                    <td>${formatTime(session.duration)}</td>
+                    <td>${session.material || '-'}</td>
+                    <td>${session.status}</td>
+                    <td class="history-action">
+                        <button class="delete-session" data-index="${appState.studySessions.length - 1 - index}">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.querySelectorAll('.delete-session').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    appState.studySessions.splice(index, 1);
+                    saveState();
+                    render();
+                });
+            });
+        }
+
+        function updateReviewItems() {
+            const container = document.getElementById('review-items-container');
+            if (appState.reviewItems.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📚</div><div class="empty-state-text">No items to review yet</div></div>';
+                return;
+            }
+
+            container.innerHTML = '';
+            appState.reviewItems.forEach((item, index) => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'review-item';
+                itemEl.innerHTML = `
+                    <div class="review-text">
+                        <div class="review-text-title">${item.text}</div>
+                        <div class="review-text-category">${item.category}</div>
+                    </div>
+                    <div class="review-status">
+                        <button class="status-btn ${item.status === 'Needs Review' ? 'active' : ''}">Review</button>
+                        <button class="status-btn ${item.status === 'Reviewed' ? 'active' : ''}">Reviewed</button>
+                        <button class="status-btn ${item.status === 'Mastered' ? 'active' : ''}">Mastered</button>
+                    </div>
+                `;
+
+                itemEl.querySelectorAll('.status-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const newStatus = e.target.textContent === 'Review' ? 'Needs Review' : (e.target.textContent === 'Reviewed' ? 'Reviewed' : 'Mastered');
+                        appState.reviewItems[index].status = newStatus;
+                        saveState();
+                        render();
+                    });
+                });
+
+                container.appendChild(itemEl);
+            });
+        }
+
+        function updateTestResults() {
+            const container = document.getElementById('test-results-container');
+            if (!appState.testScore) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const improvement = (appState.testScore - 5.1).toFixed(1);
+            const improvementClass = improvement > 0 ? 'success' : 'danger';
+
+            container.innerHTML = `
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <span>Day 7 Score:</span>
+                        <span style="font-size: 1.5rem; font-weight: 700; color: var(--success);">${appState.testScore} / 10</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Improvement:</span>
+                        <span style="font-size: 1.25rem; font-weight: 700; color: var(--${improvementClass});">+${improvement} points</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getSkillIcon(skill) {
+            const icons = {
+                'Reading': '📖',
+                'Listening': '👂',
+                'Writing': '✍️',
+                'Speaking': '🗣️',
+                'Grammar': '📚',
+                'Interview': '💼'
+            };
+            return icons[skill] || '⭐';
+        }
+
+        // ============================================================================
+        // EVENT LISTENERS
+        // ============================================================================
+
+        function setupEventListeners() {
+            // Navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const pageId = e.target.dataset.page;
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                    document.getElementById(pageId).classList.add('active');
+                });
+            });
+
+            // Timer buttons
+            document.getElementById('start-session-btn').addEventListener('click', startTimer);
+            document.getElementById('pause-session-btn').addEventListener('click', pauseTimer);
+            document.getElementById('resume-session-btn').addEventListener('click', resumeTimer);
+            document.getElementById('finish-session-btn').addEventListener('click', finishTimer);
+
+            // Session notes form
+            document.getElementById('session-notes-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const activity = document.getElementById('notes-activity').value;
+                const duration = parseInt(document.getElementById('notes-duration').value) * 60 || 0;
+
+                if (activity && duration > 0) {
+                    appState.studySessions.push({
+                        date: getToday(),
+                        day: appState.currentDay,
+                        activity,
+                        duration,
+                        material: document.getElementById('notes-material').value,
+                        notes: document.getElementById('notes-learned').value,
+                        status: 'completed'
+                    });
+                    updateStreakIfNeeded();
+                    saveState();
+                    e.target.reset();
+                    render();
+                    alert('Session notes saved!');
+                }
+            });
+
+            // Review form
+            document.getElementById('add-review-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const category = document.getElementById('review-category').value;
+                const text = document.getElementById('review-text').value;
+
+                if (text) {
+                    appState.reviewItems.push({
+                        category,
+                        text,
+                        status: 'Needs Review'
+                    });
+                    saveState();
+                    e.target.reset();
+                    render();
+                }
+            });
+
+            // Test score
+            document.getElementById('save-test-score').addEventListener('click', () => {
+                const score = parseFloat(document.getElementById('test-score').value);
+                if (score >= 0 && score <= 10) {
+                    appState.testScore = score;
+                    saveState();
+                    render();
+                    alert('Test score saved!');
+                }
+            });
+
+            // Settings
+            document.getElementById('save-targets-btn').addEventListener('click', () => {
+                appState.targets.Reading = parseInt(document.getElementById('target-reading').value);
+                appState.targets.Grammar = parseInt(document.getElementById('target-grammar').value);
+                appState.targets.Listening = parseInt(document.getElementById('target-listening').value);
+                appState.targets.Writing = parseInt(document.getElementById('target-writing').value);
+                appState.targets.Speaking = parseInt(document.getElementById('target-speaking').value);
+                appState.targets.Interview = parseInt(document.getElementById('target-interview').value);
+                saveState();
+                render();
+                alert('Targets saved!');
+            });
+
+            document.getElementById('export-data-btn').addEventListener('click', () => {
+                const data = JSON.stringify(appState, null, 2);
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `study-tracker-export-${getToday()}.json`;
+                a.click();
+            });
+
+            document.getElementById('reset-data-btn').addEventListener('click', () => {
+                if (confirm('Are you sure? This will delete all your study data.')) {
+                    localStorage.removeItem('appState');
+                    appState = {
+                        currentDay: 1,
+                        sessionActive: false,
+                        sessionPaused: false,
+                        sessionStartTime: null,
+                        sessionPauseTime: null,
+                        totalPausedTime: 0,
+                        activityTimers: {
+                            'Reading': 0,
+                            'Grammar': 0,
+                            'Listening': 0,
+                            'Writing': 0,
+                            'Speaking': 0,
+                            'Interview': 0,
+                        },
+                        activitySessionActive: {},
+                        activitySessionPaused: {},
+                        activitySessionStartTime: {},
+                        activitySessionPauseTime: {},
+                        activityTotalPausedTime: {},
+                        completedDays: new Set(),
+                        completedTasks: {},
+                        reviewItems: [],
+                        studySessions: [],
+                        testScore: null,
+                        targets: { ...ACTIVITIES },
+                        lastStudyDate: null,
+                        streak: 0,
+                    };
+                    render();
+                }
+            });
+        }
+
+        // ============================================================================
+        // ANIMATION LOOP
+        // ============================================================================
+
+        function updateTimerDisplay() {
+            if (appState.sessionActive || Object.values(appState.activitySessionActive).some(v => v)) {
+                render();
+            }
+            requestAnimationFrame(updateTimerDisplay);
+        }
+
+        // ============================================================================
+        // INIT
+        // ============================================================================
+
+        loadState();
+        setupEventListeners();
+
+        // Load target values into settings form
+        document.getElementById('target-reading').value = appState.targets.Reading;
+        document.getElementById('target-grammar').value = appState.targets.Grammar;
+        document.getElementById('target-listening').value = appState.targets.Listening;
+        document.getElementById('target-writing').value = appState.targets.Writing;
+        document.getElementById('target-speaking').value = appState.targets.Speaking;
+        document.getElementById('target-interview').value = appState.targets.Interview;
+
+        render();
+        updateTimerDisplay();
+    </script>
+</body>
+</html>
