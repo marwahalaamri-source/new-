@@ -2721,10 +2721,8 @@
         }
 
         function updateNavigation() {
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector('[data-page="dashboard"]').classList.add('active');
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('dashboard').classList.add('active');
+            // This function is called after page navigation is set up
+            // Do not override the current page selection here
         }
 
         function updateDashboard() {
