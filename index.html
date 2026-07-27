@@ -57,14 +57,8 @@
             padding: 0;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 0;
-            }
-        }
-
         /* ============================================================================
-           NAVIGATION - Minimal
+           NAVIGATION
            ============================================================================ */
         nav {
             background: var(--cream);
@@ -214,7 +208,7 @@
         }
 
         /* ============================================================================
-           TYPOGRAPHY - Editorial Style
+           TYPOGRAPHY
            ============================================================================ */
         h1 {
             font-family: var(--font-serif);
@@ -243,14 +237,6 @@
             color: var(--dark-navy);
         }
 
-        h4 {
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--dark-navy);
-        }
-
         .label {
             font-family: var(--font-sans);
             font-size: 0.6rem;
@@ -260,50 +246,18 @@
             color: var(--text-light);
         }
 
-        .large-number {
-            font-family: var(--font-serif);
-            font-size: 4.5rem;
-            font-weight: 800;
-            line-height: 0.9;
-            color: var(--dark-navy);
-            letter-spacing: -0.03em;
-        }
-
-        .medium-number {
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--dark-navy);
-        }
-
         @media (max-width: 480px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-
-            h2 {
-                font-size: 1.35rem;
-            }
-
-            h3 {
-                font-size: 1.1rem;
-            }
-
-            .large-number {
-                font-size: 3rem;
-            }
-
-            .medium-number {
-                font-size: 1.4rem;
-            }
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.35rem; }
+            h3 { font-size: 1.1rem; }
         }
 
         /* ============================================================================
-           HERO SECTION - Editorial Portfolio Hero
+           HERO SECTION (HOME)
            ============================================================================ */
         .hero-section {
             background: var(--cream);
-            padding: 3rem 1.5rem 2.5rem;
+            padding: 2rem 1.5rem 2.5rem;
             position: relative;
             border-bottom: 1px solid var(--border);
             overflow: hidden;
@@ -333,36 +287,21 @@
             z-index: 0;
         }
 
-        .hero-label {
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--text-light);
-            margin-bottom: 0.75rem;
-        }
-
-        .hero-title {
-            font-family: var(--font-serif);
-            font-size: 3rem;
-            line-height: 1.05;
-            margin-bottom: 0.5rem;
-            color: var(--dark-navy);
-            letter-spacing: -0.02em;
-        }
-
-        .hero-subtitle {
-            font-size: 1rem;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            line-height: 1.6;
+        .hero-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            display: block;
+            margin: 0 auto 1.5rem;
+            object-fit: contain;
         }
 
         .hero-stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 2.5rem;
-            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
         }
 
         .hero-stat {
@@ -386,32 +325,13 @@
             line-height: 1;
         }
 
-        .hero-image {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-            display: block;
-            margin: 0 auto 2rem;
-            border-radius: 0;
-            object-fit: contain;
-        }
-
         @media (max-width: 480px) {
             .hero-section {
-                padding: 2rem 1rem 1.75rem;
-            }
-
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .hero-subtitle {
-                font-size: 0.9rem;
+                padding: 1.5rem 1rem 1.75rem;
             }
 
             .hero-stats {
                 gap: 1.5rem;
-                grid-template-columns: repeat(2, 1fr);
             }
 
             .hero-stat-value {
@@ -420,14 +340,12 @@
         }
 
         /* ============================================================================
-           STUDY TIME DISPLAY - Dark Editorial Section
+           STUDY TIME BLOCK (HOME)
            ============================================================================ */
         .study-time-block {
             background: var(--dark-navy);
             color: var(--cream);
-            padding: 3rem 1.5rem;
-            border-radius: 0;
-            margin-bottom: 0;
+            padding: 2.5rem 1.5rem;
             text-align: left;
             position: relative;
             overflow: hidden;
@@ -455,39 +373,31 @@
 
         .study-time-display {
             font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 3rem;
+            font-size: 2.6rem;
             font-weight: 700;
             letter-spacing: 0.05em;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.75rem;
             line-height: 1;
             position: relative;
             z-index: 10;
         }
 
-        .study-time-progress {
-            height: 1px;
-            background: rgba(250, 247, 242, 0.1);
-            border-radius: 0;
-            overflow: hidden;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        .study-time-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--peach), var(--lavender));
-            border-radius: 0;
-            transition: width 0.4s ease;
-        }
-
-        .study-time-controls {
+        .streak-inline {
             display: flex;
-            gap: 0.75rem;
-            justify-content: flex-start;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--peach);
+            margin-bottom: 1.75rem;
             position: relative;
             z-index: 10;
+        }
+
+        .streak-inline .streak-icon {
+            font-size: 1.1rem;
         }
 
         @media (max-width: 480px) {
@@ -496,19 +406,15 @@
             }
 
             .study-time-display {
-                font-size: 2.2rem;
-            }
-
-            .study-time-controls {
-                gap: 0.5rem;
+                font-size: 2.1rem;
             }
         }
 
         /* ============================================================================
-           BUTTONS - Minimal
+           BUTTONS
            ============================================================================ */
         .btn {
-            padding: 0.65rem 1.4rem;
+            padding: 0.75rem 1.4rem;
             border: none;
             border-radius: 0;
             font-weight: 600;
@@ -521,14 +427,23 @@
         }
 
         .btn-primary {
-            background: var(--dark-navy);
-            color: var(--cream);
-            border: 1px solid var(--dark-navy);
+            background: var(--cream);
+            color: var(--dark-navy);
+            border: 1px solid var(--cream);
         }
 
         .btn-primary:hover {
             background: transparent;
-            color: var(--dark-navy);
+            color: var(--cream);
+        }
+
+        .btn-block {
+            width: 100%;
+            text-align: center;
+            padding: 1rem 1.4rem;
+            font-size: 0.75rem;
+            position: relative;
+            z-index: 10;
         }
 
         .btn-secondary {
@@ -559,14 +474,9 @@
             border: 1px solid var(--danger);
         }
 
-        .btn-danger:hover {
-            background: transparent;
-            color: var(--danger);
-        }
-
         .btn-small {
-            padding: 0.5rem 1rem;
-            font-size: 0.65rem;
+            padding: 0.55rem 0.5rem;
+            font-size: 0.62rem;
         }
 
         .btn:disabled {
@@ -575,38 +485,37 @@
 
         @media (max-width: 480px) {
             .btn {
-                padding: 0.55rem 1.1rem;
+                padding: 0.6rem 1.1rem;
                 font-size: 0.65rem;
             }
 
             .btn-small {
-                padding: 0.45rem 0.85rem;
-                font-size: 0.6rem;
+                padding: 0.5rem 0.4rem;
+                font-size: 0.58rem;
             }
         }
 
         /* ============================================================================
-           7-DAY JOURNEY - Portfolio Numbers
+           7-DAY PLAN CARDS
            ============================================================================ */
-        .journey-section {
+        .page-section {
             background: var(--cream);
-            padding: 2.5rem 1.5rem;
-            margin-bottom: 0;
+            padding: 2rem 1.5rem 2.5rem;
         }
 
-        .journey-title {
+        .page-title {
             font-family: var(--font-serif);
             font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            position: relative;
             color: var(--dark-navy);
+            position: relative;
             padding-left: 1.25rem;
         }
 
-        .journey-title::before {
+        .page-title::before {
             content: '';
             position: absolute;
             left: 0;
@@ -621,164 +530,136 @@
 
         .days-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
         }
 
         .day-card {
             background: white;
             border: 1px solid var(--light-beige);
-            border-radius: 0;
-            padding: 1.25rem 1rem;
-            text-align: center;
+            padding: 1.25rem;
             cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100px;
+            transition: all 0.25s;
             color: var(--dark-navy);
         }
 
-        .day-card::after {
-            content: '';
-            position: absolute;
-            bottom: -0.75rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
-            background: transparent;
-            border: 2px solid transparent;
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
-
         .day-card:hover {
-            transform: scale(1.05);
+            border-color: var(--lavender);
         }
 
-        .day-card.active::after {
-            background: var(--soft-pink);
+        .day-card.current {
             border-color: var(--soft-pink);
+            border-width: 2px;
         }
 
-        .day-card.completed::after {
-            background: var(--success);
-            border-color: var(--success);
+        .day-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
         }
 
         .day-number {
             font-family: var(--font-serif);
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 800;
-            margin-bottom: 0.4rem;
             color: var(--dark-navy);
             line-height: 1;
         }
 
-        .day-title {
-            font-size: 0.65rem;
+        .day-status-badge {
+            font-size: 0.55rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            opacity: 0.7;
-            margin-bottom: 0;
-            line-height: 1.2;
+            letter-spacing: 0.06em;
+            padding: 0.25rem 0.5rem;
+            color: var(--text-light);
+            border: 1px solid var(--border);
+        }
+
+        .day-status-badge.completed {
+            background: var(--success);
+            color: var(--cream);
+            border-color: var(--success);
+        }
+
+        .day-status-badge.current {
+            background: var(--soft-pink);
+            color: var(--cream);
+            border-color: var(--soft-pink);
+        }
+
+        .day-title {
+            font-size: 0.75rem;
             font-weight: 600;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
             color: var(--text-dark);
         }
 
-        .day-time {
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 0.7rem;
-            opacity: 0.5;
-            display: none;
+        .day-card .progress-bar {
+            margin-bottom: 0.5rem;
+        }
+
+        .day-remaining-text {
+            font-size: 0.65rem;
+            color: var(--text-light);
+            font-weight: 600;
         }
 
         @media (max-width: 480px) {
-            .journey-section {
-                padding: 2rem 1rem;
+            .page-section {
+                padding: 1.5rem 1rem 2rem;
             }
 
-            .journey-title {
+            .page-title {
                 font-size: 1rem;
-                margin-bottom: 1.5rem;
+                margin-bottom: 1.25rem;
             }
 
             .days-grid {
-                grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
-                gap: 1rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
             }
 
             .day-card {
-                padding: 0.75rem 0;
-            }
-
-            .day-number {
-                font-size: 1.8rem;
-            }
-
-            .day-title {
-                font-size: 0.6rem;
-            }
-
-            .day-card::after {
-                width: 16px;
-                height: 16px;
+                padding: 1rem;
             }
         }
 
         /* ============================================================================
-           ACTIVITIES GRID - Compact Editorial List
+           TODAY - SKILL CARDS
            ============================================================================ */
-        .activities-section {
-            background: var(--cream);
-            padding: 2rem 1.5rem;
-            margin-bottom: 0;
+        .today-day-heading {
+            margin-bottom: 1.5rem;
         }
 
-        .activities-title {
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1.5rem;
-            color: var(--dark-navy);
-            font-weight: 700;
+        .today-day-heading h2 {
+            margin-bottom: 0.25rem;
+        }
+
+        .today-day-heading .label {
+            display: block;
         }
 
         .activities-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
+            gap: 0.85rem;
         }
 
         .activity-card {
             background: white;
             border: 1px solid var(--light-beige);
-            border-radius: 0;
             padding: 1.25rem;
-            box-shadow: none;
-            transition: all 0.25s;
-            cursor: pointer;
-            min-height: 80px;
             color: var(--dark-navy);
-        }
-
-        .activity-card:hover {
-            background: var(--light-beige);
-            border-color: var(--lavender);
         }
 
         .activity-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.85rem;
         }
 
         .activity-title {
@@ -793,7 +674,6 @@
             padding: 0.25rem 0.6rem;
             background: var(--lavender);
             color: white;
-            border-radius: 0;
             font-size: 0.6rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -804,43 +684,20 @@
             background: var(--success);
         }
 
-        .activity-timer {
-            background: transparent;
-            padding: 0;
-            border-radius: 0;
-            text-align: left;
-            margin-bottom: 0.75rem;
-            display: none;
-        }
-
-        .activity-timer-display {
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--dark-navy);
-            margin-bottom: 0;
-            letter-spacing: 0.05em;
-        }
-
         .activity-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.75rem;
+            gap: 0.75rem;
+            margin-bottom: 0.85rem;
         }
 
         .stat {
             text-align: left;
-            padding: 0;
-            background: transparent;
-            border-radius: 0;
-            border-bottom: none;
         }
 
         .stat-name {
             color: var(--text-light);
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             text-transform: uppercase;
             margin-bottom: 0.2rem;
             letter-spacing: 0.05em;
@@ -851,52 +708,37 @@
             font-weight: 700;
             color: var(--dark-navy);
             font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         .progress-bar {
             height: 3px;
             background: var(--light-beige);
-            border-radius: 0;
             overflow: hidden;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.85rem;
         }
 
         .progress-fill {
             height: 100%;
             background: var(--soft-pink);
-            border-radius: 0;
             transition: width 0.3s ease;
+        }
+
+        .progress-fill.complete {
+            background: var(--success);
         }
 
         .activity-controls {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 0.5rem;
-            display: none;
         }
 
         .activity-controls.two-col {
             grid-template-columns: repeat(2, 1fr);
         }
 
-        .activity-card.expanded .activity-controls {
-            display: grid;
-        }
-
-        .activity-card.expanded .activity-timer {
-            display: block;
-        }
-
         @media (max-width: 480px) {
-            .activities-section {
-                padding: 1.5rem 1rem;
-            }
-
-            .activities-title {
-                font-size: 1rem;
-            }
-
             .activity-card {
                 padding: 1rem;
             }
@@ -904,321 +746,92 @@
             .activity-title {
                 font-size: 0.95rem;
             }
-
-            .activity-stats {
-                gap: 0.75rem;
-            }
-
-            .progress-bar {
-                margin-bottom: 0.5rem;
-            }
         }
 
         /* ============================================================================
-           REMAINING TODAY - Dark Unfinished Business Section
+           STREAK BLOCK (kept for Progress page use)
            ============================================================================ */
-        .remaining-section {
-            background: var(--dark-navy);
-            border: none;
-            border-radius: 0;
-            padding: 2.5rem 1.5rem;
-            margin-bottom: 0;
-            color: var(--cream);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .remaining-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: -100px;
-            width: 300px;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(212, 165, 165, 0.1) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .remaining-section::after {
-            content: '✦';
-            position: absolute;
-            top: 1.5rem;
-            left: 1.5rem;
-            font-size: 0.9rem;
-            color: var(--peach);
-            opacity: 0.25;
-            z-index: 2;
-        }
-
-        .remaining-title {
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: var(--peach);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            position: relative;
-            z-index: 10;
-        }
-
-        .remaining-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(232, 201, 184, 0.1);
-            position: relative;
-            z-index: 10;
-            font-size: 0.9rem;
-        }
-
-        .remaining-item:last-child {
-            border-bottom: none;
-        }
-
-        .remaining-label {
-            font-weight: 500;
-            color: var(--cream);
-        }
-
-        .remaining-time {
-            color: var(--peach);
-            font-weight: 700;
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
-        }
-
-        .remaining-time.completed {
-            color: var(--success);
-        }
-
-        .remaining-total {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(232, 201, 184, 0.15);
-            display: flex;
-            justify-content: space-between;
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--cream);
-            position: relative;
-            z-index: 10;
-        }
-
-        @media (max-width: 480px) {
-            .remaining-section {
-                padding: 2rem 1rem;
-            }
-
-            .remaining-title {
-                font-size: 1rem;
-            }
-
-            .remaining-item {
-                font-size: 0.85rem;
-                padding: 0.6rem 0;
-            }
-        }
-
-        /* ============================================================================
-           STREAK DISPLAY - Lavender Accent Block
-           ============================================================================ */
-        .streak-display {
-            background: linear-gradient(135deg, var(--lavender) 0%, var(--soft-pink) 100%);
-            color: var(--cream);
-            border-radius: 0;
-            padding: 1.75rem 1.5rem;
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0;
-            box-shadow: none;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
         .streak-icon {
-            font-size: 1.5rem;
-            margin-right: 0.5rem;
-        }
-
-        @media (max-width: 480px) {
-            .streak-display {
-                padding: 1.5rem 1rem;
-                font-size: 1rem;
-            }
+            font-size: 1.1rem;
         }
 
         /* ============================================================================
-           PROGRESS OVERVIEW - Simple Grid
+           PROGRESS PAGE - ANALYTICS
            ============================================================================ */
-        .progress-section {
-            background: var(--lavender);
-            color: var(--cream);
-            padding: 2.5rem 1.5rem;
-            margin-bottom: 0;
-        }
-
-        .progress-overview {
+        .stat-panel {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 1rem;
             margin-bottom: 2rem;
         }
 
-        .progress-day {
+        .stat-tile {
             background: white;
-            border: 2px solid var(--light-beige);
-            border-radius: 50%;
-            padding: 1rem;
-            text-align: center;
-            transition: all 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 90px;
-            aspect-ratio: 1;
-            color: var(--dark-navy);
+            border: 1px solid var(--light-beige);
+            padding: 1.25rem;
+            text-align: left;
         }
 
-        .progress-day:hover {
-            background: var(--light-beige);
-            border-color: var(--lavender);
-        }
-
-        .progress-day.completed {
-            background: var(--success);
-            border-color: var(--success);
-            color: white;
-        }
-
-        .progress-day.current {
-            background: var(--lavender);
-            border-color: var(--lavender);
-            color: white;
-        }
-
-        .progress-day-number {
-            font-family: var(--font-serif);
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 0.25rem;
-            color: inherit;
-            line-height: 1;
-        }
-
-        .progress-day-status {
-            font-size: 0.55rem;
-            color: inherit;
-            margin-bottom: 0;
+        .stat-tile-label {
+            font-size: 0.58rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 600;
-            opacity: 0.8;
-        }
-
-        .progress-day-time {
-            display: none;
-        }
-
-        .progress-bar-container {
-            margin-top: 0;
-            padding: 0;
-            background: transparent;
-            border: none;
-            border-radius: 0;
-            box-shadow: none;
-        }
-
-        .progress-bar-label {
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            display: flex;
-            justify-content: space-between;
-            color: var(--cream);
-            font-size: 0.9rem;
-        }
-
-        .progress-bar-fill {
-            height: 2px;
-            background: rgba(250, 247, 242, 0.2);
-            border-radius: 0;
-            overflow: hidden;
+            letter-spacing: 0.08em;
+            color: var(--text-light);
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
 
-        .progress-bar-fill-inner {
-            height: 100%;
-            background: var(--cream);
-            border-radius: 0;
-            transition: width 0.4s ease;
+        .stat-tile-value {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--dark-navy);
+            line-height: 1;
         }
 
-        .progress-bar-text {
-            text-align: center;
-            font-size: 0.75rem;
+        .weekly-block {
+            background: var(--dark-navy);
             color: var(--cream);
-            opacity: 0.8;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        @media (max-width: 480px) {
-            .progress-section {
-                padding: 2rem 1rem;
-            }
+        .weekly-block-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.75rem;
+        }
 
-            .progress-overview {
-                gap: 0.75rem;
-            }
+        .weekly-block .progress-bar {
+            background: rgba(250, 247, 242, 0.15);
+        }
 
-            .progress-day {
-                min-height: 75px;
-                padding: 0.75rem;
-            }
-
-            .progress-day-number {
-                font-size: 1.4rem;
-            }
+        .weekly-block .progress-fill {
+            background: var(--cream);
         }
 
         /* ============================================================================
-           SKILL PROGRESS - Typography and Lines
+           SKILL PROGRESS LIST (Progress page)
            ============================================================================ */
         .skill-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 0;
-            background: var(--cream);
-            padding: 2.5rem 1.5rem;
-            position: relative;
-        }
-
-        .skill-grid::before {
-            content: '✦';
-            position: absolute;
-            top: 1rem;
-            left: 1.5rem;
-            font-size: 0.8rem;
-            color: var(--peach);
-            opacity: 0.3;
         }
 
         .skill-card {
             background: white;
             border: 1px solid var(--light-beige);
-            border-radius: 0;
-            padding: 1.25rem;
+            padding: 1.1rem 1.25rem;
             text-align: left;
-            transition: all 0.25s;
-            box-shadow: none;
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            border-bottom: none;
             color: var(--dark-navy);
             margin-bottom: 0.75rem;
         }
@@ -1227,13 +840,8 @@
             margin-bottom: 0;
         }
 
-        .skill-card:hover {
-            background: var(--light-beige);
-        }
-
         .skill-icon {
-            font-size: 1.5rem;
-            margin-bottom: 0;
+            font-size: 1.4rem;
             margin-right: 1rem;
             flex-shrink: 0;
         }
@@ -1241,173 +849,29 @@
         .skill-name {
             font-family: var(--font-serif);
             font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 0;
-            color: var(--dark-navy);
+            font-size: 0.95rem;
             flex-grow: 1;
-        }
-
-        .skill-stat {
-            padding: 0;
-            background: transparent;
-            border-radius: 0;
-            margin-bottom: 0;
-            font-size: 0;
-            width: auto;
-            border-bottom: none;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .skill-stat-label {
-            color: var(--text-light);
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            margin-bottom: 0;
-            letter-spacing: 0.05em;
-            font-weight: 700;
-            display: none;
         }
 
         .skill-stat-value {
             font-weight: 700;
             color: var(--dark-navy);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-family: 'Monaco', 'Courier New', monospace;
         }
 
         @media (max-width: 480px) {
-            .skill-grid {
-                padding: 2rem 1rem;
-            }
-
             .skill-card {
-                padding: 1rem 0;
-            }
-
-            .skill-icon {
-                margin-right: 0.75rem;
-                font-size: 1.2rem;
+                padding: 0.9rem 1rem;
             }
 
             .skill-name {
-                font-size: 0.9rem;
-            }
-
-            .skill-stat-value {
-                font-size: 0.8rem;
+                font-size: 0.85rem;
             }
         }
 
         /* ============================================================================
-           JOURNEY SECTION - Personal Journey Cards
-           ============================================================================ */
-        .journey-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .journey-card {
-            background: white;
-            border: 1px solid var(--light-beige);
-            border-radius: 0;
-            padding: 1.75rem 1.5rem;
-            text-align: center;
-            transition: all 0.3s;
-            box-shadow: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .journey-card:hover {
-            border-color: var(--lavender);
-        }
-
-        .journey-label {
-            font-size: 0.6rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.75rem;
-            font-weight: 700;
-        }
-
-        .journey-value {
-            font-family: var(--font-serif);
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--dark-navy);
-            margin-bottom: 0.5rem;
-            line-height: 1;
-        }
-
-        .journey-subtext {
-            font-size: 0.75rem;
-            color: var(--text-light);
-            line-height: 1.4;
-        }
-
-        /* ============================================================================
-           HISTORY TABLE - Study Journal
-           ============================================================================ */
-        .history-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.95rem;
-        }
-
-        .history-table th {
-            background: var(--dark-navy);
-            color: var(--cream);
-            padding: 1.25rem 1rem;
-            text-align: left;
-            font-weight: 700;
-            border: none;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .history-table td {
-            padding: 1.25rem 1rem;
-            border-bottom: 1px solid var(--light-beige);
-            font-size: 0.9rem;
-        }
-
-        .history-table tr:hover {
-            background: rgba(155, 143, 160, 0.06);
-        }
-
-        .history-action {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .history-action button {
-            padding: 0.4rem 0.9rem;
-            border: 2px solid var(--border);
-            background: var(--cream);
-            border-radius: 0;
-            cursor: pointer;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.3s;
-        }
-
-        .history-action button:hover {
-            background: var(--dark-navy);
-            border-color: var(--dark-navy);
-            color: var(--cream);
-        }
-
-        /* ============================================================================
-           FORMS & MODALS - Minimal Modals
+           FORMS & MODALS
            ============================================================================ */
         .modal {
             display: none;
@@ -1436,9 +900,8 @@
 
         .modal-content {
             background: var(--cream);
-            border-radius: 0;
             padding: 2rem;
-            max-width: 500px;
+            max-width: 480px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
@@ -1448,7 +911,7 @@
 
         .modal-header {
             font-family: var(--font-serif);
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
             display: flex;
@@ -1491,14 +954,13 @@
             padding: 1rem;
             border: 1px solid var(--border);
             background: white;
-            border-radius: 0;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 700;
             color: var(--text-dark);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
         }
 
         .option-button:hover {
@@ -1512,7 +974,7 @@
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
         .form-group label {
@@ -1520,40 +982,36 @@
             font-weight: 700;
             margin-bottom: 0.5rem;
             color: var(--text-dark);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
         }
 
         .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group textarea {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.75rem;
             border: 1px solid var(--border);
-            border-radius: 0;
             font-size: 0.9rem;
             font-family: inherit;
-            transition: all 0.3s;
             background: white;
             color: var(--text-dark);
         }
 
         .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--lavender);
         }
 
         .form-group textarea {
             resize: vertical;
-            min-height: 80px;
+            min-height: 70px;
         }
 
         .form-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 1rem;
         }
 
@@ -1563,395 +1021,7 @@
             }
 
             .modal-header {
-                font-size: 1.2rem;
-                margin-bottom: 1.25rem;
-            }
-        }
-
-        /* ============================================================================
-           EMPTY STATE
-           ============================================================================ */
-        .empty-state {
-            text-align: center;
-            padding: 3rem 2rem;
-            color: var(--text-light);
-        }
-
-        .empty-state-icon {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            opacity: 0.3;
-        }
-
-        .empty-state-text {
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        /* ============================================================================
-           TASK LISTS - Editorial Task Items
-           ============================================================================ */
-        .task-item {
-            display: flex;
-            align-items: center;
-            padding: 1.25rem;
-            background: white;
-            border: 1px solid var(--light-beige);
-            border-radius: 0;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .task-item:hover {
-            background: rgba(155, 143, 160, 0.06);
-            border-color: var(--lavender);
-            transform: translateX(4px);
-        }
-
-        .task-item.completed {
-            background: rgba(168, 153, 104, 0.08);
-            border-color: var(--success);
-        }
-
-        .task-checkbox {
-            width: 22px;
-            height: 22px;
-            border: 2px solid var(--lavender);
-            border-radius: 0;
-            margin-right: 1.25rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.3s;
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
-
-        .task-item:hover .task-checkbox {
-            border-color: var(--dark-navy);
-        }
-
-        .task-item.completed .task-checkbox {
-            background: var(--success);
-            border-color: var(--success);
-            color: var(--cream);
-        }
-
-        .task-text {
-            flex: 1;
-            font-weight: 500;
-            color: var(--text-dark);
-            font-size: 0.95rem;
-        }
-
-        .task-item.completed .task-text {
-            text-decoration: line-through;
-            color: var(--text-light);
-        }
-
-        .task-time {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            white-space: nowrap;
-            margin-left: 1.5rem;
-            font-family: 'Monaco', 'Courier New', monospace;
-        }
-
-        /* ============================================================================
-           REVIEW ITEMS - Personal Review Notes
-           ============================================================================ */
-        .review-items {
-            display: grid;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .review-item {
-            background: white;
-            border: 1px solid var(--light-beige);
-            border-radius: 0;
-            padding: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 2px 8px rgba(26, 31, 58, 0.06);
-        }
-
-        .review-item:hover {
-            border-color: var(--lavender);
-            box-shadow: 0 6px 16px rgba(26, 31, 58, 0.1);
-        }
-
-        .review-text {
-            flex: 1;
-            margin-right: 2rem;
-        }
-
-        .review-text-title {
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--dark-navy);
-            font-size: 1rem;
-        }
-
-        .review-text-category {
-            font-size: 0.65rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 600;
-        }
-
-        .review-status {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .review-status button {
-            padding: 0.5rem 1rem;
-            border: 2px solid var(--border);
-            background: var(--cream);
-            border-radius: 0;
-            cursor: pointer;
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.3s;
-        }
-
-        .review-status button:hover {
-            border-color: var(--lavender);
-            background: white;
-        }
-
-        .review-status button.active {
-            background: var(--dark-navy);
-            color: var(--cream);
-            border-color: var(--dark-navy);
-        }
-
-        @media (max-width: 768px) {
-            .modal-content {
-                padding: 2rem;
-            }
-
-            .review-item {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 1.5rem;
-            }
-
-            .review-text {
-                margin-right: 0;
-                margin-bottom: 1.5rem;
-            }
-
-            .review-status {
-                width: 100%;
-                gap: 0.5rem;
-            }
-
-            .review-status button {
-                flex: 1;
-                padding: 0.45rem 0.75rem;
-                font-size: 0.6rem;
-            }
-        }
-
-        /* ============================================================================
-           RESPONSIVE - Mobile First Editorial Design
-           ============================================================================ */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.25rem;
-                margin-bottom: 0.75rem;
-            }
-
-            h2 {
-                font-size: 1.6rem;
-                margin-bottom: 1.25rem;
-            }
-
-            .journey-section,
-            .activities-section,
-            .progress-section {
-                margin-bottom: 3rem;
-            }
-
-            .journey-title,
-            .activities-title {
-                font-size: 1.2rem;
-            }
-
-            .study-time-display {
-                font-size: 2.5rem;
-            }
-
-            .hero-section {
-                margin-bottom: 2.5rem;
-                padding: 2rem 0 1.5rem 0;
-            }
-
-            .activity-card {
-                padding: 1.5rem;
-            }
-
-            .skill-card {
-                padding: 1.5rem;
-            }
-
-            .progress-day {
-                min-height: 150px;
-                padding: 1.5rem;
-            }
-
-            .day-card {
-                min-height: 160px;
-                padding: 1.5rem 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                font-size: 0.95rem;
-            }
-
-            h1 {
-                font-size: 1.75rem;
-            }
-
-            h2 {
-                font-size: 1.35rem;
-            }
-
-            .large-number {
-                font-size: 2.5rem;
-            }
-
-            nav .container {
-                gap: 0.75rem;
-            }
-
-            nav h1 {
-                font-size: 0.8rem;
-            }
-
-            nav button {
-                padding: 0.3rem 0.6rem;
-                font-size: 0.6rem;
-            }
-
-            .hero-section {
-                padding: 1.5rem 0 1rem 0;
-            }
-
-            .hero-title {
-                font-size: 1.8rem;
-            }
-
-            .hero-subtitle {
-                font-size: 0.9rem;
-            }
-
-            .hero-stat-value {
-                font-size: 1.75rem;
-            }
-
-            .study-time-block {
-                padding: 2rem 1.25rem;
-                margin-bottom: 2.5rem;
-            }
-
-            .study-time-display {
-                font-size: 2rem;
-            }
-
-            .study-time-controls {
-                flex-direction: column;
-            }
-
-            .btn {
-                padding: 0.65rem 1.2rem;
-                font-size: 0.7rem;
-            }
-
-            .days-grid {
-                grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
-                gap: 0.75rem;
-            }
-
-            .day-card {
-                min-height: 140px;
-                padding: 1.25rem 0.75rem;
-            }
-
-            .day-number {
-                font-size: 1.75rem;
-            }
-
-            .activities-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .remaining-section {
-                padding: 2rem 1.25rem;
-                margin-bottom: 2.5rem;
-            }
-
-            .remaining-title {
                 font-size: 1.15rem;
-            }
-
-            .progress-overview {
-                gap: 1rem;
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            }
-
-            .progress-day {
-                min-height: 130px;
-                padding: 1.25rem 0.75rem;
-            }
-
-            .skill-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .modal-content {
-                padding: 1.75rem;
-                max-width: 90vw;
-            }
-
-            .modal-header {
-                font-size: 1.4rem;
-            }
-
-            .activity-timer {
-                padding: 1.5rem 1rem;
-            }
-
-            .activity-timer-display {
-                font-size: 1.5rem;
-            }
-        }
-
-        /* Safe area for iPhone notch */
-        @supports (padding: max(0px)) {
-            nav .container,
-            .container {
-                padding-left: max(1rem, env(safe-area-inset-left));
-                padding-right: max(1rem, env(safe-area-inset-right));
-            }
-
-            main {
-                padding-bottom: max(1rem, env(safe-area-inset-bottom));
             }
         }
 
@@ -1963,9 +1033,7 @@
 
             .hero-section,
             .study-time-block,
-            .journey-section,
-            .activities-section,
-            .remaining-section {
+            .page-section {
                 margin-left: 0;
                 margin-right: 0;
             }
@@ -1978,23 +1046,19 @@
             <h1>🎯 English Journey</h1>
             <button class="nav-toggle" id="nav-toggle">☰</button>
             <ul>
-                <li><button class="nav-btn active" data-page="dashboard">Home</button></li>
+                <li><button class="nav-btn active" data-page="home">Home</button></li>
                 <li><button class="nav-btn" data-page="today">Today</button></li>
-                <li><button class="nav-btn" data-page="progress">7-Day</button></li>
-                <li><button class="nav-btn" data-page="skills">Skills</button></li>
-                <li><button class="nav-btn" data-page="journey">Journey</button></li>
-                <li><button class="nav-btn" data-page="history">History</button></li>
-                <li><button class="nav-btn" data-page="review">Review</button></li>
-                <li><button class="nav-btn" data-page="settings">Settings</button></li>
+                <li><button class="nav-btn" data-page="sevenday">7-Day</button></li>
+                <li><button class="nav-btn" data-page="progress">Progress</button></li>
             </ul>
         </div>
     </nav>
 
     <main>
         <div class="container">
-            <!-- DASHBOARD PAGE -->
-            <div class="page active" id="dashboard">
-                <!-- Hero Section -->
+
+            <!-- ==================== HOME ==================== -->
+            <div class="page active" id="home">
                 <div class="hero-section">
                     <img src="hero-marwah.png" alt="Marwah - English Study" class="hero-image">
                     <div class="hero-stats">
@@ -2009,299 +1073,71 @@
                     </div>
                 </div>
 
-                <!-- Study Time Block -->
                 <div class="study-time-block">
-                    <div class="study-time-label">TODAY'S STUDY TIME</div>
+                    <div class="study-time-label">Today's Study Time</div>
                     <div class="study-time-display"><span id="timer-display">00:00:00</span></div>
-                    <div class="study-time-progress">
-                        <div class="study-time-progress-bar" style="width: 0%"></div>
+                    <div class="streak-inline">
+                        <span class="streak-icon">◆</span>
+                        <span id="streak-display">0 Day Streak</span>
                     </div>
-                    <div class="study-time-controls">
-                        <button class="btn btn-primary" id="start-session-btn">Start Session</button>
-                        <button class="btn btn-secondary" id="pause-session-btn" disabled>Pause</button>
-                        <button class="btn btn-secondary" id="resume-session-btn" disabled>Resume</button>
-                        <button class="btn btn-primary" id="finish-session-btn" disabled>Finish</button>
+                    <button class="btn btn-primary btn-block" id="start-studying-btn">Start Studying</button>
+                </div>
+            </div>
+
+            <!-- ==================== TODAY ==================== -->
+            <div class="page" id="today">
+                <div class="page-section">
+                    <div class="today-day-heading">
+                        <span class="label" id="today-day-label">Day 1</span>
+                        <h2 id="today-day-title">Sentence Building</h2>
                     </div>
-                </div>
-
-                <!-- Streak -->
-                <div class="streak-display">
-                    <span class="streak-icon">◆</span>
-                    <span id="streak-display">0 Day Streak</span>
-                </div>
-
-                <!-- 7-Day Journey -->
-                <div class="journey-section">
-                    <div class="journey-title">Your 7-Day Journey</div>
-                    <div class="days-grid" id="days-grid"></div>
-                </div>
-
-                <!-- Today's Activities -->
-                <div class="activities-section">
-                    <div class="activities-title">Today's Focus</div>
                     <div class="activities-grid" id="activities-grid"></div>
                 </div>
+            </div>
 
-                <!-- What's Remaining -->
-                <div id="remaining-section"></div>
-
-                <!-- 7-Day Progress -->
-                <div class="progress-section">
-                    <h2>7-Day Progress</h2>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar-label">
-                            <span>Plan Completion</span>
-                            <span><span id="completed-days">0</span> / 7</span>
-                        </div>
-                        <div class="progress-bar-fill">
-                            <div class="progress-bar-fill-inner" id="overall-progress" style="width: 0%"></div>
-                        </div>
-                        <div class="progress-bar-text"><span id="overall-percentage">0</span>% Complete</div>
-                    </div>
+            <!-- ==================== 7-DAY PLAN ==================== -->
+            <div class="page" id="sevenday">
+                <div class="page-section">
+                    <div class="page-title">Your 7-Day Plan</div>
+                    <div class="days-grid" id="days-grid"></div>
                 </div>
+            </div>
 
-                <!-- Skill Progress -->
-                <div style="margin-top: 3rem;">
-                    <h2>Your Progress by Skill</h2>
+            <!-- ==================== PROGRESS ==================== -->
+            <div class="page" id="progress">
+                <div class="page-section">
+                    <div class="page-title">Your Progress</div>
+
+                    <div class="stat-panel">
+                        <div class="stat-tile">
+                            <div class="stat-tile-label">Total Study Time</div>
+                            <div class="stat-tile-value" id="progress-total-time">0m</div>
+                        </div>
+                        <div class="stat-tile">
+                            <div class="stat-tile-label">Completed Days</div>
+                            <div class="stat-tile-value"><span id="progress-completed-days">0</span> / 7</div>
+                        </div>
+                        <div class="stat-tile">
+                            <div class="stat-tile-label">Current Streak</div>
+                            <div class="stat-tile-value"><span id="progress-streak">0</span>d</div>
+                        </div>
+                    </div>
+
+                    <div class="weekly-block">
+                        <div class="weekly-block-label">
+                            <span>Weekly Completion</span>
+                            <span><span id="progress-weekly-pct">0</span>%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-weekly-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-bottom: 1rem;">Progress by Skill</h3>
                     <div class="skill-grid" id="skill-grid"></div>
                 </div>
             </div>
 
-            <!-- TODAY'S PLAN PAGE -->
-            <div class="page" id="today">
-                <h2 style="margin-bottom: 1rem;">Today's Plan</h2>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <h3 style="margin-bottom: 0;" id="today-day-title">Day 1</h3>
-                    <div style="text-align: right;">
-                        <div class="label">Progress</div>
-                        <div style="font-size: 1.5rem; font-weight: 700;"><span id="today-tasks-completed">0</span> / <span id="today-tasks-total">0</span></div>
-                    </div>
-                </div>
-
-                <div class="tasks-list" id="today-tasks-list"></div>
-
-                <div style="margin-top: 2rem; margin-bottom: 2rem;">
-                    <h3>What's Left Today?</h3>
-                    <div class="remaining-section" id="today-remaining"></div>
-                </div>
-
-                <div style="margin-top: 2rem;">
-                    <h3>Add Session Notes</h3>
-                    <div class="card">
-                        <form id="session-notes-form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>Activity</label>
-                                    <select id="notes-activity">
-                                        <option value="">Select Activity</option>
-                                        <option value="Reading">Reading</option>
-                                        <option value="Listening">Listening</option>
-                                        <option value="Writing">Writing</option>
-                                        <option value="Speaking">Speaking</option>
-                                        <option value="Grammar">Grammar / Vocabulary</option>
-                                        <option value="Interview">Interview / Work Practice</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Duration (minutes)</label>
-                                    <input type="number" id="notes-duration" min="0" max="999" placeholder="45">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>What did I study?</label>
-                                <input type="text" id="notes-topic" placeholder="e.g., Present Simple Tense">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Material / Source</label>
-                                <input type="text" id="notes-material" placeholder="e.g., YouTube, Book">
-                            </div>
-
-                            <div class="form-group">
-                                <label>What did I learn?</label>
-                                <textarea id="notes-learned" placeholder="Key learnings..."></textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Save Session Notes</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7-DAY PROGRESS PAGE -->
-            <div class="page" id="progress">
-                <h2>Your 7-Day Plan</h2>
-                <div class="progress-overview" id="progress-overview"></div>
-
-                <div class="progress-bar-container" style="margin-top: 2rem;">
-                    <div class="progress-bar-label">
-                        <span>Overall Completion</span>
-                        <span><span id="total-completed-days">0</span> / 7 Days</span>
-                    </div>
-                    <div class="progress-bar-fill">
-                        <div class="progress-bar-fill-inner" id="total-progress" style="width: 0%"></div>
-                    </div>
-                    <div class="progress-bar-text"><span id="total-percentage">0</span>% Complete</div>
-                </div>
-            </div>
-
-            <!-- SKILLS PAGE -->
-            <div class="page" id="skills">
-                <h2>Your Progress by Skill</h2>
-                <div class="skill-grid" id="detailed-skill-grid"></div>
-            </div>
-
-            <!-- JOURNEY PAGE -->
-            <div class="page" id="journey">
-                <h2 style="margin-bottom: 2rem;">Your English Journey</h2>
-                <div class="journey-container">
-                    <div class="journey-card">
-                        <div class="journey-label">Starting Level</div>
-                        <div class="journey-value">A2+</div>
-                        <div class="journey-subtext">24 July 2026</div>
-                    </div>
-                    <div class="journey-card">
-                        <div class="journey-label">Baseline Score</div>
-                        <div class="journey-value">5.1</div>
-                        <div class="journey-subtext">/ 10</div>
-                    </div>
-                    <div class="journey-card">
-                        <div class="journey-label">Goal</div>
-                        <div class="journey-value">B1</div>
-                        <div class="journey-subtext">Practical English</div>
-                    </div>
-                </div>
-
-                <div class="card" style="margin-top: 2rem;">
-                    <h3>Your Targets</h3>
-                    <ul style="list-style: none; margin-top: 1rem;">
-                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--light-beige); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Speak more confidently and fluently</li>
-                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--light-beige); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Form sentences correctly</li>
-                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--light-beige); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Improve grammar</li>
-                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--light-beige); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Write correct professional emails</li>
-                        <li style="padding: 0.75rem 0; display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Answer interview questions successfully</li>
-                    </ul>
-                </div>
-
-                <div class="card" style="margin-top: 2rem;">
-                    <h3>Assessment Results</h3>
-                    <div class="form-group" style="margin-top: 1rem;">
-                        <label>Baseline Score</label>
-                        <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--warning);">5.1 / 10</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Day 7 Test Score</label>
-                        <div style="display: flex; gap: 0.75rem;">
-                            <input type="number" id="test-score" min="0" max="10" step="0.1" placeholder="e.g., 7.5" style="flex: 1;">
-                            <button class="btn btn-primary btn-small" id="save-test-score">Save</button>
-                        </div>
-                    </div>
-
-                    <div id="test-results-container"></div>
-                </div>
-            </div>
-
-            <!-- HISTORY PAGE -->
-            <div class="page" id="history">
-                <h2>Study Journal</h2>
-                <div style="overflow-x: auto; margin-top: 1.5rem;">
-                    <table class="history-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Day</th>
-                                <th>Activity</th>
-                                <th>Time</th>
-                                <th>Notes</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="history-tbody">
-                            <tr>
-                                <td colspan="6" style="text-align: center; padding: 2rem;">No sessions yet. Start studying!</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- REVIEW PAGE -->
-            <div class="page" id="review">
-                <h2>Review Later</h2>
-
-                <div class="card" style="margin-bottom: 2rem; margin-top: 1rem;">
-                    <h3>Add Item for Review</h3>
-                    <form id="add-review-form" style="margin-top: 1rem;">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Category</label>
-                                <select id="review-category">
-                                    <option value="Vocabulary">Vocabulary</option>
-                                    <option value="Grammar Mistake">Grammar Mistake</option>
-                                    <option value="Writing Mistake">Writing Mistake</option>
-                                    <option value="Interview Question">Interview Question</option>
-                                    <option value="Useful Sentence">Useful Sentence</option>
-                                    <option value="Pronunciation">Pronunciation Note</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Item Text</label>
-                                <input type="text" id="review-text" placeholder="What needs review?" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Add to Review</button>
-                    </form>
-                </div>
-
-                <div id="review-items-container"></div>
-            </div>
-
-            <!-- SETTINGS PAGE -->
-            <div class="page" id="settings">
-                <h2>Settings</h2>
-
-                <div class="card" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
-                    <h3>Daily Targets</h3>
-                    <p style="color: var(--text-light); margin-bottom: 1rem;">Adjust your daily study time targets</p>
-
-                    <div class="form-group">
-                        <label>Reading (minutes)</label>
-                        <input type="number" id="target-reading" min="0" max="999" value="30">
-                    </div>
-                    <div class="form-group">
-                        <label>Grammar / Vocabulary (minutes)</label>
-                        <input type="number" id="target-grammar" min="0" max="999" value="45">
-                    </div>
-                    <div class="form-group">
-                        <label>Listening (minutes)</label>
-                        <input type="number" id="target-listening" min="0" max="999" value="45">
-                    </div>
-                    <div class="form-group">
-                        <label>Writing (minutes)</label>
-                        <input type="number" id="target-writing" min="0" max="999" value="60">
-                    </div>
-                    <div class="form-group">
-                        <label>Speaking (minutes)</label>
-                        <input type="number" id="target-speaking" min="0" max="999" value="90">
-                    </div>
-                    <div class="form-group">
-                        <label>Interview / Work Practice (minutes)</label>
-                        <input type="number" id="target-interview" min="0" max="999" value="0">
-                    </div>
-
-                    <button class="btn btn-primary" id="save-targets-btn">Save Targets</button>
-                </div>
-
-                <div class="card">
-                    <h3>Data Management</h3>
-                    <p style="color: var(--text-light); margin-bottom: 1rem;">Manage your study data</p>
-
-                    <button class="btn btn-secondary" id="export-data-btn" style="margin-bottom: 0.75rem; width: 100%;">Export Data (JSON)</button>
-                    <button class="btn btn-danger" id="reset-data-btn" style="width: 100%;">Reset All Data</button>
-                </div>
-            </div>
         </div>
     </main>
 
@@ -2334,13 +1170,8 @@
                     <input type="date" id="add-time-date">
                 </div>
 
-                <div class="form-group">
-                    <label>Notes</label>
-                    <textarea id="add-time-notes" placeholder="Optional notes..."></textarea>
-                </div>
-
                 <div class="modal-buttons single">
-                    <button type="submit" class="btn btn-primary">Add Time</button>
+                    <button type="submit" class="btn btn-secondary">Add Time</button>
                 </div>
             </form>
         </div>
@@ -2355,18 +1186,18 @@
 
             <form id="mark-completed-form">
                 <div class="form-group" style="margin-bottom: 1.5rem;">
-                    <label style="font-size: 0.85rem; color: var(--text-light); text-transform: uppercase;">
+                    <label style="font-size: 0.8rem; color: var(--text-light); text-transform: uppercase;">
                         <span id="mark-completed-task"></span>
                     </label>
-                    <div style="font-size: 1.125rem; font-weight: 600; color: var(--lavender); margin-top: 0.5rem;" id="mark-completed-target"></div>
+                    <div style="font-size: 1.1rem; font-weight: 600; color: var(--lavender); margin-top: 0.5rem;" id="mark-completed-target"></div>
                 </div>
 
-                <div style="background: var(--light-beige); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
-                    <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1rem;">Did you study the full target time?</p>
+                <div style="background: var(--light-beige); padding: 1rem; margin-bottom: 1.5rem;">
+                    <p style="font-size: 0.8rem; color: var(--text-light); margin-bottom: 1rem;">Did you study the full target time?</p>
                     <div class="modal-buttons three-col" id="mark-completed-options">
-                        <button type="button" class="option-button" id="mark-full-time">Yes<br><span style="font-size: 0.75rem;">Full time</span></button>
-                        <button type="button" class="option-button" id="mark-partial-time">No<br><span style="font-size: 0.75rem;">Partial</span></button>
-                        <button type="button" class="option-button" id="mark-no-time">Skip<br><span style="font-size: 0.75rem;">No time</span></button>
+                        <button type="button" class="option-button" id="mark-full-time">Yes<br><span style="font-size: 0.7rem;">Full time</span></button>
+                        <button type="button" class="option-button" id="mark-partial-time">No<br><span style="font-size: 0.7rem;">Partial</span></button>
+                        <button type="button" class="option-button" id="mark-no-time">Skip<br><span style="font-size: 0.7rem;">No time</span></button>
                     </div>
                 </div>
 
@@ -2387,55 +1218,16 @@
                 </div>
 
                 <div class="modal-buttons single">
-                    <button type="button" class="btn btn-primary" id="confirm-mark-completed">Mark as Completed</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="modal" id="edit-session-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div>Edit Session</div>
-                <button class="modal-close" onclick="closeModal('edit-session-modal')">×</button>
-            </div>
-            <form id="edit-session-form">
-                <div class="form-group">
-                    <label>Activity</label>
-                    <input type="text" id="edit-activity" readonly style="background: var(--light-beige);">
-                </div>
-
-                <div class="form-group">
-                    <label>Date</label>
-                    <input type="date" id="edit-date" required>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Hours</label>
-                        <input type="number" id="edit-hours" min="0" max="24" value="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Minutes</label>
-                        <input type="number" id="edit-minutes" min="0" max="59" value="0">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Notes</label>
-                    <textarea id="edit-notes" placeholder="Optional notes..."></textarea>
-                </div>
-
-                <div class="modal-buttons">
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                    <button type="button" class="btn btn-danger" id="delete-session-btn">Delete</button>
+                    <button type="button" class="btn btn-secondary" id="confirm-mark-completed">Mark as Completed</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        // CONSTANTS & DATA
+        // ============================================================================
+        // DATA
+        // ============================================================================
         const ACTIVITIES = {
             'Reading': 30,
             'Grammar': 45,
@@ -2444,6 +1236,17 @@
             'Speaking': 90,
             'Interview': 0,
         };
+
+        const ACTIVITY_LABELS = {
+            'Reading': 'Reading',
+            'Grammar': 'Grammar',
+            'Listening': 'Listening',
+            'Writing': 'Writing',
+            'Speaking': 'Speaking',
+            'Interview': 'Interview Practice',
+        };
+
+        const ACTIVITY_ICONS = ['—', '~', '✎', '◆', 'Aa', '⟡'];
 
         const DAY_PLANS = [
             { day: 1, title: 'Sentence Building', focus: 'Sentence Building + Speaking + Present/Past', topics: ['Basic sentence building', 'Present Simple', 'Past Simple', 'Answering questions', 'Speaking practice'], interview: 'Tell me about yourself', tasks: ['Speaking practice - 45 min', 'Present Simple exercises', 'Past Simple exercises', 'Self introduction', 'Answer questions', 'Interview practice'] },
@@ -2455,13 +1258,14 @@
             { day: 7, title: 'Final Test', focus: 'Full Skills Test + Mock Interview', topics: ['All skills', 'Assessment'], interview: 'Full mock interview', tasks: ['Listening test - 45 min', 'Reading test - 30 min', 'Writing test - 60 min', 'Speaking test - 90 min', 'Mock interview', 'Review mistakes'] }
         ];
 
+        function getDaySkills(plan) {
+            const skills = ['Reading', 'Grammar', 'Listening', 'Writing', 'Speaking'];
+            if (plan && plan.interview) skills.push('Interview');
+            return skills;
+        }
+
         let appState = {
             currentDay: 1,
-            sessionActive: false,
-            sessionPaused: false,
-            sessionStartTime: null,
-            sessionPauseTime: null,
-            totalPausedTime: 0,
             activityTimers: { 'Reading': 0, 'Grammar': 0, 'Listening': 0, 'Writing': 0, 'Speaking': 0, 'Interview': 0 },
             activitySessionActive: {},
             activitySessionPaused: {},
@@ -2469,21 +1273,29 @@
             activitySessionPauseTime: {},
             activityTotalPausedTime: {},
             completedDays: new Set(),
-            completedTasks: {},
-            reviewItems: [],
             studySessions: [],
-            testScore: null,
             targets: { ...ACTIVITIES },
             lastStudyDate: null,
             streak: 0,
         };
 
+        // ============================================================================
         // UTILITY FUNCTIONS
+        // ============================================================================
         function formatTime(seconds) {
             const h = Math.floor(seconds / 3600);
             const m = Math.floor((seconds % 3600) / 60);
             const s = seconds % 60;
             return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        // Fixes the "270 minutes shown as 270h" bug: converts seconds -> "Xh Ym"
+        function formatHM(seconds) {
+            const totalMinutes = Math.round(seconds / 60);
+            const h = Math.floor(totalMinutes / 60);
+            const m = totalMinutes % 60;
+            if (h > 0) return `${h}h ${m}m`;
+            return `${m}m`;
         }
 
         function getToday() {
@@ -2526,12 +1338,6 @@
             }));
         }
 
-        // TIMER LOGIC
-        function getTodaysTotalTime() {
-            const today = getToday();
-            return appState.studySessions.filter(s => s.date === today).reduce((sum, s) => sum + s.duration, 0);
-        }
-
         function getActivityCurrentTime(activity) {
             let elapsed = appState.activityTimers[activity] || 0;
             if (appState.activitySessionActive[activity]) {
@@ -2542,71 +1348,9 @@
             return elapsed;
         }
 
-        function startTimer() {
-            if (!appState.sessionActive) {
-                appState.sessionActive = true;
-                appState.sessionPaused = false;
-                appState.sessionStartTime = Date.now();
-                appState.sessionPauseTime = null;
-                appState.totalPausedTime = 0;
-                updateTimerButtons();
-                saveState();
-            }
-        }
-
-        function pauseTimer() {
-            if (appState.sessionActive && !appState.sessionPaused) {
-                appState.sessionPaused = true;
-                appState.sessionPauseTime = Date.now();
-                updateTimerButtons();
-                saveState();
-            }
-        }
-
-        function resumeTimer() {
-            if (appState.sessionActive && appState.sessionPaused) {
-                appState.totalPausedTime += Date.now() - appState.sessionPauseTime;
-                appState.sessionPauseTime = null;
-                appState.sessionPaused = false;
-                updateTimerButtons();
-                saveState();
-            }
-        }
-
-        function finishTimer() {
-            if (appState.sessionActive) {
-                const elapsed = Math.floor((Date.now() - appState.sessionStartTime - appState.totalPausedTime) / 1000);
-                if (elapsed > 0) {
-                    appState.studySessions.push({
-                        date: getToday(),
-                        day: appState.currentDay,
-                        activity: 'General',
-                        duration: elapsed,
-                        material: '',
-                        notes: '',
-                        status: 'completed'
-                    });
-                }
-                appState.sessionActive = false;
-                appState.sessionPaused = false;
-                appState.sessionStartTime = null;
-                appState.sessionPauseTime = null;
-                appState.totalPausedTime = 0;
-                updateTimerButtons();
-                updateStreakIfNeeded();
-                saveState();
-                render();
-            }
-        }
-
-        function updateTimerButtons() {
-            document.getElementById('start-session-btn').disabled = appState.sessionActive;
-            document.getElementById('pause-session-btn').disabled = !appState.sessionActive || appState.sessionPaused;
-            document.getElementById('resume-session-btn').disabled = !appState.sessionActive || !appState.sessionPaused;
-            document.getElementById('finish-session-btn').disabled = !appState.sessionActive;
-        }
-
-        // ACTIVITY TIMERS
+        // ============================================================================
+        // ACTIVITY TIMERS (per-skill)
+        // ============================================================================
         function startActivityTimer(activity) {
             if (!appState.activitySessionActive[activity]) {
                 appState.activitySessionActive[activity] = true;
@@ -2648,7 +1392,6 @@
                         day: appState.currentDay,
                         activity: activity,
                         duration: elapsed,
-                        material: '',
                         notes: '',
                         status: 'completed'
                     });
@@ -2659,6 +1402,7 @@
                 appState.activitySessionPauseTime[activity] = null;
                 appState.activityTotalPausedTime[activity] = 0;
                 updateStreakIfNeeded();
+                checkDayCompletion();
                 saveState();
                 render();
             }
@@ -2681,6 +1425,18 @@
             }
         }
 
+        // Auto-marks the current day complete once every timed skill for that day has reached its target
+        function checkDayCompletion() {
+            const plan = DAY_PLANS[appState.currentDay - 1];
+            if (!plan) return;
+            const skills = getDaySkills(plan).filter(s => (appState.targets[s] || 0) > 0);
+            if (skills.length === 0) return;
+            const allDone = skills.every(s => getActivityCurrentTime(s) >= appState.targets[s] * 60);
+            if (allDone) {
+                appState.completedDays.add(appState.currentDay);
+            }
+        }
+
         // MODAL FUNCTIONS
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
@@ -2691,20 +1447,20 @@
         }
 
         function openAddTimeModal(activity) {
-            document.getElementById('add-time-activity').textContent = activity;
+            document.getElementById('add-time-activity').textContent = ACTIVITY_LABELS[activity] || activity;
             document.getElementById('add-time-hours').value = '0';
             document.getElementById('add-time-minutes').value = '0';
             document.getElementById('add-time-date').value = getToday();
-            document.getElementById('add-time-notes').value = '';
             document.getElementById('add-time-form').dataset.activity = activity;
             openModal('add-time-modal');
         }
 
         function openMarkCompletedModal(activity) {
             const target = appState.targets[activity] || 0;
-            document.getElementById('mark-completed-task').textContent = activity;
-            document.getElementById('mark-completed-target').textContent = target > 0 ? `Target: ${target} minutes` : 'Non-timed task';
+            document.getElementById('mark-completed-task').textContent = ACTIVITY_LABELS[activity] || activity;
+            document.getElementById('mark-completed-target').textContent = target > 0 ? `Target: ${formatHM(target * 60)}` : 'Non-timed task';
             document.getElementById('mark-completed-form').dataset.activity = activity;
+            document.getElementById('mark-completed-form').dataset.timeMode = '';
             document.getElementById('mark-time-input').style.display = 'none';
             document.getElementById('mark-full-time').classList.remove('selected');
             document.getElementById('mark-partial-time').classList.remove('selected');
@@ -2712,473 +1468,227 @@
             openModal('mark-completed-modal');
         }
 
-        function openEditSessionModal(sessionIndex) {
-            const session = appState.studySessions[sessionIndex];
-            document.getElementById('edit-session-form').dataset.sessionIndex = sessionIndex;
-            document.getElementById('edit-activity').value = session.activity;
-            document.getElementById('edit-date').value = session.date;
-            document.getElementById('edit-hours').value = Math.floor(session.duration / 3600);
-            document.getElementById('edit-minutes').value = Math.floor((session.duration % 3600) / 60);
-            document.getElementById('edit-notes').value = session.notes || '';
-            openModal('edit-session-modal');
-        }
-
-        // RENDER FUNCTIONS
+        // ============================================================================
+        // RENDER
+        // ============================================================================
         function render() {
-            updateNavigation();
-            updateDashboard();
-            updateTodaysPlan();
-            updateProgressPage();
-            updateSkillsPage();
-            updateHistoryTable();
-            updateReviewItems();
-            updateTestResults();
+            updateHome();
+            updateToday();
+            updateSevenDay();
+            updateProgress();
         }
 
-        function updateNavigation() {
-            // This function is called after page navigation is set up
-            // Do not override the current page selection here
+        function todaysTotalSeconds() {
+            return Object.keys(appState.activityTimers).reduce((sum, a) => sum + getActivityCurrentTime(a), 0);
         }
 
-        function updateDashboard() {
-            let todaysTotal = 0;
-            if (appState.sessionActive) {
-                const paused = appState.sessionPaused;
-                const now = paused ? appState.sessionPauseTime : Date.now();
-                todaysTotal = Math.floor((now - appState.sessionStartTime - appState.totalPausedTime) / 1000);
-            }
+        function targetTotalSeconds() {
+            return Object.values(appState.targets).reduce((a, b) => a + b, 0) * 60;
+        }
 
-            Object.keys(appState.activityTimers).forEach(activity => {
-                todaysTotal += getActivityCurrentTime(activity);
-            });
+        function updateHome() {
+            const total = todaysTotalSeconds();
+            const targetTotal = targetTotalSeconds();
+            const progress = targetTotal > 0 ? Math.min((total / targetTotal) * 100, 100) : 0;
 
-            document.getElementById('timer-display').textContent = formatTime(todaysTotal);
-            const targetTotal = Object.values(appState.targets).reduce((a, b) => a + b, 0) * 60;
-            const progress = targetTotal > 0 ? Math.min((todaysTotal / targetTotal) * 100, 100) : 0;
-            document.querySelector('.study-time-progress-bar').style.width = progress + '%';
-
+            document.getElementById('timer-display').textContent = formatTime(total);
             document.getElementById('current-day-display').textContent = appState.currentDay;
             document.getElementById('today-percentage').textContent = Math.floor(progress);
             document.getElementById('streak-display').textContent = `${appState.streak} Day Streak`;
+        }
 
-            // Days grid
-            const daysGrid = document.getElementById('days-grid');
-            daysGrid.innerHTML = '';
-            DAY_PLANS.forEach(plan => {
-                const card = document.createElement('div');
-                card.className = 'day-card';
-                if (plan.day === appState.currentDay) card.classList.add('active');
-                if (appState.completedDays.has(plan.day)) card.classList.add('completed');
+        function renderActivityCard(activity, plan) {
+            const target = appState.targets[activity] * 60;
+            const completed = getActivityCurrentTime(activity);
+            const remaining = Math.max(0, target - completed);
+            const progressPercent = target > 0 ? Math.min((completed / target) * 100, 100) : 0;
+            const isRunning = appState.activitySessionActive[activity];
+            const isPaused = appState.activitySessionPaused[activity];
+            const isComplete = target > 0 && completed >= target;
 
-                const dayTime = appState.studySessions.filter(s => s.day === plan.day).reduce((sum, s) => sum + s.duration, 0);
+            const card = document.createElement('div');
+            card.className = 'activity-card';
 
-                card.innerHTML = `
-                    <div class="day-number">${plan.day}</div>
-                    <div class="day-title">${plan.title}</div>
-                    <div class="day-time">${formatTime(dayTime)}</div>
-                `;
-                card.addEventListener('click', () => {
-                    appState.currentDay = plan.day;
-                    saveState();
-                    render();
-                });
-                daysGrid.appendChild(card);
-            });
-
-            // Activities grid
-            const activitiesGrid = document.getElementById('activities-grid');
-            activitiesGrid.innerHTML = '';
-            Object.keys(appState.targets).forEach(activity => {
-                const target = appState.targets[activity] * 60;
-                const completed = getActivityCurrentTime(activity);
-                const remaining = Math.max(0, target - completed);
-                const progressPercent = target > 0 ? Math.min((completed / target) * 100, 100) : 0;
-
-                const card = document.createElement('div');
-                card.className = 'activity-card';
-                card.innerHTML = `
-                    <div class="activity-header">
-                        <div class="activity-title">${activity}</div>
-                        ${target > 0 ? `<div class="activity-badge">${Math.floor(progressPercent)}%</div>` : ''}
-                    </div>
-                    <div class="activity-timer">
-                        <div class="activity-timer-display">${formatTime(completed)}</div>
-                    </div>
+            let statsHtml;
+            if (target > 0) {
+                statsHtml = `
                     <div class="activity-stats">
                         <div class="stat">
                             <div class="stat-name">Target</div>
-                            <div class="stat-time">${appState.targets[activity]}'</div>
+                            <div class="stat-time">${formatHM(target)}</div>
                         </div>
                         <div class="stat">
                             <div class="stat-name">Done</div>
-                            <div class="stat-time">${Math.floor(completed / 60)}'</div>
+                            <div class="stat-time">${formatHM(completed)}</div>
                         </div>
                         <div class="stat">
                             <div class="stat-name">Left</div>
-                            <div class="stat-time">${Math.floor(remaining / 60)}'</div>
+                            <div class="stat-time">${formatHM(remaining)}</div>
                         </div>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                        <div class="progress-fill ${isComplete ? 'complete' : ''}" style="width: ${progressPercent}%"></div>
                     </div>
+                `;
+            } else {
+                statsHtml = `
+                    <div class="activity-stats">
+                        <div class="stat">
+                            <div class="stat-name">Practice Logged</div>
+                            <div class="stat-time">${formatHM(completed)}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            let controlsHtml = '';
+            if (!isRunning) {
+                controlsHtml = `
                     <div class="activity-controls">
-                        <button class="btn btn-small btn-primary" id="start-${activity}">Start</button>
+                        <button class="btn btn-small btn-secondary" id="start-${activity}">Start</button>
+                        <button class="btn btn-small btn-secondary" id="add-time-${activity}">+ Time</button>
+                        <button class="btn btn-small btn-success" id="mark-done-${activity}">Complete</button>
+                    </div>
+                `;
+            } else if (isPaused) {
+                controlsHtml = `
+                    <div class="activity-controls">
+                        <button class="btn btn-small btn-secondary" id="resume-${activity}">Resume</button>
+                        <button class="btn btn-small btn-secondary" id="finish-${activity}">Finish</button>
+                        <button class="btn btn-small btn-success" id="mark-done-${activity}">Complete</button>
+                    </div>
+                `;
+            } else {
+                controlsHtml = `
+                    <div class="activity-controls">
                         <button class="btn btn-small btn-secondary" id="pause-${activity}">Pause</button>
                         <button class="btn btn-small btn-secondary" id="finish-${activity}">Finish</button>
-                    </div>
-                    <div class="activity-controls" style="margin-top: 0.5rem; grid-template-columns: 1fr 1fr;">
-                        <button class="btn btn-small btn-secondary" id="add-time-${activity}">+ Add Time</button>
-                        <button class="btn btn-small btn-success" id="mark-done-${activity}">✓ Done</button>
+                        <button class="btn btn-small btn-success" id="mark-done-${activity}">Complete</button>
                     </div>
                 `;
-
-                card.addEventListener('click', (e) => {
-                    if (!e.target.closest('button')) {
-                        card.classList.toggle('expanded');
-                    }
-                });
-
-                card.querySelector(`#start-${activity}`).addEventListener('click', () => startActivityTimer(activity));
-                card.querySelector(`#pause-${activity}`).addEventListener('click', () => {
-                    const isRunning = appState.activitySessionActive[activity];
-                    if (isRunning && !appState.activitySessionPaused[activity]) {
-                        pauseActivityTimer(activity);
-                    } else if (isRunning && appState.activitySessionPaused[activity]) {
-                        resumeActivityTimer(activity);
-                    }
-                });
-                card.querySelector(`#finish-${activity}`).addEventListener('click', () => finishActivityTimer(activity));
-                card.querySelector(`#add-time-${activity}`).addEventListener('click', () => openAddTimeModal(activity));
-                card.querySelector(`#mark-done-${activity}`).addEventListener('click', () => openMarkCompletedModal(activity));
-
-                activitiesGrid.appendChild(card);
-            });
-
-            // Remaining today
-            const remainingEl = document.getElementById('remaining-section');
-            remainingEl.innerHTML = '';
-            let totalRemaining = 0;
-            const remainingItems = [];
-
-            Object.keys(appState.targets).forEach(activity => {
-                const target = appState.targets[activity] * 60;
-                const completed = getActivityCurrentTime(activity);
-                const remaining = Math.max(0, target - completed);
-
-                if (remaining > 0) {
-                    remainingItems.push({ activity, remaining, completed: completed >= target });
-                    totalRemaining += remaining;
-                } else if (target > 0) {
-                    remainingItems.push({ activity, remaining: 0, completed: true });
-                }
-            });
-
-            if (remainingItems.length > 0) {
-                const section = document.createElement('div');
-                section.className = 'remaining-section';
-                section.innerHTML = '<div class="remaining-title">Unfinished</div>';
-
-                remainingItems.forEach(item => {
-                    const itemEl = document.createElement('div');
-                    itemEl.className = 'remaining-item';
-                    const timeStr = item.remaining > 0 ? `${Math.floor(item.remaining / 60)}m remaining` : 'Done ✓';
-                    const cls = item.completed ? 'completed' : '';
-                    itemEl.innerHTML = `
-                        <div class="remaining-label">${item.activity}</div>
-                        <div class="remaining-time ${cls}">${timeStr}</div>
-                    `;
-                    section.appendChild(itemEl);
-                });
-
-                const totalEl = document.createElement('div');
-                totalEl.className = 'remaining-total';
-                totalEl.innerHTML = `
-                    <span>Total Remaining</span>
-                    <span>${Math.floor(totalRemaining / 60)}h ${Math.floor(totalRemaining % 60)}m</span>
-                `;
-                section.appendChild(totalEl);
-                remainingEl.appendChild(section);
             }
 
-            // Skills
-            const skillGrid = document.getElementById('skill-grid');
-            skillGrid.innerHTML = '';
-            Object.keys(appState.activityTimers).forEach(skill => {
-                const totalTime = appState.studySessions.filter(s => s.activity === skill).reduce((sum, s) => sum + s.duration, 0);
-
-                const skillCard = document.createElement('div');
-                skillCard.className = 'skill-card';
-                skillCard.innerHTML = `
-                    <div class="skill-icon">${['—', '~', '✎', '◆', 'Aa', '⟡'][Object.keys(appState.activityTimers).indexOf(skill)]}</div>
-                    <div class="skill-name">${skill}</div>
-                    <div class="skill-stat">
-                        <div class="skill-stat-label">Hours</div>
-                        <div class="skill-stat-value">${(totalTime / 3600).toFixed(1)}</div>
-                    </div>
-                `;
-                skillGrid.appendChild(skillCard);
-            });
-
-            // Progress
-            const completedCount = appState.completedDays.size;
-            document.getElementById('completed-days').textContent = completedCount;
-            document.getElementById('overall-percentage').textContent = Math.floor((completedCount / 7) * 100);
-            document.getElementById('overall-progress').style.width = ((completedCount / 7) * 100) + '%';
-
-            updateTimerButtons();
-        }
-
-        function updateTodaysPlan() {
-            if (!(appState.currentDay >= 1 && appState.currentDay <= DAY_PLANS.length)) {
-                appState.currentDay = 1;
-            }
-            const plan = DAY_PLANS[appState.currentDay - 1];
-            document.getElementById('today-day-title').textContent = `Day ${plan.day} — ${plan.title}`;
-
-            const tasksList = document.getElementById('today-tasks-list');
-            tasksList.innerHTML = '';
-
-            if (!appState.completedTasks[appState.currentDay]) {
-                appState.completedTasks[appState.currentDay] = {};
-            }
-
-            let completedCount = 0;
-            plan.tasks.forEach((task, index) => {
-                const isCompleted = appState.completedTasks[appState.currentDay][index];
-                if (isCompleted) completedCount++;
-
-                const taskEl = document.createElement('div');
-                taskEl.className = 'task-item';
-                if (isCompleted) taskEl.classList.add('completed');
-
-                taskEl.innerHTML = `
-                    <div class="task-checkbox">${isCompleted ? '✓' : ''}</div>
-                    <div class="task-text">${task}</div>
-                `;
-
-                taskEl.addEventListener('click', () => {
-                    appState.completedTasks[appState.currentDay][index] = !isCompleted;
-                    saveState();
-                    render();
-                });
-
-                tasksList.appendChild(taskEl);
-            });
-
-            document.getElementById('today-tasks-completed').textContent = completedCount;
-            document.getElementById('today-tasks-total').textContent = plan.tasks.length;
-
-            // Remaining
-            const remainingEl = document.getElementById('today-remaining');
-            remainingEl.innerHTML = '';
-
-            let totalRemaining = 0;
-            const remainingItems = [];
-
-            Object.keys(appState.targets).forEach(activity => {
-                const target = appState.targets[activity] * 60;
-                const completed = getActivityCurrentTime(activity);
-                const remaining = Math.max(0, target - completed);
-
-                if (remaining > 0) {
-                    remainingItems.push({ activity, remaining, completed: completed >= target });
-                    totalRemaining += remaining;
-                } else if (target > 0) {
-                    remainingItems.push({ activity, remaining: 0, completed: true });
-                }
-            });
-
-            remainingItems.forEach(item => {
-                const itemEl = document.createElement('div');
-                itemEl.className = 'remaining-item';
-                const timeStr = item.remaining > 0 ? `${Math.floor(item.remaining / 60)}m remaining` : 'Completed ✓';
-                const cls = item.completed ? 'completed' : '';
-                itemEl.innerHTML = `
-                    <div class="remaining-label">${item.activity}</div>
-                    <div class="remaining-time ${cls}">${timeStr}</div>
-                `;
-                remainingEl.appendChild(itemEl);
-            });
-
-            const totalEl = document.createElement('div');
-            totalEl.className = 'remaining-total';
-            totalEl.innerHTML = `
-                <span>Total Remaining</span>
-                <span>${Math.floor(totalRemaining / 60)}h ${Math.floor(totalRemaining % 60)}m</span>
+            card.innerHTML = `
+                <div class="activity-header">
+                    <div class="activity-title">${ACTIVITY_LABELS[activity] || activity}</div>
+                    ${target > 0 ? `<div class="activity-badge ${isComplete ? 'success' : ''}">${Math.floor(progressPercent)}%</div>` : ''}
+                </div>
+                ${statsHtml}
+                ${controlsHtml}
             `;
-            remainingEl.appendChild(totalEl);
+
+            if (!isRunning) {
+                card.querySelector(`#start-${activity}`).addEventListener('click', () => startActivityTimer(activity));
+            } else if (isPaused) {
+                card.querySelector(`#resume-${activity}`).addEventListener('click', () => resumeActivityTimer(activity));
+                card.querySelector(`#finish-${activity}`).addEventListener('click', () => finishActivityTimer(activity));
+            } else {
+                card.querySelector(`#pause-${activity}`).addEventListener('click', () => pauseActivityTimer(activity));
+                card.querySelector(`#finish-${activity}`).addEventListener('click', () => finishActivityTimer(activity));
+            }
+            card.querySelector(`#add-time-${activity}`) && card.querySelector(`#add-time-${activity}`).addEventListener('click', () => openAddTimeModal(activity));
+            card.querySelector(`#mark-done-${activity}`).addEventListener('click', () => openMarkCompletedModal(activity));
+
+            return card;
         }
 
-        function updateProgressPage() {
-            const overview = document.getElementById('progress-overview');
-            overview.innerHTML = '';
+        function updateToday() {
+            const plan = DAY_PLANS[appState.currentDay - 1];
+            document.getElementById('today-day-label').textContent = `Day ${plan.day}`;
+            document.getElementById('today-day-title').textContent = plan.title;
 
-            let completedDays = 0;
-            DAY_PLANS.forEach(plan => {
-                const dayTime = appState.studySessions.filter(s => s.day === plan.day).reduce((sum, s) => sum + s.duration, 0);
-                const isCompleted = appState.completedDays.has(plan.day);
-                if (isCompleted) completedDays++;
-
-                const card = document.createElement('div');
-                card.className = 'progress-day';
-                if (isCompleted) card.classList.add('completed');
-                if (plan.day === appState.currentDay) card.classList.add('current');
-
-                const status = isCompleted ? '✓ Done' : (plan.day === appState.currentDay ? '● Today' : 'Pending');
-                card.innerHTML = `
-                    <div class="progress-day-number">${plan.day}</div>
-                    <div class="progress-day-status">${status}</div>
-                    <div class="progress-day-time">${formatTime(dayTime)}</div>
-                `;
-
-                if (plan.day === appState.currentDay) {
-                    card.style.cursor = 'pointer';
-                    card.addEventListener('click', () => {
-                        appState.completedDays.add(plan.day);
-                        saveState();
-                        render();
-                    });
-                }
-
-                overview.appendChild(card);
+            const grid = document.getElementById('activities-grid');
+            grid.innerHTML = '';
+            getDaySkills(plan).forEach(activity => {
+                grid.appendChild(renderActivityCard(activity, plan));
             });
-
-            document.getElementById('total-completed-days').textContent = completedDays;
-            document.getElementById('total-percentage').textContent = Math.floor((completedDays / 7) * 100);
-            document.getElementById('total-progress').style.width = ((completedDays / 7) * 100) + '%';
         }
 
-        function updateSkillsPage() {
-            const grid = document.getElementById('detailed-skill-grid');
+        function updateSevenDay() {
+            const grid = document.getElementById('days-grid');
             grid.innerHTML = '';
 
-            Object.keys(appState.activityTimers).forEach(skill => {
-                const totalTime = appState.studySessions.filter(s => s.activity === skill).reduce((sum, s) => sum + s.duration, 0);
-                const sessions = appState.studySessions.filter(s => s.activity === skill).length;
-                const avgTime = sessions > 0 ? Math.floor(totalTime / sessions) : 0;
+            DAY_PLANS.forEach(plan => {
+                const skills = getDaySkills(plan).filter(s => (appState.targets[s] || 0) > 0);
+                const targetSeconds = skills.reduce((sum, s) => sum + appState.targets[s] * 60, 0);
+                const completedSeconds = skills.reduce((sum, s) => sum + Math.min(getActivityCurrentTime(s), appState.targets[s] * 60), 0);
+                const pct = targetSeconds > 0 ? Math.min((completedSeconds / targetSeconds) * 100, 100) : 0;
+                const isCompleted = appState.completedDays.has(plan.day);
+                const isCurrent = plan.day === appState.currentDay;
+                const remainingSeconds = Math.max(0, targetSeconds - completedSeconds);
 
                 const card = document.createElement('div');
-                card.className = 'skill-card';
+                card.className = 'day-card' + (isCurrent ? ' current' : '');
+
+                const badgeClass = isCompleted ? 'completed' : (isCurrent ? 'current' : '');
+                const badgeText = isCompleted ? 'Completed' : (isCurrent ? 'Today' : 'Pending');
+                const remainingText = isCompleted ? 'All done' : `${formatHM(remainingSeconds)} left`;
+
                 card.innerHTML = `
-                    <div class="skill-icon">${['—', '~', '✎', '◆', 'Aa', '⟡'][Object.keys(appState.activityTimers).indexOf(skill)]}</div>
-                    <div class="skill-name">${skill}</div>
-                    <div class="skill-stat">
-                        <div class="skill-stat-label">Total Hours</div>
-                        <div class="skill-stat-value">${(totalTime / 3600).toFixed(1)}</div>
+                    <div class="day-card-top">
+                        <div class="day-number">${plan.day}</div>
+                        <div class="day-status-badge ${badgeClass}">${badgeText}</div>
                     </div>
-                    <div class="skill-stat">
-                        <div class="skill-stat-label">Sessions</div>
-                        <div class="skill-stat-value">${sessions}</div>
+                    <div class="day-title">${plan.title}</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill ${isCompleted ? 'complete' : ''}" style="width: ${pct}%"></div>
                     </div>
+                    <div class="day-remaining-text">${remainingText}</div>
                 `;
+
+                card.addEventListener('click', () => {
+                    appState.currentDay = plan.day;
+                    saveState();
+                    switchPage('today');
+                });
+
                 grid.appendChild(card);
             });
         }
 
-        function updateHistoryTable() {
-            const tbody = document.getElementById('history-tbody');
-            if (appState.studySessions.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">No sessions yet. Start studying!</td></tr>';
-                return;
-            }
+        function updateProgress() {
+            const totalSeconds = Object.keys(appState.activityTimers).reduce((sum, a) => sum + getActivityCurrentTime(a), 0);
+            document.getElementById('progress-total-time').textContent = formatHM(totalSeconds);
+            document.getElementById('progress-completed-days').textContent = appState.completedDays.size;
+            document.getElementById('progress-streak').textContent = appState.streak;
 
-            tbody.innerHTML = '';
-            [...appState.studySessions].reverse().forEach((session, index) => {
-                const row = document.createElement('tr');
-                const actualIndex = appState.studySessions.length - 1 - index;
-                row.innerHTML = `
-                    <td>${session.date}</td>
-                    <td>Day ${session.day}</td>
-                    <td>${session.activity}</td>
-                    <td>${formatTime(session.duration)}</td>
-                    <td>${session.notes ? session.notes.substring(0, 20) : '-'}</td>
-                    <td class="history-action" style="display: flex; gap: 0.5rem;">
-                        <button class="edit-session" data-index="${actualIndex}">Edit</button>
-                        <button class="delete-session" data-index="${actualIndex}">Delete</button>
-                    </td>
+            const weeklyPct = Math.floor((appState.completedDays.size / DAY_PLANS.length) * 100);
+            document.getElementById('progress-weekly-pct').textContent = weeklyPct;
+            document.getElementById('progress-weekly-bar').style.width = weeklyPct + '%';
+
+            const skillGrid = document.getElementById('skill-grid');
+            skillGrid.innerHTML = '';
+            Object.keys(appState.activityTimers).forEach((skill, index) => {
+                const totalTime = getActivityCurrentTime(skill);
+                const skillCard = document.createElement('div');
+                skillCard.className = 'skill-card';
+                skillCard.innerHTML = `
+                    <div class="skill-icon">${ACTIVITY_ICONS[index]}</div>
+                    <div class="skill-name">${ACTIVITY_LABELS[skill] || skill}</div>
+                    <div class="skill-stat-value">${formatHM(totalTime)}</div>
                 `;
-                tbody.appendChild(row);
-            });
-
-            document.querySelectorAll('.edit-session').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    openEditSessionModal(parseInt(e.target.dataset.index));
-                });
-            });
-
-            document.querySelectorAll('.delete-session').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const index = parseInt(e.target.dataset.index);
-                    if (confirm('Delete this session?')) {
-                        appState.studySessions.splice(index, 1);
-                        saveState();
-                        render();
-                    }
-                });
+                skillGrid.appendChild(skillCard);
             });
         }
 
-        function updateReviewItems() {
-            const container = document.getElementById('review-items-container');
-            if (appState.reviewItems.length === 0) {
-                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✦</div><div class="empty-state-text">No items to review yet</div></div>';
-                return;
-            }
-
-            container.innerHTML = '';
-            appState.reviewItems.forEach((item, index) => {
-                const itemEl = document.createElement('div');
-                itemEl.className = 'review-item';
-                itemEl.innerHTML = `
-                    <div class="review-text">
-                        <div class="review-text-title">${item.text}</div>
-                        <div class="review-text-category">${item.category}</div>
-                    </div>
-                    <div class="review-status">
-                        <button class="status-btn ${item.status === 'Needs Review' ? 'active' : ''}">Review</button>
-                        <button class="status-btn ${item.status === 'Reviewed' ? 'active' : ''}">Reviewed</button>
-                        <button class="status-btn ${item.status === 'Mastered' ? 'active' : ''}">Mastered</button>
-                    </div>
-                `;
-
-                itemEl.querySelectorAll('.status-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const newStatus = e.target.textContent === 'Review' ? 'Needs Review' : (e.target.textContent === 'Reviewed' ? 'Reviewed' : 'Mastered');
-                        appState.reviewItems[index].status = newStatus;
-                        saveState();
-                        render();
-                    });
-                });
-
-                container.appendChild(itemEl);
-            });
+        // ============================================================================
+        // NAVIGATION
+        // ============================================================================
+        function switchPage(pageId) {
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            const navBtn = document.querySelector(`.nav-btn[data-page="${pageId}"]`);
+            if (navBtn) navBtn.classList.add('active');
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.classList.remove('mobile-open');
+            render();
         }
 
-        function updateTestResults() {
-            const container = document.getElementById('test-results-container');
-            if (!appState.testScore) {
-                container.innerHTML = '';
-                return;
-            }
-
-            const improvement = (appState.testScore - 5.1).toFixed(1);
-            container.innerHTML = `
-                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <span>Day 7 Score</span>
-                        <span style="font-size: 1.5rem; font-weight: 700; color: var(--success);">${appState.testScore} / 10</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span>Improvement</span>
-                        <span style="font-size: 1.25rem; font-weight: 700; color: var(--success);">+${improvement}</span>
-                    </div>
-                </div>
-            `;
-        }
-
+        // ============================================================================
         // EVENT LISTENERS
+        // ============================================================================
         function setupEventListeners() {
-            // Mobile menu toggle
             const navToggle = document.getElementById('nav-toggle');
             const navMenu = document.getElementById('nav-menu');
             if (navToggle) {
@@ -3189,94 +1699,12 @@
 
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    const pageId = e.target.dataset.page;
-                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                    document.getElementById(pageId).classList.add('active');
-                    // Close mobile menu when a page is clicked
-                    navMenu.classList.remove('mobile-open');
+                    switchPage(e.target.dataset.page);
                 });
             });
 
-            document.getElementById('start-session-btn').addEventListener('click', startTimer);
-            document.getElementById('pause-session-btn').addEventListener('click', pauseTimer);
-            document.getElementById('resume-session-btn').addEventListener('click', resumeTimer);
-            document.getElementById('finish-session-btn').addEventListener('click', finishTimer);
-
-            document.getElementById('session-notes-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const activity = document.getElementById('notes-activity').value;
-                const duration = parseInt(document.getElementById('notes-duration').value) * 60 || 0;
-
-                if (activity && duration > 0) {
-                    appState.studySessions.push({
-                        date: getToday(),
-                        day: appState.currentDay,
-                        activity,
-                        duration,
-                        material: document.getElementById('notes-material').value,
-                        notes: document.getElementById('notes-learned').value,
-                        status: 'completed'
-                    });
-                    updateStreakIfNeeded();
-                    saveState();
-                    e.target.reset();
-                    render();
-                    alert('Session saved!');
-                }
-            });
-
-            document.getElementById('add-review-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const category = document.getElementById('review-category').value;
-                const text = document.getElementById('review-text').value;
-
-                if (text) {
-                    appState.reviewItems.push({ category, text, status: 'Needs Review' });
-                    saveState();
-                    e.target.reset();
-                    render();
-                }
-            });
-
-            document.getElementById('save-test-score').addEventListener('click', () => {
-                const score = parseFloat(document.getElementById('test-score').value);
-                if (score >= 0 && score <= 10) {
-                    appState.testScore = score;
-                    saveState();
-                    render();
-                    alert('Score saved!');
-                }
-            });
-
-            document.getElementById('save-targets-btn').addEventListener('click', () => {
-                appState.targets.Reading = parseInt(document.getElementById('target-reading').value);
-                appState.targets.Grammar = parseInt(document.getElementById('target-grammar').value);
-                appState.targets.Listening = parseInt(document.getElementById('target-listening').value);
-                appState.targets.Writing = parseInt(document.getElementById('target-writing').value);
-                appState.targets.Speaking = parseInt(document.getElementById('target-speaking').value);
-                appState.targets.Interview = parseInt(document.getElementById('target-interview').value);
-                saveState();
-                render();
-                alert('Targets saved!');
-            });
-
-            document.getElementById('export-data-btn').addEventListener('click', () => {
-                const data = JSON.stringify(appState, null, 2);
-                const blob = new Blob([data], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `study-tracker-${getToday()}.json`;
-                a.click();
-            });
-
-            document.getElementById('reset-data-btn').addEventListener('click', () => {
-                if (confirm('Delete all data?')) {
-                    localStorage.removeItem('appState');
-                    location.reload();
-                }
+            document.getElementById('start-studying-btn').addEventListener('click', () => {
+                switchPage('today');
             });
 
             // Add time form
@@ -3289,20 +1717,20 @@
                 const date = document.getElementById('add-time-date').value || getToday();
 
                 if (duration > 0) {
+                    appState.activityTimers[activity] += duration;
                     appState.studySessions.push({
                         date: date,
                         day: appState.currentDay,
                         activity: activity,
                         duration: duration,
-                        material: '',
-                        notes: document.getElementById('add-time-notes').value,
+                        notes: '',
                         status: 'completed'
                     });
                     if (date === getToday()) updateStreakIfNeeded();
+                    checkDayCompletion();
                     saveState();
                     closeModal('add-time-modal');
                     render();
-                    alert(`Added ${hours}h ${minutes}m`);
                 }
             });
 
@@ -3348,72 +1776,39 @@
                 }
 
                 if (duration > 0 || timeMode === 'none') {
-                    appState.studySessions.push({
-                        date: getToday(),
-                        day: appState.currentDay,
-                        activity: activity,
-                        duration: duration,
-                        material: '',
-                        notes: 'Marked complete',
-                        status: 'completed'
-                    });
+                    if (duration > 0) {
+                        appState.activityTimers[activity] += duration;
+                        appState.studySessions.push({
+                            date: getToday(),
+                            day: appState.currentDay,
+                            activity: activity,
+                            duration: duration,
+                            notes: 'Marked complete',
+                            status: 'completed'
+                        });
+                    }
                     updateStreakIfNeeded();
+                    checkDayCompletion();
                     saveState();
                     closeModal('mark-completed-modal');
                     render();
                 }
             });
-
-            // Edit session
-            document.getElementById('edit-session-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const sessionIndex = parseInt(document.getElementById('edit-session-form').dataset.sessionIndex);
-                const hours = parseInt(document.getElementById('edit-hours').value) || 0;
-                const minutes = parseInt(document.getElementById('edit-minutes').value) || 0;
-                const duration = hours * 3600 + minutes * 60;
-
-                appState.studySessions[sessionIndex].date = document.getElementById('edit-date').value;
-                appState.studySessions[sessionIndex].duration = duration;
-                appState.studySessions[sessionIndex].notes = document.getElementById('edit-notes').value;
-
-                saveState();
-                closeModal('edit-session-modal');
-                render();
-                alert('Updated');
-            });
-
-            document.getElementById('delete-session-btn').addEventListener('click', () => {
-                if (confirm('Delete?')) {
-                    const sessionIndex = parseInt(document.getElementById('edit-session-form').dataset.sessionIndex);
-                    appState.studySessions.splice(sessionIndex, 1);
-                    saveState();
-                    closeModal('edit-session-modal');
-                    render();
-                }
-            });
         }
 
-        function updateTimerDisplay() {
-            if (appState.sessionActive || Object.values(appState.activitySessionActive).some(v => v)) {
+        function tick() {
+            if (Object.values(appState.activitySessionActive).some(v => v)) {
                 render();
             }
-            requestAnimationFrame(updateTimerDisplay);
         }
 
+        // ============================================================================
+        // INIT
+        // ============================================================================
         loadState();
         setupEventListeners();
-
-        document.getElementById('target-reading').value = appState.targets.Reading;
-        document.getElementById('target-grammar').value = appState.targets.Grammar;
-        document.getElementById('target-listening').value = appState.targets.Listening;
-        document.getElementById('target-writing').value = appState.targets.Writing;
-        document.getElementById('target-speaking').value = appState.targets.Speaking;
-        document.getElementById('target-interview').value = appState.targets.Interview;
-
         render();
-        updateTimerDisplay();
+        setInterval(tick, 1000);
     </script>
 </body>
 </html>
-<!-- Generated: 2026-07-27T15:20:22Z -->
-<!-- Generated: 2026-07-27T15:20:22Z -->
