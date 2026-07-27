@@ -769,6 +769,25 @@
             font-size: 0.8rem;
         }
 
+        .edit-time-link {
+            background: none;
+            border: none;
+            padding: 0;
+            margin-top: 0.2rem;
+            display: block;
+            font-size: 0.62rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-light);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .edit-time-link:hover {
+            color: var(--dark-navy);
+        }
+
         .progress-bar {
             height: 3px;
             background: var(--light-beige);
@@ -1262,6 +1281,38 @@
         </div>
     </div>
 
+    <div class="modal" id="edit-time-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>Edit Logged Time</div>
+                <button class="modal-close" onclick="closeModal('edit-time-modal')">×</button>
+            </div>
+            <form id="edit-time-form">
+                <div class="form-group">
+                    <label>Activity</label>
+                    <div style="font-weight: 600; color: var(--dark-navy);" id="edit-time-activity"></div>
+                </div>
+
+                <p style="font-size: 0.8rem; color: var(--text-light); margin-bottom: 1.25rem;">Set the correct total time studied for this activity. This replaces the current logged time.</p>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Hours</label>
+                        <input type="number" id="edit-time-hours" min="0" max="999" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Minutes</label>
+                        <input type="number" id="edit-time-minutes" min="0" max="59" value="0">
+                    </div>
+                </div>
+
+                <div class="modal-buttons single">
+                    <button type="submit" class="btn btn-secondary">Save Correct Time</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="modal" id="mark-completed-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1366,6 +1417,7 @@
             activitySessionStartTime: {},
             activitySessionPauseTime: {},
             activityTotalPausedTime: {},
+            activityLastHeartbeat: {},
             completedDays: new Set(),
             studySessions: [],
             targets: { ...ACTIVITIES },
@@ -1396,6 +1448,47 @@
             return new Date().toISOString().split('T')[0];
         }
 
+        // A session is only trusted to keep running silently across a reload if we have
+        // recent proof (a heartbeat) that the page was actually open and ticking. Anything
+        // older than this is treated as left running by accident (tab/app closed, phone
+        // locked, etc.) and gets auto-stopped instead of counting wall-clock time forever.
+        const HEARTBEAT_STALE_MS = 5000;
+
+        function reconcileStaleTimers() {
+            Object.keys(appState.activityTimers).forEach(activity => {
+                if (!appState.activitySessionActive[activity] || appState.activitySessionPaused[activity]) {
+                    return; // idle or paused sessions don't drift with wall-clock time
+                }
+                const lastBeat = appState.activityLastHeartbeat[activity];
+                const isStale = !lastBeat || (Date.now() - lastBeat) > HEARTBEAT_STALE_MS;
+                if (!isStale) return; // fresh heartbeat: this is just a quick refresh, let it keep running
+
+                const startTime = appState.activitySessionStartTime[activity];
+                const pausedTime = appState.activityTotalPausedTime[activity] || 0;
+                let elapsed = 0;
+                if (lastBeat && startTime) {
+                    elapsed = Math.max(0, Math.floor((lastBeat - startTime - pausedTime) / 1000));
+                }
+                if (elapsed > 0) {
+                    appState.activityTimers[activity] += elapsed;
+                    appState.studySessions.push({
+                        date: getToday(),
+                        day: appState.currentDay,
+                        activity: activity,
+                        duration: elapsed,
+                        notes: 'Auto-stopped (left running)',
+                        status: 'completed'
+                    });
+                }
+                appState.activitySessionActive[activity] = false;
+                appState.activitySessionPaused[activity] = false;
+                appState.activitySessionStartTime[activity] = null;
+                appState.activitySessionPauseTime[activity] = null;
+                appState.activityTotalPausedTime[activity] = 0;
+                appState.activityLastHeartbeat[activity] = null;
+            });
+        }
+
         function loadState() {
             const saved = localStorage.getItem('appState');
             if (saved) {
@@ -1410,6 +1503,7 @@
                         activitySessionStartTime: parsed.activitySessionStartTime || {},
                         activitySessionPauseTime: parsed.activitySessionPauseTime || {},
                         activityTotalPausedTime: parsed.activityTotalPausedTime || {},
+                        activityLastHeartbeat: parsed.activityLastHeartbeat || {},
                     };
                 } catch (e) {
                     console.error('Corrupted appState in localStorage, falling back to defaults', e);
@@ -1417,6 +1511,8 @@
                 if (!(appState.currentDay >= 1 && appState.currentDay <= DAY_PLANS.length)) {
                     appState.currentDay = 1;
                 }
+                reconcileStaleTimers();
+                saveState();
             }
         }
 
@@ -1429,6 +1525,7 @@
                 activitySessionStartTime: appState.activitySessionStartTime,
                 activitySessionPauseTime: appState.activitySessionPauseTime,
                 activityTotalPausedTime: appState.activityTotalPausedTime,
+                activityLastHeartbeat: appState.activityLastHeartbeat,
             }));
         }
 
@@ -1452,6 +1549,7 @@
                 appState.activitySessionStartTime[activity] = Date.now();
                 appState.activitySessionPauseTime[activity] = null;
                 appState.activityTotalPausedTime[activity] = appState.activityTotalPausedTime[activity] || 0;
+                appState.activityLastHeartbeat[activity] = Date.now();
                 saveState();
                 render();
             }
@@ -1461,6 +1559,7 @@
             if (appState.activitySessionActive[activity] && !appState.activitySessionPaused[activity]) {
                 appState.activitySessionPaused[activity] = true;
                 appState.activitySessionPauseTime[activity] = Date.now();
+                appState.activityLastHeartbeat[activity] = null;
                 saveState();
                 render();
             }
@@ -1471,6 +1570,7 @@
                 appState.activityTotalPausedTime[activity] += Date.now() - appState.activitySessionPauseTime[activity];
                 appState.activitySessionPauseTime[activity] = null;
                 appState.activitySessionPaused[activity] = false;
+                appState.activityLastHeartbeat[activity] = Date.now();
                 saveState();
                 render();
             }
@@ -1495,6 +1595,7 @@
                 appState.activitySessionStartTime[activity] = null;
                 appState.activitySessionPauseTime[activity] = null;
                 appState.activityTotalPausedTime[activity] = 0;
+                appState.activityLastHeartbeat[activity] = null;
                 updateStreakIfNeeded();
                 checkDayCompletion();
                 saveState();
@@ -1547,6 +1648,15 @@
             document.getElementById('add-time-date').value = getToday();
             document.getElementById('add-time-form').dataset.activity = activity;
             openModal('add-time-modal');
+        }
+
+        function openEditTimeModal(activity) {
+            const current = getActivityCurrentTime(activity);
+            document.getElementById('edit-time-activity').textContent = ACTIVITY_LABELS[activity] || activity;
+            document.getElementById('edit-time-hours').value = Math.floor(current / 3600);
+            document.getElementById('edit-time-minutes').value = Math.floor((current % 3600) / 60);
+            document.getElementById('edit-time-form').dataset.activity = activity;
+            openModal('edit-time-modal');
         }
 
         function openMarkCompletedModal(activity) {
@@ -1614,6 +1724,7 @@
                         <div class="stat">
                             <div class="stat-name">Done</div>
                             <div class="stat-time">${formatHM(completed)}</div>
+                            <button type="button" class="edit-time-link" id="edit-time-${activity}">Edit</button>
                         </div>
                         <div class="stat">
                             <div class="stat-name">Left</div>
@@ -1630,6 +1741,7 @@
                         <div class="stat">
                             <div class="stat-name">Practice Logged</div>
                             <div class="stat-time">${formatHM(completed)}</div>
+                            <button type="button" class="edit-time-link" id="edit-time-${activity}">Edit</button>
                         </div>
                     </div>
                 `;
@@ -1688,6 +1800,7 @@
                 card.querySelector(`#finish-${activity}`).addEventListener('click', () => finishActivityTimer(activity));
             }
             card.querySelector(`#add-time-${activity}`) && card.querySelector(`#add-time-${activity}`).addEventListener('click', () => openAddTimeModal(activity));
+            card.querySelector(`#edit-time-${activity}`).addEventListener('click', () => openEditTimeModal(activity));
             card.querySelector(`#mark-done-${activity}`).addEventListener('click', () => openMarkCompletedModal(activity));
 
             return card;
@@ -1841,6 +1954,30 @@
                 }
             });
 
+            // Edit (correct) logged time - overwrites the total rather than adding to it
+            document.getElementById('edit-time-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const activity = document.getElementById('edit-time-form').dataset.activity;
+                const hours = parseInt(document.getElementById('edit-time-hours').value) || 0;
+                const minutes = parseInt(document.getElementById('edit-time-minutes').value) || 0;
+                const newTotal = hours * 3600 + minutes * 60;
+
+                // Stop any in-progress session for this activity first so it can't
+                // keep adding on top of the corrected total.
+                appState.activitySessionActive[activity] = false;
+                appState.activitySessionPaused[activity] = false;
+                appState.activitySessionStartTime[activity] = null;
+                appState.activitySessionPauseTime[activity] = null;
+                appState.activityTotalPausedTime[activity] = 0;
+                appState.activityLastHeartbeat[activity] = null;
+
+                appState.activityTimers[activity] = Math.max(0, newTotal);
+                checkDayCompletion();
+                saveState();
+                closeModal('edit-time-modal');
+                render();
+            });
+
             // Mark completed
             document.getElementById('mark-full-time').addEventListener('click', () => {
                 document.getElementById('mark-full-time').classList.add('selected');
@@ -1904,7 +2041,17 @@
         }
 
         function tick() {
-            if (Object.values(appState.activitySessionActive).some(v => v)) {
+            const anyActive = Object.values(appState.activitySessionActive).some(v => v);
+            if (anyActive) {
+                // Proves the page is genuinely open and ticking, so a later reload
+                // within the last few seconds can safely resume instead of being
+                // treated as an accidentally-left-running timer.
+                Object.keys(appState.activityTimers).forEach(activity => {
+                    if (appState.activitySessionActive[activity] && !appState.activitySessionPaused[activity]) {
+                        appState.activityLastHeartbeat[activity] = Date.now();
+                    }
+                });
+                saveState();
                 render();
             }
         }
