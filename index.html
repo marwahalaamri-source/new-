@@ -2493,17 +2493,24 @@
         function loadState() {
             const saved = localStorage.getItem('appState');
             if (saved) {
-                const parsed = JSON.parse(saved);
-                appState = {
-                    ...appState,
-                    ...parsed,
-                    completedDays: new Set(parsed.completedDays || []),
-                    activitySessionActive: parsed.activitySessionActive || {},
-                    activitySessionPaused: parsed.activitySessionPaused || {},
-                    activitySessionStartTime: parsed.activitySessionStartTime || {},
-                    activitySessionPauseTime: parsed.activitySessionPauseTime || {},
-                    activityTotalPausedTime: parsed.activityTotalPausedTime || {},
-                };
+                try {
+                    const parsed = JSON.parse(saved);
+                    appState = {
+                        ...appState,
+                        ...parsed,
+                        completedDays: new Set(parsed.completedDays || []),
+                        activitySessionActive: parsed.activitySessionActive || {},
+                        activitySessionPaused: parsed.activitySessionPaused || {},
+                        activitySessionStartTime: parsed.activitySessionStartTime || {},
+                        activitySessionPauseTime: parsed.activitySessionPauseTime || {},
+                        activityTotalPausedTime: parsed.activityTotalPausedTime || {},
+                    };
+                } catch (e) {
+                    console.error('Corrupted appState in localStorage, falling back to defaults', e);
+                }
+                if (!(appState.currentDay >= 1 && appState.currentDay <= DAY_PLANS.length)) {
+                    appState.currentDay = 1;
+                }
             }
         }
 
@@ -2752,7 +2759,6 @@
 
             document.getElementById('current-day-display').textContent = appState.currentDay;
             document.getElementById('today-percentage').textContent = Math.floor(progress);
-            document.getElementById('streak-count').textContent = appState.streak;
             document.getElementById('streak-display').textContent = `${appState.streak} Day Streak`;
 
             // Days grid
@@ -2923,6 +2929,9 @@
         }
 
         function updateTodaysPlan() {
+            if (!(appState.currentDay >= 1 && appState.currentDay <= DAY_PLANS.length)) {
+                appState.currentDay = 1;
+            }
             const plan = DAY_PLANS[appState.currentDay - 1];
             document.getElementById('today-day-title').textContent = `Day ${plan.day} — ${plan.title}`;
 
