@@ -340,6 +340,51 @@
         }
 
         /* ============================================================================
+           COMPANION ILLUSTRATIONS - small, intentional reward/mood accents
+           ============================================================================ */
+        .mood-thumb {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            object-position: top center;
+            border-radius: 50%;
+            border: 1px solid var(--light-beige);
+            background: white;
+            flex-shrink: 0;
+        }
+
+        .mood-thumb-row {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .completion-banner {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+            border: 1px solid var(--light-beige);
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .completion-banner img {
+            width: 84px;
+            height: 84px;
+            object-fit: cover;
+            object-position: top center;
+            border-radius: 50%;
+            border: 1px solid var(--light-beige);
+            flex-shrink: 0;
+        }
+
+        .completion-banner-text .label {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* ============================================================================
            STUDY TIME BLOCK (HOME)
            ============================================================================ */
         .study-time-block {
@@ -658,11 +703,24 @@
         .activity-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
+            gap: 0.75rem;
             margin-bottom: 0.85rem;
         }
 
+        .activity-icon-img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            object-position: top center;
+            border-radius: 50%;
+            border: 1px solid var(--light-beige);
+            background: var(--light-beige);
+            flex-shrink: 0;
+        }
+
         .activity-title {
+            flex-grow: 1;
             font-family: var(--font-serif);
             font-weight: 700;
             font-size: 1rem;
@@ -1080,6 +1138,10 @@
                         <span class="streak-icon">◆</span>
                         <span id="streak-display">0 Day Streak</span>
                     </div>
+                    <div class="mood-thumb-row" style="margin-bottom: 1.25rem;">
+                        <img class="mood-thumb" src="illustrations/journey_starting_journey.png" alt="">
+                        <div class="label" style="color: var(--peach);">Ready when you are</div>
+                    </div>
                     <button class="btn btn-primary btn-block" id="start-studying-btn">Start Studying</button>
                 </div>
             </div>
@@ -1087,9 +1149,12 @@
             <!-- ==================== TODAY ==================== -->
             <div class="page" id="today">
                 <div class="page-section">
-                    <div class="today-day-heading">
-                        <span class="label" id="today-day-label">Day 1</span>
-                        <h2 id="today-day-title">Sentence Building</h2>
+                    <div class="today-day-heading mood-thumb-row">
+                        <img class="mood-thumb" src="illustrations/journey_studying_tired.png" alt="">
+                        <div>
+                            <span class="label" id="today-day-label">Day 1</span>
+                            <h2 id="today-day-title">Sentence Building</h2>
+                        </div>
                     </div>
                     <div class="activities-grid" id="activities-grid"></div>
                 </div>
@@ -1099,6 +1164,13 @@
             <div class="page" id="sevenday">
                 <div class="page-section">
                     <div class="page-title">Your 7-Day Plan</div>
+                    <div class="completion-banner" id="all-complete-banner" style="display: none;">
+                        <img src="illustrations/journey_i_did_it.png" alt="">
+                        <div class="completion-banner-text">
+                            <span class="label">7-Day Plan Complete</span>
+                            <h3 style="margin-bottom: 0;">I Did It!</h3>
+                        </div>
+                    </div>
                     <div class="days-grid" id="days-grid"></div>
                 </div>
             </div>
@@ -1106,7 +1178,10 @@
             <!-- ==================== PROGRESS ==================== -->
             <div class="page" id="progress">
                 <div class="page-section">
-                    <div class="page-title">Your Progress</div>
+                    <div class="mood-thumb-row" style="margin-bottom: 1.5rem;">
+                        <img class="mood-thumb" src="illustrations/journey_seeing_progress.png" alt="">
+                        <div class="page-title" style="margin-bottom: 0;">Your Progress</div>
+                    </div>
 
                     <div class="stat-panel">
                         <div class="stat-tile">
@@ -1123,6 +1198,11 @@
                         </div>
                     </div>
 
+                    <div class="mood-thumb-row" id="streak-mood-row" style="display: none; margin-bottom: 1.5rem;">
+                        <img class="mood-thumb" src="illustrations/journey_on_streak.png" alt="">
+                        <div class="label" style="color: var(--dark-navy);">You're on a streak — keep it going</div>
+                    </div>
+
                     <div class="weekly-block">
                         <div class="weekly-block-label">
                             <span>Weekly Completion</span>
@@ -1131,6 +1211,11 @@
                         <div class="progress-bar">
                             <div class="progress-fill" id="progress-weekly-bar" style="width: 0%"></div>
                         </div>
+                    </div>
+
+                    <div class="mood-thumb-row" id="levelup-mood-row" style="display: none; margin-bottom: 1.5rem;">
+                        <img class="mood-thumb" src="illustrations/journey_level_up.png" alt="">
+                        <div class="label" style="color: var(--dark-navy);">Halfway there — level up energy</div>
                     </div>
 
                     <h3 style="margin-bottom: 1rem;">Progress by Skill</h3>
@@ -1247,6 +1332,15 @@
         };
 
         const ACTIVITY_ICONS = ['—', '~', '✎', '◆', 'Aa', '⟡'];
+
+        const ACTIVITY_ILLUSTRATIONS = {
+            'Reading': 'illustrations/activity_reading_book.png',
+            'Grammar': 'illustrations/activity_laptop_study.png',
+            'Listening': 'illustrations/activity_listening_headphones.png',
+            'Writing': 'illustrations/activity_writing_desk.png',
+            'Speaking': 'illustrations/journey_speaking_bravely.png',
+            'Interview': 'illustrations/activity_interview_practice.png',
+        };
 
         const DAY_PLANS = [
             { day: 1, title: 'Sentence Building', focus: 'Sentence Building + Speaking + Present/Past', topics: ['Basic sentence building', 'Present Simple', 'Past Simple', 'Answering questions', 'Speaking practice'], interview: 'Tell me about yourself', tasks: ['Speaking practice - 45 min', 'Present Simple exercises', 'Past Simple exercises', 'Self introduction', 'Answer questions', 'Interview practice'] },
@@ -1570,6 +1664,7 @@
 
             card.innerHTML = `
                 <div class="activity-header">
+                    <img class="activity-icon-img" src="${ACTIVITY_ILLUSTRATIONS[activity]}" alt="">
                     <div class="activity-title">${ACTIVITY_LABELS[activity] || activity}</div>
                     ${target > 0 ? `<div class="activity-badge ${isComplete ? 'success' : ''}">${Math.floor(progressPercent)}%</div>` : ''}
                 </div>
@@ -1605,6 +1700,9 @@
         }
 
         function updateSevenDay() {
+            const allComplete = appState.completedDays.size >= DAY_PLANS.length;
+            document.getElementById('all-complete-banner').style.display = allComplete ? 'flex' : 'none';
+
             const grid = document.getElementById('days-grid');
             grid.innerHTML = '';
 
@@ -1655,6 +1753,9 @@
             const weeklyPct = Math.floor((appState.completedDays.size / DAY_PLANS.length) * 100);
             document.getElementById('progress-weekly-pct').textContent = weeklyPct;
             document.getElementById('progress-weekly-bar').style.width = weeklyPct + '%';
+
+            document.getElementById('streak-mood-row').style.display = appState.streak >= 2 ? 'flex' : 'none';
+            document.getElementById('levelup-mood-row').style.display = (weeklyPct >= 50 && weeklyPct < 100) ? 'flex' : 'none';
 
             const skillGrid = document.getElementById('skill-grid');
             skillGrid.innerHTML = '';
