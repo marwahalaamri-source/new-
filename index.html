@@ -1651,6 +1651,9 @@
                         <button class="btn btn-small btn-secondary" id="finish-${activity}">Finish</button>
                         <button class="btn btn-small btn-success" id="mark-done-${activity}">Complete</button>
                     </div>
+                    <div class="activity-controls" style="margin-top: 0.5rem; grid-template-columns: 1fr;">
+                        <button class="btn btn-small btn-secondary" id="add-time-${activity}">+ Time</button>
+                    </div>
                 `;
             } else {
                 controlsHtml = `
@@ -1658,6 +1661,9 @@
                         <button class="btn btn-small btn-secondary" id="pause-${activity}">Pause</button>
                         <button class="btn btn-small btn-secondary" id="finish-${activity}">Finish</button>
                         <button class="btn btn-small btn-success" id="mark-done-${activity}">Complete</button>
+                    </div>
+                    <div class="activity-controls" style="margin-top: 0.5rem; grid-template-columns: 1fr;">
+                        <button class="btn btn-small btn-secondary" id="add-time-${activity}">+ Time</button>
                     </div>
                 `;
             }
