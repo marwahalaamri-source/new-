@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>English Study Tracker - 7 Day Plan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,43 +15,67 @@
         }
 
         :root {
-            --primary: #6366f1;
-            --primary-light: #818cf8;
-            --secondary: #ec4899;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --neutral-dark: #1e293b;
-            --neutral-light: #f8fafc;
-            --border: #e2e8f0;
-            --text: #334155;
-            --text-light: #64748b;
-            --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --cream: #faf7f2;
+            --dark-navy: #1a1f3a;
+            --navy: #2d3142;
+            --lavender: #9b8fb0;
+            --soft-pink: #d4a5a5;
+            --peach: #e8c9b8;
+            --beige: #c4b5a0;
+            --light-beige: #e8dfd5;
+
+            --text-dark: #1a1f3a;
+            --text-light: #6b7280;
+            --border: #e8dfd5;
+
+            --success: #a89968;
+            --warning: #d4a574;
+            --danger: #c65c5c;
+
+            --shadow: 0 4px 6px rgba(26, 31, 58, 0.08);
+            --shadow-lg: 0 12px 24px rgba(26, 31, 58, 0.12);
+
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            color: var(--text);
+            font-family: var(--font-sans);
+            background: var(--cream);
+            color: var(--text-dark);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 1.5rem;
         }
 
-        /* Navigation */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        /* ============================================================================
+           NAVIGATION
+           ============================================================================ */
         nav {
-            background: white;
-            border-bottom: 1px solid var(--border);
+            background: var(--cream);
+            border-bottom: 1px solid var(--light-beige);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: var(--shadow);
+            box-shadow: none;
+            backdrop-filter: blur(10px);
+            background: rgba(250, 247, 242, 0.95);
         }
 
         nav .container {
@@ -56,21 +83,21 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         nav h1 {
-            font-size: 1.25rem;
+            font-family: var(--font-serif);
+            font-size: 1.125rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--dark-navy);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         nav ul {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.25rem;
             list-style: none;
             flex-wrap: wrap;
         }
@@ -81,24 +108,47 @@
             padding: 0.5rem 1rem;
             cursor: pointer;
             border-radius: 0.375rem;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             font-weight: 500;
             transition: all 0.2s;
-            color: var(--text);
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
         }
 
         nav button:hover {
-            background: var(--neutral-light);
+            color: var(--dark-navy);
+            background: var(--light-beige);
         }
 
         nav button.active {
-            background: var(--primary);
-            color: white;
+            background: var(--dark-navy);
+            color: var(--cream);
         }
 
-        /* Main Content */
+        @media (max-width: 768px) {
+            nav .container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            nav ul {
+                width: 100%;
+                gap: 0.25rem;
+            }
+
+            nav button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* ============================================================================
+           MAIN CONTENT
+           ============================================================================ */
         main {
-            padding: 2rem 0;
+            padding: 1rem 0 2rem;
         }
 
         .page {
@@ -107,7 +157,7 @@
 
         .page.active {
             display: block;
-            animation: fadeIn 0.3s ease-in;
+            animation: fadeIn 0.4s ease-in;
         }
 
         @keyframes fadeIn {
@@ -115,157 +165,272 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Cards */
-        .card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            transition: all 0.2s;
-        }
-
-        .card:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow-lg);
-        }
-
-        /* Dashboard Header */
-        .dashboard-header {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--primary);
-        }
-
-        .stat-card.secondary {
-            border-left-color: var(--secondary);
-        }
-
-        .stat-card.success {
-            border-left-color: var(--success);
-        }
-
-        .stat-card.warning {
-            border-left-color: var(--warning);
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-value {
-            font-size: 1.875rem;
+        /* ============================================================================
+           TYPOGRAPHY
+           ============================================================================ */
+        h1 {
+            font-family: var(--font-serif);
+            font-size: 3rem;
             font-weight: 700;
-            color: var(--neutral-dark);
+            line-height: 1.1;
             margin-bottom: 0.5rem;
+            color: var(--dark-navy);
         }
 
-        .stat-subtext {
+        h2 {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--dark-navy);
+        }
+
+        h3 {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-navy);
+        }
+
+        h4 {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--dark-navy);
+        }
+
+        .label {
+            font-family: var(--font-sans);
             font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
             color: var(--text-light);
         }
 
-        /* Timer Display */
-        .timer-display {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .timer-label {
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            opacity: 0.9;
-            margin-bottom: 0.5rem;
-        }
-
-        .timer-time {
+        .large-number {
+            font-family: var(--font-serif);
             font-size: 3.5rem;
-            font-weight: 700;
-            font-family: 'Monaco', 'Courier New', monospace;
-            letter-spacing: 0.1em;
-            margin-bottom: 1.5rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--dark-navy);
         }
 
-        .timer-progress {
-            height: 4px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 2px;
-            overflow: hidden;
+        .medium-number {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .large-number {
+                font-size: 2.5rem;
+            }
+
+            .medium-number {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* ============================================================================
+           HERO SECTION
+           ============================================================================ */
+        .hero-section {
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .hero-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--soft-pink);
             margin-bottom: 1rem;
         }
 
-        .timer-progress-bar {
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+            color: var(--dark-navy);
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .hero-stat {
+            text-align: left;
+        }
+
+        .hero-stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-stat-value {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stat-value {
+                font-size: 2rem;
+            }
+        }
+
+        /* ============================================================================
+           STUDY TIME DISPLAY
+           ============================================================================ */
+        .study-time-block {
+            background: var(--dark-navy);
+            color: var(--cream);
+            padding: 3rem 2rem;
+            border-radius: 0.75rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .study-time-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .study-time-display {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+            line-height: 1;
+        }
+
+        .study-time-progress {
+            height: 3px;
+            background: rgba(250, 247, 242, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .study-time-progress-bar {
             height: 100%;
-            background: white;
+            background: var(--lavender);
             border-radius: 2px;
             transition: width 0.3s ease;
         }
 
-        .timer-controls {
+        .study-time-controls {
             display: flex;
             gap: 0.75rem;
             justify-content: center;
             flex-wrap: wrap;
         }
 
+        @media (max-width: 768px) {
+            .study-time-block {
+                padding: 2rem 1.5rem;
+            }
+
+            .study-time-display {
+                font-size: 2.5rem;
+            }
+
+            .study-time-controls {
+                flex-direction: column;
+            }
+        }
+
+        /* ============================================================================
+           BUTTONS
+           ============================================================================ */
         .btn {
             padding: 0.75rem 1.5rem;
             border: none;
             border-radius: 0.5rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
             font-size: 0.875rem;
+            font-family: var(--font-sans);
         }
 
         .btn-primary {
-            background: var(--primary);
-            color: white;
+            background: var(--dark-navy);
+            color: var(--cream);
         }
 
         .btn-primary:hover {
-            background: #4f46e5;
+            background: var(--navy);
             transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
         }
 
         .btn-secondary {
-            background: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
+            background: var(--light-beige);
+            color: var(--dark-navy);
+            border: 1px solid var(--border);
         }
 
         .btn-secondary:hover {
-            background: var(--neutral-light);
+            background: var(--border);
         }
 
         .btn-success {
             background: var(--success);
-            color: white;
+            color: var(--cream);
         }
 
         .btn-success:hover {
-            background: #059669;
+            background: #9d8a5c;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: var(--cream);
+        }
+
+        .btn-danger:hover {
+            background: #b34c4c;
         }
 
         .btn-small {
@@ -278,7 +443,608 @@
             cursor: not-allowed;
         }
 
-        /* Modals */
+        @media (max-width: 768px) {
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ============================================================================
+           7-DAY JOURNEY
+           ============================================================================ */
+        .journey-section {
+            margin-bottom: 3rem;
+        }
+
+        .journey-title {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .day-card {
+            background: white;
+            border: 2px solid var(--light-beige);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .day-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: transparent;
+            transition: all 0.3s;
+        }
+
+        .day-card:hover {
+            border-color: var(--lavender);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .day-card.active {
+            background: var(--dark-navy);
+            border-color: var(--dark-navy);
+            color: var(--cream);
+        }
+
+        .day-card.active::before {
+            height: 4px;
+            background: var(--soft-pink);
+        }
+
+        .day-card.completed {
+            border-color: var(--success);
+            background: rgba(168, 153, 104, 0.05);
+        }
+
+        .day-card.completed::before {
+            height: 4px;
+            background: var(--success);
+        }
+
+        .day-number {
+            font-family: var(--font-serif);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: inherit;
+        }
+
+        .day-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.7;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+
+        .day-time {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        .day-card.active .day-time {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .days-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 0.75rem;
+            }
+
+            .day-number {
+                font-size: 1.5rem;
+            }
+
+            .day-title {
+                font-size: 0.65rem;
+            }
+        }
+
+        /* ============================================================================
+           ACTIVITIES GRID
+           ============================================================================ */
+        .activities-section {
+            margin-bottom: 3rem;
+        }
+
+        .activities-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+            color: var(--dark-navy);
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .activity-card {
+            background: white;
+            border: 1px solid var(--light-beige);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .activity-card:hover {
+            border-color: var(--lavender);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .activity-title {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--dark-navy);
+        }
+
+        .activity-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--lavender);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .activity-badge.success {
+            background: var(--success);
+        }
+
+        .activity-timer {
+            background: var(--light-beige);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .activity-timer-display {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .activity-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 0.75rem;
+            background: var(--light-beige);
+            border-radius: 0.375rem;
+        }
+
+        .stat-name {
+            color: var(--text-light);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-time {
+            font-weight: 700;
+            color: var(--dark-navy);
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: var(--light-beige);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--lavender);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .activity-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+
+        .activity-controls.two-col {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 768px) {
+            .activities-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .activity-controls {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ============================================================================
+           REMAINING TODAY
+           ============================================================================ */
+        .remaining-section {
+            background: linear-gradient(135deg, rgba(212, 165, 165, 0.05) 0%, rgba(232, 201, 184, 0.05) 100%);
+            border: 1px solid var(--peach);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .remaining-title {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--soft-pink);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .remaining-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(26, 31, 58, 0.1);
+        }
+
+        .remaining-item:last-child {
+            border-bottom: none;
+        }
+
+        .remaining-label {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .remaining-time {
+            color: var(--soft-pink);
+            font-weight: 700;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .remaining-time.completed {
+            color: var(--success);
+        }
+
+        .remaining-total {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid rgba(26, 31, 58, 0.1);
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--dark-navy);
+        }
+
+        @media (max-width: 768px) {
+            .remaining-section {
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        /* ============================================================================
+           STREAK DISPLAY
+           ============================================================================ */
+        .streak-display {
+            background: linear-gradient(135deg, var(--warning) 0%, var(--soft-pink) 100%);
+            color: var(--cream);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .streak-icon {
+            font-size: 1.75rem;
+            margin-right: 0.75rem;
+        }
+
+        /* ============================================================================
+           PROGRESS OVERVIEW
+           ============================================================================ */
+        .progress-section {
+            margin-bottom: 3rem;
+        }
+
+        .progress-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-day {
+            background: white;
+            border: 1px solid var(--light-beige);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .progress-day:hover {
+            border-color: var(--lavender);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .progress-day.completed {
+            background: rgba(168, 153, 104, 0.05);
+            border-color: var(--success);
+        }
+
+        .progress-day.current {
+            background: rgba(155, 143, 160, 0.1);
+            border-color: var(--lavender);
+        }
+
+        .progress-day-number {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-navy);
+        }
+
+        .progress-day-status {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .progress-day-time {
+            font-weight: 700;
+            color: var(--lavender);
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .progress-day.completed .progress-day-time {
+            color: var(--success);
+        }
+
+        .progress-bar-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border: 1px solid var(--light-beige);
+            border-radius: 0.75rem;
+        }
+
+        .progress-bar-label {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-dark);
+        }
+
+        .progress-bar-fill {
+            height: 6px;
+            background: var(--light-beige);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .progress-bar-fill-inner {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success) 0%, var(--lavender) 100%);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-bar-text {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* ============================================================================
+           SKILL PROGRESS
+           ============================================================================ */
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: white;
+            border: 1px solid var(--light-beige);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            border-color: var(--lavender);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .skill-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-name {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            color: var(--dark-navy);
+        }
+
+        .skill-stat {
+            padding: 0.75rem;
+            background: var(--light-beige);
+            border-radius: 0.375rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .skill-stat-label {
+            color: var(--text-light);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .skill-stat-value {
+            font-weight: 700;
+            color: var(--dark-navy);
+            font-size: 1rem;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        /* ============================================================================
+           JOURNEY SECTION
+           ============================================================================ */
+        .journey-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .journey-card {
+            background: white;
+            border: 1px solid var(--light-beige);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .journey-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .journey-value {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .journey-subtext {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* ============================================================================
+           HISTORY TABLE
+           ============================================================================ */
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th {
+            background: var(--dark-navy);
+            color: var(--cream);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .history-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--light-beige);
+            font-size: 0.9rem;
+        }
+
+        .history-table tr:hover {
+            background: var(--light-beige);
+        }
+
+        .history-action {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .history-action button {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid var(--border);
+            background: var(--cream);
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .history-action button:hover {
+            background: var(--light-beige);
+            border-color: var(--lavender);
+        }
+
+        /* ============================================================================
+           FORMS & MODALS
+           ============================================================================ */
         .modal {
             display: none;
             position: fixed;
@@ -286,10 +1052,11 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(26, 31, 58, 0.5);
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            padding: 1rem;
         }
 
         .modal.active {
@@ -297,35 +1064,39 @@
         }
 
         .modal-content {
-            background: white;
-            border-radius: 1rem;
+            background: var(--cream);
+            border-radius: 0.75rem;
             padding: 2rem;
             max-width: 500px;
-            width: 90%;
+            width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: var(--shadow-lg);
+            border: 1px solid var(--light-beige);
         }
 
         .modal-header {
+            font-family: var(--font-serif);
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: var(--dark-navy);
         }
 
         .modal-close {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             cursor: pointer;
             color: var(--text-light);
+            transition: color 0.2s;
         }
 
         .modal-close:hover {
-            color: var(--text);
+            color: var(--dark-navy);
         }
 
         .modal-buttons {
@@ -345,346 +1116,24 @@
 
         .option-button {
             padding: 1rem;
-            border: 2px solid var(--border);
-            background: white;
+            border: 2px solid var(--light-beige);
+            background: var(--cream);
             border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.2s;
             font-weight: 600;
+            color: var(--text-dark);
         }
 
         .option-button:hover {
-            border-color: var(--primary);
-            background: var(--neutral-light);
+            border-color: var(--lavender);
+            background: white;
         }
 
         .option-button.selected {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        /* Days Grid */
-        .days-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .day-card {
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .day-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .day-card.active {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .day-card.completed {
-            border-color: var(--success);
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
-        }
-
-        .day-card.completed .day-number {
-            color: var(--success);
-        }
-
-        .day-number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .day-title {
-            font-size: 0.75rem;
-            opacity: 0.8;
-            margin-bottom: 0.5rem;
-        }
-
-        .day-time {
-            font-size: 0.875rem;
-            opacity: 0.7;
-        }
-
-        /* Activity Grid */
-        .activities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .activity-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .activity-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .activity-title {
-            font-weight: 600;
-            font-size: 1.125rem;
-        }
-
-        .activity-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: var(--primary);
-            color: white;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .activity-badge.success {
-            background: var(--success);
-        }
-
-        .activity-timer {
-            background: var(--neutral-light);
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            font-family: 'Monaco', 'Courier New', monospace;
-        }
-
-        .activity-timer-display {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .activity-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
-        }
-
-        .stat {
-            text-align: center;
-            padding: 0.75rem;
-            background: var(--neutral-light);
-            border-radius: 0.375rem;
-        }
-
-        .stat-name {
-            color: var(--text-light);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            margin-bottom: 0.25rem;
-        }
-
-        .stat-time {
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .progress-bar {
-            height: 6px;
-            background: var(--border);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 3px;
-            transition: width 0.3s ease;
-        }
-
-        .activity-controls {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.75rem;
-        }
-
-        .activity-controls.two-col {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        /* Progress Ring */
-        .progress-ring-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 1.5rem 0;
-        }
-
-        .progress-ring-svg {
-            width: 120px;
-            height: 120px;
-        }
-
-        .progress-ring {
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-        }
-
-        .progress-ring-circle {
-            transition: stroke-dashoffset 0.5s ease;
-            stroke: var(--primary);
-        }
-
-        .progress-ring-bg {
-            stroke: var(--border);
-        }
-
-        .progress-ring-text {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        /* Tasks List */
-        .tasks-list {
-            margin-bottom: 2rem;
-        }
-
-        .task-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 0.5rem;
-            margin-bottom: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .task-item:hover {
-            background: var(--neutral-light);
-        }
-
-        .task-item.completed {
-            background: rgba(16, 185, 129, 0.05);
-            border-color: var(--success);
-        }
-
-        .task-checkbox {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--primary);
-            border-radius: 0.375rem;
-            margin-right: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .task-item.completed .task-checkbox {
-            background: var(--success);
-            border-color: var(--success);
-            color: white;
-        }
-
-        .task-text {
-            flex: 1;
-            font-weight: 500;
-        }
-
-        .task-item.completed .task-text {
-            text-decoration: line-through;
-            color: var(--text-light);
-        }
-
-        .task-time {
-            font-size: 0.875rem;
-            color: var(--text-light);
-            white-space: nowrap;
-            margin-left: 1rem;
-        }
-
-        /* Remaining Today */
-        .remaining-section {
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.05) 0%, rgba(236, 72, 153, 0.02) 100%);
-            border: 1px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .remaining-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--secondary);
-        }
-
-        .remaining-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .remaining-item:last-child {
-            border-bottom: none;
-        }
-
-        .remaining-label {
-            font-weight: 500;
-        }
-
-        .remaining-time {
-            color: var(--secondary);
-            font-weight: 700;
-            font-family: 'Monaco', 'Courier New', monospace;
-        }
-
-        .remaining-time.completed {
-            color: var(--success);
-        }
-
-        .remaining-total {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 2px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            font-weight: 700;
-            font-size: 1.125rem;
-        }
-
-        /* Session Notes */
-        .session-notes {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+            background: var(--dark-navy);
+            color: var(--cream);
+            border-color: var(--dark-navy);
         }
 
         .form-group {
@@ -695,7 +1144,8 @@
             display: block;
             font-weight: 600;
             margin-bottom: 0.5rem;
-            color: var(--neutral-dark);
+            color: var(--text-dark);
+            font-size: 0.9rem;
         }
 
         .form-group input,
@@ -703,19 +1153,21 @@
         .form-group select {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid var(--border);
+            border: 1px solid var(--light-beige);
             border-radius: 0.375rem;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             font-family: inherit;
             transition: border-color 0.2s;
+            background: white;
+            color: var(--text-dark);
         }
 
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            border-color: var(--lavender);
+            box-shadow: 0 0 0 3px rgba(155, 143, 160, 0.1);
         }
 
         .form-group textarea {
@@ -729,342 +1181,9 @@
             gap: 1rem;
         }
 
-        /* History Table */
-        .history-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .history-table th {
-            background: var(--neutral-light);
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 2px solid var(--border);
-            font-size: 0.875rem;
-            text-transform: uppercase;
-        }
-
-        .history-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .history-table tr:hover {
-            background: var(--neutral-light);
-        }
-
-        .history-action {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .history-action button {
-            padding: 0.375rem 0.75rem;
-            border: 1px solid var(--border);
-            background: white;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            font-size: 0.75rem;
-            transition: all 0.2s;
-        }
-
-        .history-action button:hover {
-            background: var(--neutral-light);
-        }
-
-        /* 7-Day Progress */
-        .progress-overview {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .progress-day {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .progress-day.completed {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
-            border-color: var(--success);
-        }
-
-        .progress-day.current {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%);
-            border-color: var(--primary);
-        }
-
-        .progress-day-number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .progress-day-status {
-            font-size: 0.875rem;
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
-        }
-
-        .progress-day-time {
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .progress-day.completed .progress-day-time {
-            color: var(--success);
-        }
-
-        .progress-bar-container {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 0.75rem;
-        }
-
-        .progress-bar-label {
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .progress-bar-fill {
-            height: 8px;
-            background: var(--border);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 0.5rem;
-        }
-
-        .progress-bar-fill-inner {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success) 0%, var(--primary) 100%);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        .progress-bar-text {
-            text-align: center;
-            font-size: 0.875rem;
-            color: var(--text-light);
-        }
-
-        /* Skill Progress */
-        .skill-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .skill-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .skill-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .skill-name {
-            font-weight: 600;
-            font-size: 1.125rem;
-            margin-bottom: 1rem;
-        }
-
-        .skill-stat {
-            padding: 0.75rem;
-            background: var(--neutral-light);
-            border-radius: 0.375rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-        }
-
-        .skill-stat-label {
-            color: var(--text-light);
-            font-size: 0.75rem;
-        }
-
-        .skill-stat-value {
-            font-weight: 700;
-            color: var(--primary);
-            font-size: 1rem;
-        }
-
-        /* Journey Section */
-        .journey-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .journey-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .journey-label {
-            font-size: 0.875rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-
-        .journey-value {
-            font-size: 1.875rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .journey-subtext {
-            font-size: 0.875rem;
-            color: var(--text-light);
-        }
-
-        /* Streak */
-        .streak-display {
-            background: linear-gradient(135deg, var(--warning) 0%, var(--secondary) 100%);
-            color: white;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .streak-icon {
-            font-size: 2rem;
-            margin-right: 0.5rem;
-        }
-
-        /* Calendar */
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .calendar-day-header {
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.875rem;
-            color: var(--text-light);
-            padding: 0.5rem;
-        }
-
-        .calendar-day {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.375rem;
-            cursor: pointer;
-            font-size: 0.875rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            border: 1px solid var(--border);
-        }
-
-        .calendar-day.empty {
-            background: var(--neutral-light);
-            cursor: default;
-            border-color: transparent;
-        }
-
-        .calendar-day.completed {
-            background: var(--success);
-            color: white;
-            border-color: var(--success);
-        }
-
-        .calendar-day.partial {
-            background: var(--warning);
-            color: white;
-            border-color: var(--warning);
-        }
-
-        .calendar-day.today {
-            border-width: 2px;
-            border-color: var(--primary);
-        }
-
-        .calendar-day:hover:not(.empty) {
-            transform: scale(1.05);
-        }
-
-        /* Review Later */
-        .review-items {
-            display: grid;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .review-item {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .review-text {
-            flex: 1;
-            margin-right: 1rem;
-        }
-
-        .review-text-title {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .review-text-category {
-            font-size: 0.75rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-        }
-
-        .review-status {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .review-status button {
-            padding: 0.375rem 0.75rem;
-            border: 1px solid var(--border);
-            background: white;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            font-size: 0.75rem;
-            transition: all 0.2s;
-        }
-
-        .review-status button.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        /* Empty State */
+        /* ============================================================================
+           EMPTY STATE
+           ============================================================================ */
         .empty-state {
             text-align: center;
             padding: 3rem 1rem;
@@ -1081,48 +1200,179 @@
             margin-bottom: 1rem;
         }
 
-        /* Responsive */
+        /* ============================================================================
+           TASK LISTS
+           ============================================================================ */
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border: 1px solid var(--light-beige);
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .task-item:hover {
+            background: var(--light-beige);
+            border-color: var(--lavender);
+        }
+
+        .task-item.completed {
+            background: rgba(168, 153, 104, 0.05);
+            border-color: var(--success);
+        }
+
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--lavender);
+            border-radius: 0.375rem;
+            margin-right: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .task-item:hover .task-checkbox {
+            border-color: var(--dark-navy);
+        }
+
+        .task-item.completed .task-checkbox {
+            background: var(--success);
+            border-color: var(--success);
+            color: var(--cream);
+        }
+
+        .task-text {
+            flex: 1;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: var(--text-light);
+        }
+
+        .task-time {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            white-space: nowrap;
+            margin-left: 1rem;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        /* ============================================================================
+           REVIEW ITEMS
+           ============================================================================ */
+        .review-items {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .review-item {
+            background: white;
+            border: 1px solid var(--light-beige);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .review-text {
+            flex: 1;
+            margin-right: 1rem;
+        }
+
+        .review-text-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--dark-navy);
+        }
+
+        .review-text-category {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .review-status {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .review-status button {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid var(--border);
+            background: var(--cream);
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.7rem;
+            transition: all 0.2s;
+        }
+
+        .review-status button.active {
+            background: var(--dark-navy);
+            color: var(--cream);
+            border-color: var(--dark-navy);
+        }
+
         @media (max-width: 768px) {
-            .timer-time {
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+
+            .review-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .review-status {
+                margin-top: 1rem;
+                width: 100%;
+            }
+        }
+
+        /* ============================================================================
+           RESPONSIVE
+           ============================================================================ */
+        @media (max-width: 768px) {
+            .journey-section,
+            .activities-section,
+            .progress-section,
+            .skill-grid {
+                margin-bottom: 2rem;
+            }
+
+            .journey-title,
+            .activities-title {
+                font-size: 1.25rem;
+            }
+
+            .study-time-display {
                 font-size: 2.5rem;
             }
 
-            .dashboard-header {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            .hero-section {
+                margin-bottom: 2rem;
+                padding: 1rem 0;
             }
+        }
 
-            .days-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            }
-
-            .activities-grid {
-                grid-template-columns: 1fr;
-            }
-
-            nav .container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            nav ul {
-                justify-content: center;
-            }
-
-            .activity-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .activity-controls {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .timer-controls {
-                gap: 0.5rem;
-            }
-
-            .btn {
-                padding: 0.5rem 1rem;
-                font-size: 0.75rem;
+        /* Safe area for iPhone notch */
+        @supports (padding: max(0px)) {
+            nav, main {
+                padding-left: max(1rem, env(safe-area-inset-left));
+                padding-right: max(1rem, env(safe-area-inset-right));
             }
         }
     </style>
@@ -1130,15 +1380,15 @@
 <body>
     <nav>
         <div class="container">
-            <h1>🎯 English Study Tracker</h1>
+            <h1>🎯 English Journey</h1>
             <ul>
-                <li><button class="nav-btn active" data-page="dashboard">Dashboard</button></li>
-                <li><button class="nav-btn" data-page="today">Today's Plan</button></li>
-                <li><button class="nav-btn" data-page="progress">7-Day Progress</button></li>
+                <li><button class="nav-btn active" data-page="dashboard">Home</button></li>
+                <li><button class="nav-btn" data-page="today">Today</button></li>
+                <li><button class="nav-btn" data-page="progress">7-Day</button></li>
                 <li><button class="nav-btn" data-page="skills">Skills</button></li>
                 <li><button class="nav-btn" data-page="journey">Journey</button></li>
                 <li><button class="nav-btn" data-page="history">History</button></li>
-                <li><button class="nav-btn" data-page="review">Review Later</button></li>
+                <li><button class="nav-btn" data-page="review">Review</button></li>
                 <li><button class="nav-btn" data-page="settings">Settings</button></li>
             </ul>
         </div>
@@ -1148,159 +1398,152 @@
         <div class="container">
             <!-- DASHBOARD PAGE -->
             <div class="page active" id="dashboard">
-                <div class="dashboard-header">
-                    <div class="stat-card">
-                        <div class="stat-label">Current Day</div>
-                        <div class="stat-value"><span id="current-day-display">1</span> / 7</div>
-                        <div class="stat-subtext">7-Day English Plan</div>
-                    </div>
-                    <div class="stat-card secondary">
-                        <div class="stat-label">Today's Study Time</div>
-                        <div class="stat-value"><span id="todays-total">00:00:00</span></div>
-                        <div class="stat-subtext">Active Time</div>
-                    </div>
-                    <div class="stat-card success">
-                        <div class="stat-label">Completion %</div>
-                        <div class="stat-value"><span id="today-percentage">0</span>%</div>
-                        <div class="stat-subtext">Today's Progress</div>
-                    </div>
-                    <div class="stat-card warning">
-                        <div class="stat-label">Current Streak</div>
-                        <div class="stat-value">🔥 <span id="streak-count">0</span></div>
-                        <div class="stat-subtext">Consecutive Days</div>
+                <!-- Hero Section -->
+                <div class="hero-section">
+                    <div class="hero-label">Your English Transformation</div>
+                    <div class="hero-title">7 Days to<br>Better English.</div>
+                    <div class="hero-subtitle">A2+ → Practical B1. Building confidence, fluency and professional English — one focused day at a time.</div>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <div class="hero-stat-label">Current Day</div>
+                            <div class="hero-stat-value"><span id="current-day-display">1</span><span style="font-size: 0.5em;"> / 7</span></div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-label">Today's Progress</div>
+                            <div class="hero-stat-value"><span id="today-percentage">0</span><span style="font-size: 0.5em;">%</span></div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="timer-display">
-                    <div class="timer-label">TODAY'S STUDY TIME</div>
-                    <div class="timer-time"><span id="timer-display">00:00:00</span></div>
-                    <div class="timer-progress">
-                        <div class="timer-progress-bar" style="width: 0%"></div>
+                <!-- Study Time Block -->
+                <div class="study-time-block">
+                    <div class="study-time-label">TODAY'S STUDY TIME</div>
+                    <div class="study-time-display"><span id="timer-display">00:00:00</span></div>
+                    <div class="study-time-progress">
+                        <div class="study-time-progress-bar" style="width: 0%"></div>
                     </div>
-                    <div class="timer-controls">
+                    <div class="study-time-controls">
                         <button class="btn btn-primary" id="start-session-btn">Start Session</button>
                         <button class="btn btn-secondary" id="pause-session-btn" disabled>Pause</button>
                         <button class="btn btn-secondary" id="resume-session-btn" disabled>Resume</button>
-                        <button class="btn btn-success" id="finish-session-btn" disabled>Finish Session</button>
+                        <button class="btn btn-primary" id="finish-session-btn" disabled>Finish</button>
                     </div>
                 </div>
 
-                <h2 style="margin: 2rem 0 1rem; font-size: 1.5rem;">Select Day</h2>
-                <div class="days-grid" id="days-grid"></div>
-
-                <h2 style="margin: 2rem 0 1rem; font-size: 1.5rem;">Today's Activities</h2>
-                <div class="activities-grid" id="activities-grid"></div>
-
+                <!-- Streak -->
                 <div class="streak-display">
                     <span class="streak-icon">🔥</span>
                     <span id="streak-display">0 Day Streak</span>
                 </div>
 
-                <h2 style="margin: 2rem 0 1rem; font-size: 1.5rem;">7-Day Progress</h2>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-label">
-                        <span>7-Day Plan Progress</span>
-                        <span><span id="completed-days">0</span> / 7 Days Completed</span>
-                    </div>
-                    <div class="progress-bar-fill">
-                        <div class="progress-bar-fill-inner" id="overall-progress" style="width: 0%"></div>
-                    </div>
-                    <div class="progress-bar-text"><span id="overall-percentage">0</span>% Complete</div>
+                <!-- 7-Day Journey -->
+                <div class="journey-section">
+                    <div class="journey-title">Your 7-Day Journey</div>
+                    <div class="days-grid" id="days-grid"></div>
                 </div>
 
-                <h2 style="margin: 2rem 0 1rem; font-size: 1.5rem;">Skill Progress</h2>
-                <div class="skill-grid" id="skill-grid"></div>
+                <!-- Today's Activities -->
+                <div class="activities-section">
+                    <div class="activities-title">Today's Focus</div>
+                    <div class="activities-grid" id="activities-grid"></div>
+                </div>
+
+                <!-- What's Remaining -->
+                <div id="remaining-section"></div>
+
+                <!-- 7-Day Progress -->
+                <div class="progress-section">
+                    <h2>7-Day Progress</h2>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-label">
+                            <span>Plan Completion</span>
+                            <span><span id="completed-days">0</span> / 7</span>
+                        </div>
+                        <div class="progress-bar-fill">
+                            <div class="progress-bar-fill-inner" id="overall-progress" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-bar-text"><span id="overall-percentage">0</span>% Complete</div>
+                    </div>
+                </div>
+
+                <!-- Skill Progress -->
+                <div style="margin-top: 3rem;">
+                    <h2>Your Progress by Skill</h2>
+                    <div class="skill-grid" id="skill-grid"></div>
+                </div>
             </div>
 
             <!-- TODAY'S PLAN PAGE -->
             <div class="page" id="today">
+                <h2 style="margin-bottom: 1rem;">Today's Plan</h2>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <h2 style="font-size: 1.5rem;">Today's Plan</h2>
+                    <h3 style="margin-bottom: 0;" id="today-day-title">Day 1</h3>
                     <div style="text-align: right;">
-                        <div style="font-size: 0.875rem; color: var(--text-light); text-transform: uppercase; margin-bottom: 0.25rem;">Progress</div>
+                        <div class="label">Progress</div>
                         <div style="font-size: 1.5rem; font-weight: 700;"><span id="today-tasks-completed">0</span> / <span id="today-tasks-total">0</span></div>
                     </div>
                 </div>
 
-                <div class="progress-ring-container">
-                    <svg class="progress-ring-svg" viewBox="0 0 120 120">
-                        <circle cx="60" cy="60" r="54" class="progress-ring-bg" fill="none" stroke-width="4" stroke-linecap="round" />
-                        <circle cx="60" cy="60" r="54" class="progress-ring progress-ring-circle" fill="none" stroke-width="4" stroke-linecap="round" style="stroke-dasharray: 339.29; stroke-dashoffset: 339.29;" />
-                    </svg>
-                </div>
-
-                <h3 style="margin: 2rem 0 1rem; font-size: 1.25rem;" id="today-day-title">Day 1 - Self Introduction</h3>
                 <div class="tasks-list" id="today-tasks-list"></div>
 
-                <h3 style="margin: 2rem 0 1rem; font-size: 1.25rem;">What is Left Today?</h3>
-                <div class="remaining-section" id="today-remaining"></div>
+                <div style="margin-top: 2rem; margin-bottom: 2rem;">
+                    <h3>What's Left Today?</h3>
+                    <div class="remaining-section" id="today-remaining"></div>
+                </div>
 
-                <h3 style="margin: 2rem 0 1rem; font-size: 1.25rem;">Add Session Notes</h3>
-                <div class="session-notes">
-                    <form id="session-notes-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Which activity?</label>
-                                <select id="notes-activity">
-                                    <option value="">Select Activity</option>
-                                    <option value="Reading">Reading</option>
-                                    <option value="Listening">Listening</option>
-                                    <option value="Writing">Writing</option>
-                                    <option value="Speaking">Speaking</option>
-                                    <option value="Grammar">Grammar / Vocabulary</option>
-                                    <option value="Interview">Interview / Work Practice</option>
-                                </select>
+                <div style="margin-top: 2rem;">
+                    <h3>Add Session Notes</h3>
+                    <div class="card">
+                        <form id="session-notes-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Activity</label>
+                                    <select id="notes-activity">
+                                        <option value="">Select Activity</option>
+                                        <option value="Reading">Reading</option>
+                                        <option value="Listening">Listening</option>
+                                        <option value="Writing">Writing</option>
+                                        <option value="Speaking">Speaking</option>
+                                        <option value="Grammar">Grammar / Vocabulary</option>
+                                        <option value="Interview">Interview / Work Practice</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Duration (minutes)</label>
+                                    <input type="number" id="notes-duration" min="0" max="999" placeholder="45">
+                                </div>
                             </div>
+
                             <div class="form-group">
-                                <label>Duration (minutes)</label>
-                                <input type="number" id="notes-duration" min="0" max="999" placeholder="45">
+                                <label>What did I study?</label>
+                                <input type="text" id="notes-topic" placeholder="e.g., Present Simple Tense">
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label>What did I study?</label>
-                            <input type="text" id="notes-topic" placeholder="e.g., Present Simple Tense">
-                        </div>
+                            <div class="form-group">
+                                <label>Material / Source</label>
+                                <input type="text" id="notes-material" placeholder="e.g., YouTube, Book">
+                            </div>
 
-                        <div class="form-group">
-                            <label>Material / Source used</label>
-                            <input type="text" id="notes-material" placeholder="e.g., YouTube, Book, Article">
-                        </div>
+                            <div class="form-group">
+                                <label>What did I learn?</label>
+                                <textarea id="notes-learned" placeholder="Key learnings..."></textarea>
+                            </div>
 
-                        <div class="form-group">
-                            <label>What did I learn?</label>
-                            <textarea id="notes-learned" placeholder="Write down key learnings..."></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Mistakes I made</label>
-                            <textarea id="notes-mistakes" placeholder="What mistakes did you notice?"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label>New vocabulary</label>
-                            <textarea id="notes-vocabulary" placeholder="New words learned..."></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label>What should I review later?</label>
-                            <textarea id="notes-review" placeholder="Mark points for review..."></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Save Session Notes</button>
-                    </form>
+                            <button type="submit" class="btn btn-primary">Save Session Notes</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
             <!-- 7-DAY PROGRESS PAGE -->
             <div class="page" id="progress">
-                <h2 style="margin-bottom: 2rem; font-size: 1.5rem;">7-Day Progress Overview</h2>
+                <h2>Your 7-Day Plan</h2>
                 <div class="progress-overview" id="progress-overview"></div>
 
-                <div class="progress-bar-container">
+                <div class="progress-bar-container" style="margin-top: 2rem;">
                     <div class="progress-bar-label">
-                        <span>7-Day Plan Progress</span>
-                        <span><span id="total-completed-days">0</span> / 7 Days Completed</span>
+                        <span>Overall Completion</span>
+                        <span><span id="total-completed-days">0</span> / 7 Days</span>
                     </div>
                     <div class="progress-bar-fill">
                         <div class="progress-bar-fill-inner" id="total-progress" style="width: 0%"></div>
@@ -1311,18 +1554,18 @@
 
             <!-- SKILLS PAGE -->
             <div class="page" id="skills">
-                <h2 style="margin-bottom: 2rem; font-size: 1.5rem;">Skill Progress</h2>
+                <h2>Your Progress by Skill</h2>
                 <div class="skill-grid" id="detailed-skill-grid"></div>
             </div>
 
             <!-- JOURNEY PAGE -->
             <div class="page" id="journey">
-                <h2 style="margin-bottom: 2rem; font-size: 1.5rem;">My English Journey</h2>
+                <h2 style="margin-bottom: 2rem;">Your English Journey</h2>
                 <div class="journey-container">
                     <div class="journey-card">
                         <div class="journey-label">Starting Level</div>
                         <div class="journey-value">A2+</div>
-                        <div class="journey-subtext">24 July 2024</div>
+                        <div class="journey-subtext">24 July 2026</div>
                     </div>
                     <div class="journey-card">
                         <div class="journey-label">Baseline Score</div>
@@ -1330,29 +1573,28 @@
                         <div class="journey-subtext">/ 10</div>
                     </div>
                     <div class="journey-card">
-                        <div class="journey-label">Current Level</div>
-                        <div class="journey-value" id="current-level">A2+</div>
-                        <div class="journey-subtext">Based on progress</div>
+                        <div class="journey-label">Goal</div>
+                        <div class="journey-value">B1</div>
+                        <div class="journey-subtext">Practical English</div>
                     </div>
                 </div>
 
-                <h3 style="margin: 2rem 0 1rem; font-size: 1.25rem;">Goal: B1 Practical English</h3>
-                <div class="card">
-                    <h4 style="font-weight: 600; margin-bottom: 1rem;">Final Target</h4>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Speak more confidently and fluently</li>
-                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Form sentences correctly</li>
-                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Improve grammar</li>
-                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Write correct professional emails</li>
+                <div class="card" style="margin-top: 2rem;">
+                    <h3>Your Targets</h3>
+                    <ul style="list-style: none; margin-top: 1rem;">
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--light-beige); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Speak more confidently and fluently</li>
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--light-beige); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Form sentences correctly</li>
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--light-beige); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Improve grammar</li>
+                        <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--light-beige); display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Write correct professional emails</li>
                         <li style="padding: 0.75rem 0; display: flex; align-items: center;"><span style="margin-right: 0.75rem;">✓</span> Answer interview questions successfully</li>
                     </ul>
                 </div>
 
-                <h3 style="margin: 2rem 0 1rem; font-size: 1.25rem;">Test Results</h3>
-                <div class="card">
-                    <div class="form-group">
-                        <label>Baseline Score (24 July)</label>
-                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--warning);">5.1 / 10</div>
+                <div class="card" style="margin-top: 2rem;">
+                    <h3>Assessment Results</h3>
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label>Baseline Score</label>
+                        <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--warning);">5.1 / 10</div>
                     </div>
 
                     <div class="form-group">
@@ -1369,37 +1611,35 @@
 
             <!-- HISTORY PAGE -->
             <div class="page" id="history">
-                <h2 style="margin-bottom: 2rem; font-size: 1.5rem;">Study History</h2>
-                <div style="overflow-x: auto;">
+                <h2>Study Journal</h2>
+                <div style="overflow-x: auto; margin-top: 1.5rem;">
                     <table class="history-table">
                         <thead>
                             <tr>
                                 <th>Date</th>
                                 <th>Day</th>
                                 <th>Activity</th>
-                                <th>Duration</th>
-                                <th>Material</th>
-                                <th>Status</th>
+                                <th>Time</th>
                                 <th>Notes</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="history-tbody">
                             <tr>
-                                <td colspan="7" style="text-align: center; padding: 2rem;">No study sessions yet. Start studying!</td>
+                                <td colspan="6" style="text-align: center; padding: 2rem;">No sessions yet. Start studying!</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- REVIEW LATER PAGE -->
+            <!-- REVIEW PAGE -->
             <div class="page" id="review">
-                <h2 style="margin-bottom: 2rem; font-size: 1.5rem;">Review Later</h2>
+                <h2>Review Later</h2>
 
-                <div class="card" style="margin-bottom: 2rem;">
-                    <h3 style="font-weight: 600; margin-bottom: 1rem;">Add Item for Review</h3>
-                    <form id="add-review-form">
+                <div class="card" style="margin-bottom: 2rem; margin-top: 1rem;">
+                    <h3>Add Item for Review</h3>
+                    <form id="add-review-form" style="margin-top: 1rem;">
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Category</label>
@@ -1426,10 +1666,10 @@
 
             <!-- SETTINGS PAGE -->
             <div class="page" id="settings">
-                <h2 style="margin-bottom: 2rem; font-size: 1.5rem;">Settings</h2>
+                <h2>Settings</h2>
 
-                <div class="card" style="margin-bottom: 1.5rem;">
-                    <h3 style="font-weight: 600; margin-bottom: 1rem;">Daily Targets</h3>
+                <div class="card" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+                    <h3>Daily Targets</h3>
                     <p style="color: var(--text-light); margin-bottom: 1rem;">Adjust your daily study time targets</p>
 
                     <div class="form-group">
@@ -1461,27 +1701,27 @@
                 </div>
 
                 <div class="card">
-                    <h3 style="font-weight: 600; margin-bottom: 1rem;">Data Management</h3>
+                    <h3>Data Management</h3>
                     <p style="color: var(--text-light); margin-bottom: 1rem;">Manage your study data</p>
 
-                    <button class="btn btn-secondary" id="export-data-btn" style="margin-bottom: 0.75rem;">Export Data (JSON)</button>
-                    <button class="btn btn-danger" id="reset-data-btn" style="background: var(--danger); color: white;">Reset All Data</button>
+                    <button class="btn btn-secondary" id="export-data-btn" style="margin-bottom: 0.75rem; width: 100%;">Export Data (JSON)</button>
+                    <button class="btn btn-danger" id="reset-data-btn" style="width: 100%;">Reset All Data</button>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- MODAL: Add Time Manually -->
+    <!-- MODALS -->
     <div class="modal" id="add-time-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div>Add Study Time Manually</div>
+                <div>Add Study Time</div>
                 <button class="modal-close" onclick="closeModal('add-time-modal')">×</button>
             </div>
             <form id="add-time-form">
                 <div class="form-group">
                     <label>Activity</label>
-                    <div style="font-weight: 600; color: var(--primary);" id="add-time-activity"></div>
+                    <div style="font-weight: 600; color: var(--dark-navy);" id="add-time-activity"></div>
                 </div>
 
                 <div class="form-row">
@@ -1501,7 +1741,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Notes (what did you study?)</label>
+                    <label>Notes</label>
                     <textarea id="add-time-notes" placeholder="Optional notes..."></textarea>
                 </div>
 
@@ -1512,75 +1752,63 @@
         </div>
     </div>
 
-    <!-- MODAL: Mark as Completed -->
     <div class="modal" id="mark-completed-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div>Mark Task as Completed</div>
+                <div>Mark Complete</div>
                 <button class="modal-close" onclick="closeModal('mark-completed-modal')">×</button>
             </div>
 
             <form id="mark-completed-form">
                 <div class="form-group" style="margin-bottom: 1.5rem;">
-                    <label style="font-size: 0.875rem; color: var(--text-light); text-transform: uppercase;">
+                    <label style="font-size: 0.85rem; color: var(--text-light); text-transform: uppercase;">
                         <span id="mark-completed-task"></span>
                     </label>
-                    <div style="font-size: 1.125rem; font-weight: 600; color: var(--primary); margin-top: 0.5rem;" id="mark-completed-target"></div>
+                    <div style="font-size: 1.125rem; font-weight: 600; color: var(--lavender); margin-top: 0.5rem;" id="mark-completed-target"></div>
                 </div>
 
-            <div style="background: var(--neutral-light); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
-                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1rem;">Did you study the full target time?</p>
-                <div class="modal-buttons three-col" id="mark-completed-options">
-                    <button type="button" class="option-button" id="mark-full-time">
-                        Yes<br><span style="font-size: 0.75rem;">Full time</span>
-                    </button>
-                    <button type="button" class="option-button" id="mark-partial-time">
-                        No<br><span style="font-size: 0.75rem;">Partial time</span>
-                    </button>
-                    <button type="button" class="option-button" id="mark-no-time">
-                        Skip<br><span style="font-size: 0.75rem;">No time</span>
-                    </button>
+                <div style="background: var(--light-beige); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
+                    <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1rem;">Did you study the full target time?</p>
+                    <div class="modal-buttons three-col" id="mark-completed-options">
+                        <button type="button" class="option-button" id="mark-full-time">Yes<br><span style="font-size: 0.75rem;">Full time</span></button>
+                        <button type="button" class="option-button" id="mark-partial-time">No<br><span style="font-size: 0.75rem;">Partial</span></button>
+                        <button type="button" class="option-button" id="mark-no-time">Skip<br><span style="font-size: 0.75rem;">No time</span></button>
+                    </div>
                 </div>
-            </div>
 
-            <div id="mark-time-input" style="display: none;">
-                <div class="form-group">
-                    <label>Actual Study Time</label>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Hours</label>
-                            <input type="number" id="mark-time-hours" min="0" max="24" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Minutes</label>
-                            <input type="number" id="mark-time-minutes" min="0" max="59" value="0">
+                <div id="mark-time-input" style="display: none;">
+                    <div class="form-group">
+                        <label>Actual Study Time</label>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Hours</label>
+                                <input type="number" id="mark-time-hours" min="0" max="24" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Minutes</label>
+                                <input type="number" id="mark-time-minutes" min="0" max="59" value="0">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-                <div style="background: var(--neutral-light); padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.875rem; color: var(--text-light);">
-                    💡 Task completion and study time are separate. You can mark a task complete without recording exact time.
-                </div>
-
-                <div class="modal-buttons single" style="margin-top: 1.5rem;">
+                <div class="modal-buttons single">
                     <button type="button" class="btn btn-primary" id="confirm-mark-completed">Mark as Completed</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- MODAL: Edit Session -->
     <div class="modal" id="edit-session-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div>Edit Study Session</div>
+                <div>Edit Session</div>
                 <button class="modal-close" onclick="closeModal('edit-session-modal')">×</button>
             </div>
             <form id="edit-session-form">
                 <div class="form-group">
                     <label>Activity</label>
-                    <input type="text" id="edit-activity" readonly style="background: var(--neutral-light);">
+                    <input type="text" id="edit-activity" readonly style="background: var(--light-beige);">
                 </div>
 
                 <div class="form-group">
@@ -1606,17 +1834,14 @@
 
                 <div class="modal-buttons">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
-                    <button type="button" class="btn btn-danger" id="delete-session-btn" style="background: var(--danger); color: white;">Delete Session</button>
+                    <button type="button" class="btn btn-danger" id="delete-session-btn">Delete</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        // ============================================================================
-        // CONSTANTS & DATA STRUCTURE
-        // ============================================================================
-
+        // CONSTANTS & DATA
         const ACTIVITIES = {
             'Reading': 30,
             'Grammar': 45,
@@ -1627,162 +1852,14 @@
         };
 
         const DAY_PLANS = [
-            {
-                day: 1,
-                title: 'Self Introduction',
-                focus: 'Sentence Building + Speaking + Present/Past',
-                topics: [
-                    'Basic sentence building',
-                    'Present Simple',
-                    'Past Simple',
-                    'Answering questions about myself',
-                    'Speaking practice',
-                    'Self introduction',
-                    'Work experience'
-                ],
-                interview: 'Tell me about yourself and your experience.',
-                tasks: [
-                    'Speaking practice - 45 min',
-                    'Present Simple exercises',
-                    'Past Simple exercises',
-                    'Self introduction recording',
-                    'Answer questions about yourself',
-                    'Interview practice: Self introduction'
-                ]
-            },
-            {
-                day: 2,
-                title: 'Calendar & Scheduling',
-                focus: 'Questions & Answers + Listening',
-                topics: [
-                    'Common interview questions',
-                    'Understanding short conversations',
-                    'Answering questions correctly',
-                    'Listening practice'
-                ],
-                interview: 'Calendar & Scheduling Questions',
-                tasks: [
-                    'Listening practice - 45 min',
-                    'Common questions exercises',
-                    'Short conversation listening',
-                    'Q&A practice',
-                    'Calendar vocabulary',
-                    'Interview practice: Scheduling'
-                ]
-            },
-            {
-                day: 3,
-                title: 'Emails & Follow-ups',
-                focus: 'Writing + Spelling + Email Vocabulary',
-                topics: [
-                    'Writing formal emails',
-                    'Common work email phrases',
-                    'Email vocabulary',
-                    'Spelling correction',
-                    'Writing follow-ups'
-                ],
-                interview: 'Emails & Follow-ups',
-                tasks: [
-                    'Writing practice - 60 min',
-                    'Email vocabulary',
-                    'Spelling exercises',
-                    'Write professional email',
-                    'Email correction',
-                    'Interview practice: Email scenarios'
-                ]
-            },
-            {
-                day: 4,
-                title: 'Situational Questions',
-                focus: 'Past Tense + Storytelling',
-                topics: [
-                    'Past Simple',
-                    'Past Continuous',
-                    'Tell me about a time...',
-                    'Organizing ideas before speaking',
-                    'Describing previous situations and experiences'
-                ],
-                interview: 'Situational questions and previous experience',
-                tasks: [
-                    'Past Simple exercises',
-                    'Past Continuous exercises',
-                    'Storytelling practice',
-                    'Organize ideas exercise',
-                    'Experience description',
-                    'Interview practice: Situational questions'
-                ]
-            },
-            {
-                day: 5,
-                title: 'Meetings & Priorities',
-                focus: 'Speaking Speed + Vocabulary',
-                topics: [
-                    'Meeting vocabulary',
-                    'Work vocabulary',
-                    'Priorities',
-                    'Agenda',
-                    'Giving short professional answers',
-                    'Speaking faster and more naturally'
-                ],
-                interview: 'Meetings, Agenda & Priorities',
-                tasks: [
-                    'Speaking practice - 90 min',
-                    'Meeting vocabulary',
-                    'Work vocabulary',
-                    'Priority discussion',
-                    'Agenda practice',
-                    'Interview practice: Meetings'
-                ]
-            },
-            {
-                day: 6,
-                title: 'Manager/Employee Situations',
-                focus: 'Listening + Reading',
-                topics: [
-                    'Faster listening practice',
-                    'Reading practical English texts',
-                    'Finding information quickly',
-                    'Understanding workplace situations'
-                ],
-                interview: 'Manager / employee situations and workplace understanding',
-                tasks: [
-                    'Listening practice - 45 min',
-                    'Reading practice - 30 min',
-                    'Workplace listening',
-                    'Practical text reading',
-                    'Quick information finding',
-                    'Interview practice: Workplace scenarios'
-                ]
-            },
-            {
-                day: 7,
-                title: 'Full Skills Test + Mock Interview',
-                focus: 'All Skills Test',
-                topics: [
-                    'Listening test',
-                    'Reading test',
-                    'Writing test',
-                    'Speaking test',
-                    'Full mock interview',
-                    'Review mistakes',
-                    'Create next week plan'
-                ],
-                interview: 'Full mock interview',
-                tasks: [
-                    'Listening test - 45 min',
-                    'Reading test - 30 min',
-                    'Writing test - 60 min',
-                    'Speaking test - 90 min',
-                    'Full mock interview',
-                    'Review mistakes',
-                    'Plan next week'
-                ]
-            }
+            { day: 1, title: 'Sentence Building', focus: 'Sentence Building + Speaking + Present/Past', topics: ['Basic sentence building', 'Present Simple', 'Past Simple', 'Answering questions', 'Speaking practice'], interview: 'Tell me about yourself', tasks: ['Speaking practice - 45 min', 'Present Simple exercises', 'Past Simple exercises', 'Self introduction', 'Answer questions', 'Interview practice'] },
+            { day: 2, title: 'Calendar & Scheduling', focus: 'Questions & Answers + Listening', topics: ['Common interview questions', 'Short conversations', 'Correct answers'], interview: 'Calendar & Scheduling', tasks: ['Listening practice - 45 min', 'Questions exercises', 'Conversation practice', 'Q&A', 'Calendar vocab', 'Interview practice'] },
+            { day: 3, title: 'Writing & Emails', focus: 'Writing + Spelling + Email Vocabulary', topics: ['Formal emails', 'Email phrases', 'Email vocabulary'], interview: 'Emails & Follow-ups', tasks: ['Writing practice - 60 min', 'Email vocabulary', 'Spelling', 'Professional email', 'Corrections', 'Interview practice'] },
+            { day: 4, title: 'Past Tense', focus: 'Past Tense + Storytelling', topics: ['Past Simple', 'Past Continuous', 'Storytelling'], interview: 'Situational questions', tasks: ['Past Simple', 'Past Continuous', 'Storytelling', 'Organize ideas', 'Experience description', 'Interview practice'] },
+            { day: 5, title: 'Speaking & Vocabulary', focus: 'Speaking Speed + Vocabulary', topics: ['Meeting vocabulary', 'Work vocabulary', 'Priorities'], interview: 'Meetings & Priorities', tasks: ['Speaking practice - 90 min', 'Meeting vocab', 'Work vocab', 'Priority discussion', 'Agenda practice', 'Interview practice'] },
+            { day: 6, title: 'Listening & Reading', focus: 'Listening + Reading', topics: ['Fast listening', 'Practical texts', 'Quick info'], interview: 'Workplace scenarios', tasks: ['Listening - 45 min', 'Reading - 30 min', 'Workplace listening', 'Text reading', 'Quick finding', 'Interview practice'] },
+            { day: 7, title: 'Final Test', focus: 'Full Skills Test + Mock Interview', topics: ['All skills', 'Assessment'], interview: 'Full mock interview', tasks: ['Listening test - 45 min', 'Reading test - 30 min', 'Writing test - 60 min', 'Speaking test - 90 min', 'Mock interview', 'Review mistakes'] }
         ];
-
-        // ============================================================================
-        // STATE MANAGEMENT
-        // ============================================================================
 
         let appState = {
             currentDay: 1,
@@ -1791,38 +1868,23 @@
             sessionStartTime: null,
             sessionPauseTime: null,
             totalPausedTime: 0,
-
-            activityTimers: {
-                'Reading': 0,
-                'Grammar': 0,
-                'Listening': 0,
-                'Writing': 0,
-                'Speaking': 0,
-                'Interview': 0,
-            },
-
+            activityTimers: { 'Reading': 0, 'Grammar': 0, 'Listening': 0, 'Writing': 0, 'Speaking': 0, 'Interview': 0 },
             activitySessionActive: {},
             activitySessionPaused: {},
             activitySessionStartTime: {},
             activitySessionPauseTime: {},
             activityTotalPausedTime: {},
-
             completedDays: new Set(),
             completedTasks: {},
             reviewItems: [],
             studySessions: [],
             testScore: null,
-
             targets: { ...ACTIVITIES },
-
             lastStudyDate: null,
             streak: 0,
         };
 
-        // ============================================================================
         // UTILITY FUNCTIONS
-        // ============================================================================
-
         function formatTime(seconds) {
             const h = Math.floor(seconds / 3600);
             const m = Math.floor((seconds % 3600) / 60);
@@ -1863,20 +1925,20 @@
             }));
         }
 
-        // ============================================================================
         // TIMER LOGIC
-        // ============================================================================
-
         function getTodaysTotalTime() {
             const today = getToday();
-            const todaySessions = appState.studySessions.filter(s => s.date === today);
-            return todaySessions.reduce((sum, s) => sum + s.duration, 0);
+            return appState.studySessions.filter(s => s.date === today).reduce((sum, s) => sum + s.duration, 0);
         }
 
-        function getActivityTodayTime(activity) {
-            const today = getToday();
-            const sessions = appState.studySessions.filter(s => s.date === today && s.activity === activity);
-            return sessions.reduce((sum, s) => sum + s.duration, 0);
+        function getActivityCurrentTime(activity) {
+            let elapsed = appState.activityTimers[activity] || 0;
+            if (appState.activitySessionActive[activity]) {
+                const paused = appState.activitySessionPaused[activity];
+                const now = paused ? appState.activitySessionPauseTime[activity] : Date.now();
+                elapsed += Math.floor((now - appState.activitySessionStartTime[activity] - appState.activityTotalPausedTime[activity]) / 1000);
+            }
+            return elapsed;
         }
 
         function startTimer() {
@@ -1937,21 +1999,13 @@
         }
 
         function updateTimerButtons() {
-            const startBtn = document.getElementById('start-session-btn');
-            const pauseBtn = document.getElementById('pause-session-btn');
-            const resumeBtn = document.getElementById('resume-session-btn');
-            const finishBtn = document.getElementById('finish-session-btn');
-
-            startBtn.disabled = appState.sessionActive;
-            pauseBtn.disabled = !appState.sessionActive || appState.sessionPaused;
-            resumeBtn.disabled = !appState.sessionActive || !appState.sessionPaused;
-            finishBtn.disabled = !appState.sessionActive;
+            document.getElementById('start-session-btn').disabled = appState.sessionActive;
+            document.getElementById('pause-session-btn').disabled = !appState.sessionActive || appState.sessionPaused;
+            document.getElementById('resume-session-btn').disabled = !appState.sessionActive || !appState.sessionPaused;
+            document.getElementById('finish-session-btn').disabled = !appState.sessionActive;
         }
 
-        // ============================================================================
-        // ACTIVITY TIMER LOGIC
-        // ============================================================================
-
+        // ACTIVITY TIMERS
         function startActivityTimer(activity) {
             if (!appState.activitySessionActive[activity]) {
                 appState.activitySessionActive[activity] = true;
@@ -2009,31 +2063,7 @@
             }
         }
 
-        function resetActivityTimer(activity) {
-            appState.activityTimers[activity] = 0;
-            appState.activitySessionActive[activity] = false;
-            appState.activitySessionPaused[activity] = false;
-            appState.activitySessionStartTime[activity] = null;
-            appState.activitySessionPauseTime[activity] = null;
-            appState.activityTotalPausedTime[activity] = 0;
-            saveState();
-            render();
-        }
-
-        function getActivityCurrentTime(activity) {
-            let elapsed = appState.activityTimers[activity] || 0;
-            if (appState.activitySessionActive[activity]) {
-                const paused = appState.activitySessionPaused[activity];
-                const now = paused ? appState.activitySessionPauseTime[activity] : Date.now();
-                elapsed += Math.floor((now - appState.activitySessionStartTime[activity] - appState.activityTotalPausedTime[activity]) / 1000);
-            }
-            return elapsed;
-        }
-
-        // ============================================================================
-        // STREAK LOGIC
-        // ============================================================================
-
+        // STREAK
         function updateStreakIfNeeded() {
             const today = getToday();
             if (appState.lastStudyDate !== today) {
@@ -2050,10 +2080,49 @@
             }
         }
 
-        // ============================================================================
-        // RENDER FUNCTIONS
-        // ============================================================================
+        // MODAL FUNCTIONS
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
 
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function openAddTimeModal(activity) {
+            document.getElementById('add-time-activity').textContent = activity;
+            document.getElementById('add-time-hours').value = '0';
+            document.getElementById('add-time-minutes').value = '0';
+            document.getElementById('add-time-date').value = getToday();
+            document.getElementById('add-time-notes').value = '';
+            document.getElementById('add-time-form').dataset.activity = activity;
+            openModal('add-time-modal');
+        }
+
+        function openMarkCompletedModal(activity) {
+            const target = appState.targets[activity] || 0;
+            document.getElementById('mark-completed-task').textContent = activity;
+            document.getElementById('mark-completed-target').textContent = target > 0 ? `Target: ${target} minutes` : 'Non-timed task';
+            document.getElementById('mark-completed-form').dataset.activity = activity;
+            document.getElementById('mark-time-input').style.display = 'none';
+            document.getElementById('mark-full-time').classList.remove('selected');
+            document.getElementById('mark-partial-time').classList.remove('selected');
+            document.getElementById('mark-no-time').classList.remove('selected');
+            openModal('mark-completed-modal');
+        }
+
+        function openEditSessionModal(sessionIndex) {
+            const session = appState.studySessions[sessionIndex];
+            document.getElementById('edit-session-form').dataset.sessionIndex = sessionIndex;
+            document.getElementById('edit-activity').value = session.activity;
+            document.getElementById('edit-date').value = session.date;
+            document.getElementById('edit-hours').value = Math.floor(session.duration / 3600);
+            document.getElementById('edit-minutes').value = Math.floor((session.duration % 3600) / 60);
+            document.getElementById('edit-notes').value = session.notes || '';
+            openModal('edit-session-modal');
+        }
+
+        // RENDER FUNCTIONS
         function render() {
             updateNavigation();
             updateDashboard();
@@ -2066,18 +2135,13 @@
         }
 
         function updateNavigation() {
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.page === 'dashboard') {
-                    btn.classList.add('active');
-                }
-            });
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('[data-page="dashboard"]').classList.add('active');
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('dashboard').classList.add('active');
         }
 
         function updateDashboard() {
-            // Calculate today's total time
             let todaysTotal = 0;
             if (appState.sessionActive) {
                 const paused = appState.sessionPaused;
@@ -2085,20 +2149,16 @@
                 todaysTotal = Math.floor((now - appState.sessionStartTime - appState.totalPausedTime) / 1000);
             }
 
-            // Add activity times
             Object.keys(appState.activityTimers).forEach(activity => {
                 todaysTotal += getActivityCurrentTime(activity);
             });
 
-            // Update timer display
             document.getElementById('timer-display').textContent = formatTime(todaysTotal);
             const targetTotal = Object.values(appState.targets).reduce((a, b) => a + b, 0) * 60;
             const progress = targetTotal > 0 ? Math.min((todaysTotal / targetTotal) * 100, 100) : 0;
-            document.querySelector('.timer-progress-bar').style.width = progress + '%';
+            document.querySelector('.study-time-progress-bar').style.width = progress + '%';
 
-            // Update stat cards
             document.getElementById('current-day-display').textContent = appState.currentDay;
-            document.getElementById('todays-total').textContent = formatTime(todaysTotal);
             document.getElementById('today-percentage').textContent = Math.floor(progress);
             document.getElementById('streak-count').textContent = appState.streak;
             document.getElementById('streak-display').textContent = `${appState.streak} Day Streak`;
@@ -2112,9 +2172,7 @@
                 if (plan.day === appState.currentDay) card.classList.add('active');
                 if (appState.completedDays.has(plan.day)) card.classList.add('completed');
 
-                const dayTime = appState.studySessions
-                    .filter(s => s.day === plan.day)
-                    .reduce((sum, s) => sum + s.duration, 0);
+                const dayTime = appState.studySessions.filter(s => s.day === plan.day).reduce((sum, s) => sum + s.duration, 0);
 
                 card.innerHTML = `
                     <div class="day-number">${plan.day}</div>
@@ -2147,7 +2205,6 @@
                     </div>
                     <div class="activity-timer">
                         <div class="activity-timer-display">${formatTime(completed)}</div>
-                        <div style="font-size: 0.875rem; color: var(--text-light);">Active Time</div>
                     </div>
                     <div class="activity-stats">
                         <div class="stat">
@@ -2155,11 +2212,11 @@
                             <div class="stat-time">${appState.targets[activity]}'</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-name">Completed</div>
+                            <div class="stat-name">Done</div>
                             <div class="stat-time">${Math.floor(completed / 60)}'</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-name">Remaining</div>
+                            <div class="stat-name">Left</div>
                             <div class="stat-time">${Math.floor(remaining / 60)}'</div>
                         </div>
                     </div>
@@ -2171,15 +2228,13 @@
                         <button class="btn btn-small btn-secondary" id="pause-${activity}">Pause</button>
                         <button class="btn btn-small btn-secondary" id="finish-${activity}">Finish</button>
                     </div>
-                    <div class="activity-controls" style="margin-top: 0.75rem; grid-template-columns: 1fr 1fr;">
+                    <div class="activity-controls" style="margin-top: 0.5rem; grid-template-columns: 1fr 1fr;">
                         <button class="btn btn-small btn-secondary" id="add-time-${activity}">+ Add Time</button>
-                        <button class="btn btn-small btn-success" id="mark-done-${activity}">✓ Mark Done</button>
+                        <button class="btn btn-small btn-success" id="mark-done-${activity}">✓ Done</button>
                     </div>
                 `;
 
-                card.querySelector(`#start-${activity}`).addEventListener('click', () => {
-                    startActivityTimer(activity);
-                });
+                card.querySelector(`#start-${activity}`).addEventListener('click', () => startActivityTimer(activity));
                 card.querySelector(`#pause-${activity}`).addEventListener('click', () => {
                     const isRunning = appState.activitySessionActive[activity];
                     if (isRunning && !appState.activitySessionPaused[activity]) {
@@ -2188,46 +2243,79 @@
                         resumeActivityTimer(activity);
                     }
                 });
-                card.querySelector(`#finish-${activity}`).addEventListener('click', () => {
-                    finishActivityTimer(activity);
-                });
-                card.querySelector(`#add-time-${activity}`).addEventListener('click', () => {
-                    openAddTimeModal(activity);
-                });
-                card.querySelector(`#mark-done-${activity}`).addEventListener('click', () => {
-                    openMarkCompletedModal(activity);
-                });
+                card.querySelector(`#finish-${activity}`).addEventListener('click', () => finishActivityTimer(activity));
+                card.querySelector(`#add-time-${activity}`).addEventListener('click', () => openAddTimeModal(activity));
+                card.querySelector(`#mark-done-${activity}`).addEventListener('click', () => openMarkCompletedModal(activity));
 
                 activitiesGrid.appendChild(card);
             });
 
-            // Skill progress grid in dashboard
+            // Remaining today
+            const remainingEl = document.getElementById('remaining-section');
+            remainingEl.innerHTML = '';
+            let totalRemaining = 0;
+            const remainingItems = [];
+
+            Object.keys(appState.targets).forEach(activity => {
+                const target = appState.targets[activity] * 60;
+                const completed = getActivityCurrentTime(activity);
+                const remaining = Math.max(0, target - completed);
+
+                if (remaining > 0) {
+                    remainingItems.push({ activity, remaining, completed: completed >= target });
+                    totalRemaining += remaining;
+                } else if (target > 0) {
+                    remainingItems.push({ activity, remaining: 0, completed: true });
+                }
+            });
+
+            if (remainingItems.length > 0) {
+                const section = document.createElement('div');
+                section.className = 'remaining-section';
+                section.innerHTML = '<div class="remaining-title">Unfinished</div>';
+
+                remainingItems.forEach(item => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'remaining-item';
+                    const timeStr = item.remaining > 0 ? `${Math.floor(item.remaining / 60)}m remaining` : 'Done ✓';
+                    const cls = item.completed ? 'completed' : '';
+                    itemEl.innerHTML = `
+                        <div class="remaining-label">${item.activity}</div>
+                        <div class="remaining-time ${cls}">${timeStr}</div>
+                    `;
+                    section.appendChild(itemEl);
+                });
+
+                const totalEl = document.createElement('div');
+                totalEl.className = 'remaining-total';
+                totalEl.innerHTML = `
+                    <span>Total Remaining</span>
+                    <span>${Math.floor(totalRemaining / 60)}h ${Math.floor(totalRemaining % 60)}m</span>
+                `;
+                section.appendChild(totalEl);
+                remainingEl.appendChild(section);
+            }
+
+            // Skills
             const skillGrid = document.getElementById('skill-grid');
             skillGrid.innerHTML = '';
             Object.keys(appState.activityTimers).forEach(skill => {
-                const totalTime = appState.studySessions
-                    .filter(s => s.activity === skill)
-                    .reduce((sum, s) => sum + s.duration, 0);
-                const sessions = appState.studySessions.filter(s => s.activity === skill).length;
+                const totalTime = appState.studySessions.filter(s => s.activity === skill).reduce((sum, s) => sum + s.duration, 0);
 
                 const skillCard = document.createElement('div');
                 skillCard.className = 'skill-card';
                 skillCard.innerHTML = `
-                    <div class="skill-icon">${getSkillIcon(skill)}</div>
+                    <div class="skill-icon">${['📖', '👂', '✍️', '🗣️', '📚', '💼'][Object.keys(appState.activityTimers).indexOf(skill)]}</div>
                     <div class="skill-name">${skill}</div>
                     <div class="skill-stat">
-                        <div class="skill-stat-label">Total Time</div>
-                        <div class="skill-stat-value">${(totalTime / 3600).toFixed(1)}h</div>
-                    </div>
-                    <div class="skill-stat">
-                        <div class="skill-stat-label">Sessions</div>
-                        <div class="skill-stat-value">${sessions}</div>
+                        <div class="skill-stat-label">Hours</div>
+                        <div class="skill-stat-value">${(totalTime / 3600).toFixed(1)}</div>
                     </div>
                 `;
                 skillGrid.appendChild(skillCard);
             });
 
-            // 7-day progress
+            // Progress
             const completedCount = appState.completedDays.size;
             document.getElementById('completed-days').textContent = completedCount;
             document.getElementById('overall-percentage').textContent = Math.floor((completedCount / 7) * 100);
@@ -2238,7 +2326,7 @@
 
         function updateTodaysPlan() {
             const plan = DAY_PLANS[appState.currentDay - 1];
-            document.getElementById('today-day-title').textContent = `Day ${plan.day} - ${plan.title}`;
+            document.getElementById('today-day-title').textContent = `Day ${plan.day} — ${plan.title}`;
 
             const tasksList = document.getElementById('today-tasks-list');
             tasksList.innerHTML = '';
@@ -2273,14 +2361,7 @@
             document.getElementById('today-tasks-completed').textContent = completedCount;
             document.getElementById('today-tasks-total').textContent = plan.tasks.length;
 
-            // Update progress ring
-            const progressPercent = (completedCount / plan.tasks.length) * 100;
-            const radius = 54;
-            const circumference = 2 * Math.PI * radius;
-            const offset = circumference * (1 - progressPercent / 100);
-            document.querySelector('.progress-ring-circle').style.strokeDashoffset = offset;
-
-            // Remaining today
+            // Remaining
             const remainingEl = document.getElementById('today-remaining');
             remainingEl.innerHTML = '';
 
@@ -2293,25 +2374,17 @@
                 const remaining = Math.max(0, target - completed);
 
                 if (remaining > 0) {
-                    remainingItems.push({
-                        activity,
-                        remaining,
-                        completed: completed >= target
-                    });
+                    remainingItems.push({ activity, remaining, completed: completed >= target });
                     totalRemaining += remaining;
                 } else if (target > 0) {
-                    remainingItems.push({
-                        activity,
-                        remaining: 0,
-                        completed: true
-                    });
+                    remainingItems.push({ activity, remaining: 0, completed: true });
                 }
             });
 
             remainingItems.forEach(item => {
                 const itemEl = document.createElement('div');
                 itemEl.className = 'remaining-item';
-                const timeStr = item.remaining > 0 ? `${Math.floor(item.remaining / 60)}m ${item.remaining % 60}s remaining` : 'Completed ✓';
+                const timeStr = item.remaining > 0 ? `${Math.floor(item.remaining / 60)}m remaining` : 'Completed ✓';
                 const cls = item.completed ? 'completed' : '';
                 itemEl.innerHTML = `
                     <div class="remaining-label">${item.activity}</div>
@@ -2323,7 +2396,7 @@
             const totalEl = document.createElement('div');
             totalEl.className = 'remaining-total';
             totalEl.innerHTML = `
-                <span>Total Remaining:</span>
+                <span>Total Remaining</span>
                 <span>${Math.floor(totalRemaining / 60)}h ${Math.floor(totalRemaining % 60)}m</span>
             `;
             remainingEl.appendChild(totalEl);
@@ -2335,10 +2408,7 @@
 
             let completedDays = 0;
             DAY_PLANS.forEach(plan => {
-                const dayTime = appState.studySessions
-                    .filter(s => s.day === plan.day)
-                    .reduce((sum, s) => sum + s.duration, 0);
-
+                const dayTime = appState.studySessions.filter(s => s.day === plan.day).reduce((sum, s) => sum + s.duration, 0);
                 const isCompleted = appState.completedDays.has(plan.day);
                 if (isCompleted) completedDays++;
 
@@ -2347,9 +2417,9 @@
                 if (isCompleted) card.classList.add('completed');
                 if (plan.day === appState.currentDay) card.classList.add('current');
 
-                const status = isCompleted ? '✓ Completed' : (plan.day === appState.currentDay ? '→ Current Day' : 'Upcoming');
+                const status = isCompleted ? '✓ Done' : (plan.day === appState.currentDay ? '● Today' : 'Pending');
                 card.innerHTML = `
-                    <div class="progress-day-number">Day ${plan.day}</div>
+                    <div class="progress-day-number">${plan.day}</div>
                     <div class="progress-day-status">${status}</div>
                     <div class="progress-day-time">${formatTime(dayTime)}</div>
                 `;
@@ -2361,7 +2431,6 @@
                         saveState();
                         render();
                     });
-                    card.title = 'Click to mark as completed';
                 }
 
                 overview.appendChild(card);
@@ -2377,28 +2446,22 @@
             grid.innerHTML = '';
 
             Object.keys(appState.activityTimers).forEach(skill => {
-                const totalTime = appState.studySessions
-                    .filter(s => s.activity === skill)
-                    .reduce((sum, s) => sum + s.duration, 0);
+                const totalTime = appState.studySessions.filter(s => s.activity === skill).reduce((sum, s) => sum + s.duration, 0);
                 const sessions = appState.studySessions.filter(s => s.activity === skill).length;
                 const avgTime = sessions > 0 ? Math.floor(totalTime / sessions) : 0;
 
                 const card = document.createElement('div');
                 card.className = 'skill-card';
                 card.innerHTML = `
-                    <div class="skill-icon">${getSkillIcon(skill)}</div>
+                    <div class="skill-icon">${['📖', '👂', '✍️', '🗣️', '📚', '💼'][Object.keys(appState.activityTimers).indexOf(skill)]}</div>
                     <div class="skill-name">${skill}</div>
                     <div class="skill-stat">
                         <div class="skill-stat-label">Total Hours</div>
-                        <div class="skill-stat-value">${(totalTime / 3600).toFixed(1)}h</div>
+                        <div class="skill-stat-value">${(totalTime / 3600).toFixed(1)}</div>
                     </div>
                     <div class="skill-stat">
                         <div class="skill-stat-label">Sessions</div>
                         <div class="skill-stat-value">${sessions}</div>
-                    </div>
-                    <div class="skill-stat">
-                        <div class="skill-stat-label">Avg. Duration</div>
-                        <div class="skill-stat-value">${Math.floor(avgTime / 60)}'</div>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -2408,7 +2471,7 @@
         function updateHistoryTable() {
             const tbody = document.getElementById('history-tbody');
             if (appState.studySessions.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem;">No study sessions yet. Start studying!</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">No sessions yet. Start studying!</td></tr>';
                 return;
             }
 
@@ -2421,9 +2484,7 @@
                     <td>Day ${session.day}</td>
                     <td>${session.activity}</td>
                     <td>${formatTime(session.duration)}</td>
-                    <td>${session.material || '-'}</td>
-                    <td>${session.status}</td>
-                    <td>${session.notes ? session.notes.substring(0, 20) + '...' : '-'}</td>
+                    <td>${session.notes ? session.notes.substring(0, 20) : '-'}</td>
                     <td class="history-action" style="display: flex; gap: 0.5rem;">
                         <button class="edit-session" data-index="${actualIndex}">Edit</button>
                         <button class="delete-session" data-index="${actualIndex}">Delete</button>
@@ -2434,8 +2495,7 @@
 
             document.querySelectorAll('.edit-session').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    const index = parseInt(e.target.dataset.index);
-                    openEditSessionModal(index);
+                    openEditSessionModal(parseInt(e.target.dataset.index));
                 });
             });
 
@@ -2495,87 +2555,22 @@
             }
 
             const improvement = (appState.testScore - 5.1).toFixed(1);
-            const improvementClass = improvement > 0 ? 'success' : 'danger';
-
             container.innerHTML = `
                 <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <span>Day 7 Score:</span>
+                        <span>Day 7 Score</span>
                         <span style="font-size: 1.5rem; font-weight: 700; color: var(--success);">${appState.testScore} / 10</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span>Improvement:</span>
-                        <span style="font-size: 1.25rem; font-weight: 700; color: var(--${improvementClass});">+${improvement} points</span>
+                        <span>Improvement</span>
+                        <span style="font-size: 1.25rem; font-weight: 700; color: var(--success);">+${improvement}</span>
                     </div>
                 </div>
             `;
         }
 
-        function getSkillIcon(skill) {
-            const icons = {
-                'Reading': '📖',
-                'Listening': '👂',
-                'Writing': '✍️',
-                'Speaking': '🗣️',
-                'Grammar': '📚',
-                'Interview': '💼'
-            };
-            return icons[skill] || '⭐';
-        }
-
-        // ============================================================================
-        // MODAL FUNCTIONS
-        // ============================================================================
-
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        function openAddTimeModal(activity) {
-            document.getElementById('add-time-activity').textContent = activity;
-            document.getElementById('add-time-hours').value = '0';
-            document.getElementById('add-time-minutes').value = '0';
-            const today = getToday();
-            document.getElementById('add-time-date').value = today;
-            document.getElementById('add-time-notes').value = '';
-            document.getElementById('add-time-form').dataset.activity = activity;
-            openModal('add-time-modal');
-        }
-
-        function openMarkCompletedModal(activity) {
-            const plan = DAY_PLANS[appState.currentDay - 1];
-            const target = appState.targets[activity] || 0;
-            document.getElementById('mark-completed-task').textContent = activity;
-            document.getElementById('mark-completed-target').textContent = target > 0 ? `Target: ${target} minutes` : 'Non-timed task';
-            document.getElementById('mark-completed-form').dataset.activity = activity;
-            document.getElementById('mark-time-input').style.display = 'none';
-            document.getElementById('mark-full-time').classList.remove('selected');
-            document.getElementById('mark-partial-time').classList.remove('selected');
-            document.getElementById('mark-no-time').classList.remove('selected');
-            openModal('mark-completed-modal');
-        }
-
-        function openEditSessionModal(sessionIndex) {
-            const session = appState.studySessions[sessionIndex];
-            document.getElementById('edit-session-form').dataset.sessionIndex = sessionIndex;
-            document.getElementById('edit-activity').value = session.activity;
-            document.getElementById('edit-date').value = session.date;
-            document.getElementById('edit-hours').value = Math.floor(session.duration / 3600);
-            document.getElementById('edit-minutes').value = Math.floor((session.duration % 3600) / 60);
-            document.getElementById('edit-notes').value = session.notes || '';
-            openModal('edit-session-modal');
-        }
-
-        // ============================================================================
         // EVENT LISTENERS
-        // ============================================================================
-
         function setupEventListeners() {
-            // Navigation
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const pageId = e.target.dataset.page;
@@ -2586,13 +2581,11 @@
                 });
             });
 
-            // Timer buttons
             document.getElementById('start-session-btn').addEventListener('click', startTimer);
             document.getElementById('pause-session-btn').addEventListener('click', pauseTimer);
             document.getElementById('resume-session-btn').addEventListener('click', resumeTimer);
             document.getElementById('finish-session-btn').addEventListener('click', finishTimer);
 
-            // Session notes form
             document.getElementById('session-notes-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const activity = document.getElementById('notes-activity').value;
@@ -2612,40 +2605,33 @@
                     saveState();
                     e.target.reset();
                     render();
-                    alert('Session notes saved!');
+                    alert('Session saved!');
                 }
             });
 
-            // Review form
             document.getElementById('add-review-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const category = document.getElementById('review-category').value;
                 const text = document.getElementById('review-text').value;
 
                 if (text) {
-                    appState.reviewItems.push({
-                        category,
-                        text,
-                        status: 'Needs Review'
-                    });
+                    appState.reviewItems.push({ category, text, status: 'Needs Review' });
                     saveState();
                     e.target.reset();
                     render();
                 }
             });
 
-            // Test score
             document.getElementById('save-test-score').addEventListener('click', () => {
                 const score = parseFloat(document.getElementById('test-score').value);
                 if (score >= 0 && score <= 10) {
                     appState.testScore = score;
                     saveState();
                     render();
-                    alert('Test score saved!');
+                    alert('Score saved!');
                 }
             });
 
-            // Settings
             document.getElementById('save-targets-btn').addEventListener('click', () => {
                 appState.targets.Reading = parseInt(document.getElementById('target-reading').value);
                 appState.targets.Grammar = parseInt(document.getElementById('target-grammar').value);
@@ -2664,47 +2650,18 @@
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `study-tracker-export-${getToday()}.json`;
+                a.download = `study-tracker-${getToday()}.json`;
                 a.click();
             });
 
             document.getElementById('reset-data-btn').addEventListener('click', () => {
-                if (confirm('Are you sure? This will delete all your study data.')) {
+                if (confirm('Delete all data?')) {
                     localStorage.removeItem('appState');
-                    appState = {
-                        currentDay: 1,
-                        sessionActive: false,
-                        sessionPaused: false,
-                        sessionStartTime: null,
-                        sessionPauseTime: null,
-                        totalPausedTime: 0,
-                        activityTimers: {
-                            'Reading': 0,
-                            'Grammar': 0,
-                            'Listening': 0,
-                            'Writing': 0,
-                            'Speaking': 0,
-                            'Interview': 0,
-                        },
-                        activitySessionActive: {},
-                        activitySessionPaused: {},
-                        activitySessionStartTime: {},
-                        activitySessionPauseTime: {},
-                        activityTotalPausedTime: {},
-                        completedDays: new Set(),
-                        completedTasks: {},
-                        reviewItems: [],
-                        studySessions: [],
-                        testScore: null,
-                        targets: { ...ACTIVITIES },
-                        lastStudyDate: null,
-                        streak: 0,
-                    };
-                    render();
+                    location.reload();
                 }
             });
 
-            // Add time manually form
+            // Add time form
             document.getElementById('add-time-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const activity = document.getElementById('add-time-form').dataset.activity;
@@ -2712,7 +2669,6 @@
                 const minutes = parseInt(document.getElementById('add-time-minutes').value) || 0;
                 const duration = hours * 3600 + minutes * 60;
                 const date = document.getElementById('add-time-date').value || getToday();
-                const notes = document.getElementById('add-time-notes').value;
 
                 if (duration > 0) {
                     appState.studySessions.push({
@@ -2721,22 +2677,18 @@
                         activity: activity,
                         duration: duration,
                         material: '',
-                        notes: notes,
+                        notes: document.getElementById('add-time-notes').value,
                         status: 'completed'
                     });
-                    if (date === getToday()) {
-                        updateStreakIfNeeded();
-                    }
+                    if (date === getToday()) updateStreakIfNeeded();
                     saveState();
                     closeModal('add-time-modal');
                     render();
-                    alert(`✓ Added ${hours}h ${minutes}m to ${activity}`);
-                } else {
-                    alert('Please enter a valid study time');
+                    alert(`Added ${hours}h ${minutes}m`);
                 }
             });
 
-            // Mark as completed modal
+            // Mark completed
             document.getElementById('mark-full-time').addEventListener('click', () => {
                 document.getElementById('mark-full-time').classList.add('selected');
                 document.getElementById('mark-partial-time').classList.remove('selected');
@@ -2766,10 +2718,7 @@
                 const timeMode = document.getElementById('mark-completed-form').dataset.timeMode;
                 const target = appState.targets[activity] || 0;
 
-                if (!timeMode) {
-                    alert('Please select an option');
-                    return;
-                }
+                if (!timeMode) return;
 
                 let duration = 0;
                 if (timeMode === 'full') {
@@ -2787,7 +2736,7 @@
                         activity: activity,
                         duration: duration,
                         material: '',
-                        notes: `Marked as completed via manual completion`,
+                        notes: 'Marked complete',
                         status: 'completed'
                     });
                     updateStreakIfNeeded();
@@ -2797,7 +2746,7 @@
                 }
             });
 
-            // Edit session form
+            // Edit session
             document.getElementById('edit-session-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const sessionIndex = parseInt(document.getElementById('edit-session-form').dataset.sessionIndex);
@@ -2812,11 +2761,11 @@
                 saveState();
                 closeModal('edit-session-modal');
                 render();
-                alert('Session updated successfully');
+                alert('Updated');
             });
 
             document.getElementById('delete-session-btn').addEventListener('click', () => {
-                if (confirm('Delete this session?')) {
+                if (confirm('Delete?')) {
                     const sessionIndex = parseInt(document.getElementById('edit-session-form').dataset.sessionIndex);
                     appState.studySessions.splice(sessionIndex, 1);
                     saveState();
@@ -2826,10 +2775,6 @@
             });
         }
 
-        // ============================================================================
-        // ANIMATION LOOP
-        // ============================================================================
-
         function updateTimerDisplay() {
             if (appState.sessionActive || Object.values(appState.activitySessionActive).some(v => v)) {
                 render();
@@ -2837,14 +2782,9 @@
             requestAnimationFrame(updateTimerDisplay);
         }
 
-        // ============================================================================
-        // INIT
-        // ============================================================================
-
         loadState();
         setupEventListeners();
 
-        // Load target values into settings form
         document.getElementById('target-reading').value = appState.targets.Reading;
         document.getElementById('target-grammar').value = appState.targets.Grammar;
         document.getElementById('target-listening').value = appState.targets.Listening;
