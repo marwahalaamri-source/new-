@@ -278,6 +278,92 @@
             cursor: not-allowed;
         }
 
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .modal-close:hover {
+            color: var(--text);
+        }
+
+        .modal-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .modal-buttons.single {
+            grid-template-columns: 1fr;
+        }
+
+        .modal-buttons.three-col {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .option-button {
+            padding: 1rem;
+            border: 2px solid var(--border);
+            background: white;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .option-button:hover {
+            border-color: var(--primary);
+            background: var(--neutral-light);
+        }
+
+        .option-button.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
         /* Days Grid */
         .days-grid {
             display: grid;
@@ -1294,6 +1380,7 @@
                                 <th>Duration</th>
                                 <th>Material</th>
                                 <th>Status</th>
+                                <th>Notes</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -1383,6 +1470,147 @@
             </div>
         </div>
     </main>
+
+    <!-- MODAL: Add Time Manually -->
+    <div class="modal" id="add-time-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>Add Study Time Manually</div>
+                <button class="modal-close" onclick="closeModal('add-time-modal')">×</button>
+            </div>
+            <form id="add-time-form">
+                <div class="form-group">
+                    <label>Activity</label>
+                    <div style="font-weight: 600; color: var(--primary);" id="add-time-activity"></div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Hours</label>
+                        <input type="number" id="add-time-hours" min="0" max="24" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Minutes</label>
+                        <input type="number" id="add-time-minutes" min="0" max="59" value="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Date (optional)</label>
+                    <input type="date" id="add-time-date">
+                </div>
+
+                <div class="form-group">
+                    <label>Notes (what did you study?)</label>
+                    <textarea id="add-time-notes" placeholder="Optional notes..."></textarea>
+                </div>
+
+                <div class="modal-buttons single">
+                    <button type="submit" class="btn btn-primary">Add Time</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Mark as Completed -->
+    <div class="modal" id="mark-completed-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>Mark Task as Completed</div>
+                <button class="modal-close" onclick="closeModal('mark-completed-modal')">×</button>
+            </div>
+
+            <form id="mark-completed-form">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="font-size: 0.875rem; color: var(--text-light); text-transform: uppercase;">
+                        <span id="mark-completed-task"></span>
+                    </label>
+                    <div style="font-size: 1.125rem; font-weight: 600; color: var(--primary); margin-top: 0.5rem;" id="mark-completed-target"></div>
+                </div>
+
+            <div style="background: var(--neutral-light); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1rem;">Did you study the full target time?</p>
+                <div class="modal-buttons three-col" id="mark-completed-options">
+                    <button type="button" class="option-button" id="mark-full-time">
+                        Yes<br><span style="font-size: 0.75rem;">Full time</span>
+                    </button>
+                    <button type="button" class="option-button" id="mark-partial-time">
+                        No<br><span style="font-size: 0.75rem;">Partial time</span>
+                    </button>
+                    <button type="button" class="option-button" id="mark-no-time">
+                        Skip<br><span style="font-size: 0.75rem;">No time</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="mark-time-input" style="display: none;">
+                <div class="form-group">
+                    <label>Actual Study Time</label>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Hours</label>
+                            <input type="number" id="mark-time-hours" min="0" max="24" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Minutes</label>
+                            <input type="number" id="mark-time-minutes" min="0" max="59" value="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div style="background: var(--neutral-light); padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; font-size: 0.875rem; color: var(--text-light);">
+                    💡 Task completion and study time are separate. You can mark a task complete without recording exact time.
+                </div>
+
+                <div class="modal-buttons single" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn btn-primary" id="confirm-mark-completed">Mark as Completed</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Edit Session -->
+    <div class="modal" id="edit-session-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>Edit Study Session</div>
+                <button class="modal-close" onclick="closeModal('edit-session-modal')">×</button>
+            </div>
+            <form id="edit-session-form">
+                <div class="form-group">
+                    <label>Activity</label>
+                    <input type="text" id="edit-activity" readonly style="background: var(--neutral-light);">
+                </div>
+
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="edit-date" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Hours</label>
+                        <input type="number" id="edit-hours" min="0" max="24" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Minutes</label>
+                        <input type="number" id="edit-minutes" min="0" max="59" value="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="edit-notes" placeholder="Optional notes..."></textarea>
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-danger" id="delete-session-btn" style="background: var(--danger); color: white;">Delete Session</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script>
         // ============================================================================
@@ -1943,6 +2171,10 @@
                         <button class="btn btn-small btn-secondary" id="pause-${activity}">Pause</button>
                         <button class="btn btn-small btn-secondary" id="finish-${activity}">Finish</button>
                     </div>
+                    <div class="activity-controls" style="margin-top: 0.75rem; grid-template-columns: 1fr 1fr;">
+                        <button class="btn btn-small btn-secondary" id="add-time-${activity}">+ Add Time</button>
+                        <button class="btn btn-small btn-success" id="mark-done-${activity}">✓ Mark Done</button>
+                    </div>
                 `;
 
                 card.querySelector(`#start-${activity}`).addEventListener('click', () => {
@@ -1958,6 +2190,12 @@
                 });
                 card.querySelector(`#finish-${activity}`).addEventListener('click', () => {
                     finishActivityTimer(activity);
+                });
+                card.querySelector(`#add-time-${activity}`).addEventListener('click', () => {
+                    openAddTimeModal(activity);
+                });
+                card.querySelector(`#mark-done-${activity}`).addEventListener('click', () => {
+                    openMarkCompletedModal(activity);
                 });
 
                 activitiesGrid.appendChild(card);
@@ -2170,13 +2408,14 @@
         function updateHistoryTable() {
             const tbody = document.getElementById('history-tbody');
             if (appState.studySessions.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem;">No study sessions yet. Start studying!</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem;">No study sessions yet. Start studying!</td></tr>';
                 return;
             }
 
             tbody.innerHTML = '';
             [...appState.studySessions].reverse().forEach((session, index) => {
                 const row = document.createElement('tr');
+                const actualIndex = appState.studySessions.length - 1 - index;
                 row.innerHTML = `
                     <td>${session.date}</td>
                     <td>Day ${session.day}</td>
@@ -2184,19 +2423,30 @@
                     <td>${formatTime(session.duration)}</td>
                     <td>${session.material || '-'}</td>
                     <td>${session.status}</td>
-                    <td class="history-action">
-                        <button class="delete-session" data-index="${appState.studySessions.length - 1 - index}">Delete</button>
+                    <td>${session.notes ? session.notes.substring(0, 20) + '...' : '-'}</td>
+                    <td class="history-action" style="display: flex; gap: 0.5rem;">
+                        <button class="edit-session" data-index="${actualIndex}">Edit</button>
+                        <button class="delete-session" data-index="${actualIndex}">Delete</button>
                     </td>
                 `;
                 tbody.appendChild(row);
             });
 
+            document.querySelectorAll('.edit-session').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    openEditSessionModal(index);
+                });
+            });
+
             document.querySelectorAll('.delete-session').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const index = parseInt(e.target.dataset.index);
-                    appState.studySessions.splice(index, 1);
-                    saveState();
-                    render();
+                    if (confirm('Delete this session?')) {
+                        appState.studySessions.splice(index, 1);
+                        saveState();
+                        render();
+                    }
                 });
             });
         }
@@ -2271,6 +2521,53 @@
                 'Interview': '💼'
             };
             return icons[skill] || '⭐';
+        }
+
+        // ============================================================================
+        // MODAL FUNCTIONS
+        // ============================================================================
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function openAddTimeModal(activity) {
+            document.getElementById('add-time-activity').textContent = activity;
+            document.getElementById('add-time-hours').value = '0';
+            document.getElementById('add-time-minutes').value = '0';
+            const today = getToday();
+            document.getElementById('add-time-date').value = today;
+            document.getElementById('add-time-notes').value = '';
+            document.getElementById('add-time-form').dataset.activity = activity;
+            openModal('add-time-modal');
+        }
+
+        function openMarkCompletedModal(activity) {
+            const plan = DAY_PLANS[appState.currentDay - 1];
+            const target = appState.targets[activity] || 0;
+            document.getElementById('mark-completed-task').textContent = activity;
+            document.getElementById('mark-completed-target').textContent = target > 0 ? `Target: ${target} minutes` : 'Non-timed task';
+            document.getElementById('mark-completed-form').dataset.activity = activity;
+            document.getElementById('mark-time-input').style.display = 'none';
+            document.getElementById('mark-full-time').classList.remove('selected');
+            document.getElementById('mark-partial-time').classList.remove('selected');
+            document.getElementById('mark-no-time').classList.remove('selected');
+            openModal('mark-completed-modal');
+        }
+
+        function openEditSessionModal(sessionIndex) {
+            const session = appState.studySessions[sessionIndex];
+            document.getElementById('edit-session-form').dataset.sessionIndex = sessionIndex;
+            document.getElementById('edit-activity').value = session.activity;
+            document.getElementById('edit-date').value = session.date;
+            document.getElementById('edit-hours').value = Math.floor(session.duration / 3600);
+            document.getElementById('edit-minutes').value = Math.floor((session.duration % 3600) / 60);
+            document.getElementById('edit-notes').value = session.notes || '';
+            openModal('edit-session-modal');
         }
 
         // ============================================================================
@@ -2403,6 +2700,127 @@
                         lastStudyDate: null,
                         streak: 0,
                     };
+                    render();
+                }
+            });
+
+            // Add time manually form
+            document.getElementById('add-time-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const activity = document.getElementById('add-time-form').dataset.activity;
+                const hours = parseInt(document.getElementById('add-time-hours').value) || 0;
+                const minutes = parseInt(document.getElementById('add-time-minutes').value) || 0;
+                const duration = hours * 3600 + minutes * 60;
+                const date = document.getElementById('add-time-date').value || getToday();
+                const notes = document.getElementById('add-time-notes').value;
+
+                if (duration > 0) {
+                    appState.studySessions.push({
+                        date: date,
+                        day: appState.currentDay,
+                        activity: activity,
+                        duration: duration,
+                        material: '',
+                        notes: notes,
+                        status: 'completed'
+                    });
+                    if (date === getToday()) {
+                        updateStreakIfNeeded();
+                    }
+                    saveState();
+                    closeModal('add-time-modal');
+                    render();
+                    alert(`✓ Added ${hours}h ${minutes}m to ${activity}`);
+                } else {
+                    alert('Please enter a valid study time');
+                }
+            });
+
+            // Mark as completed modal
+            document.getElementById('mark-full-time').addEventListener('click', () => {
+                document.getElementById('mark-full-time').classList.add('selected');
+                document.getElementById('mark-partial-time').classList.remove('selected');
+                document.getElementById('mark-no-time').classList.remove('selected');
+                document.getElementById('mark-time-input').style.display = 'none';
+                document.getElementById('mark-completed-form').dataset.timeMode = 'full';
+            });
+
+            document.getElementById('mark-partial-time').addEventListener('click', () => {
+                document.getElementById('mark-full-time').classList.remove('selected');
+                document.getElementById('mark-partial-time').classList.add('selected');
+                document.getElementById('mark-no-time').classList.remove('selected');
+                document.getElementById('mark-time-input').style.display = 'block';
+                document.getElementById('mark-completed-form').dataset.timeMode = 'partial';
+            });
+
+            document.getElementById('mark-no-time').addEventListener('click', () => {
+                document.getElementById('mark-full-time').classList.remove('selected');
+                document.getElementById('mark-partial-time').classList.remove('selected');
+                document.getElementById('mark-no-time').classList.add('selected');
+                document.getElementById('mark-time-input').style.display = 'none';
+                document.getElementById('mark-completed-form').dataset.timeMode = 'none';
+            });
+
+            document.getElementById('confirm-mark-completed').addEventListener('click', () => {
+                const activity = document.getElementById('mark-completed-form').dataset.activity;
+                const timeMode = document.getElementById('mark-completed-form').dataset.timeMode;
+                const target = appState.targets[activity] || 0;
+
+                if (!timeMode) {
+                    alert('Please select an option');
+                    return;
+                }
+
+                let duration = 0;
+                if (timeMode === 'full') {
+                    duration = target * 60;
+                } else if (timeMode === 'partial') {
+                    const hours = parseInt(document.getElementById('mark-time-hours').value) || 0;
+                    const minutes = parseInt(document.getElementById('mark-time-minutes').value) || 0;
+                    duration = hours * 3600 + minutes * 60;
+                }
+
+                if (duration > 0 || timeMode === 'none') {
+                    appState.studySessions.push({
+                        date: getToday(),
+                        day: appState.currentDay,
+                        activity: activity,
+                        duration: duration,
+                        material: '',
+                        notes: `Marked as completed via manual completion`,
+                        status: 'completed'
+                    });
+                    updateStreakIfNeeded();
+                    saveState();
+                    closeModal('mark-completed-modal');
+                    render();
+                }
+            });
+
+            // Edit session form
+            document.getElementById('edit-session-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const sessionIndex = parseInt(document.getElementById('edit-session-form').dataset.sessionIndex);
+                const hours = parseInt(document.getElementById('edit-hours').value) || 0;
+                const minutes = parseInt(document.getElementById('edit-minutes').value) || 0;
+                const duration = hours * 3600 + minutes * 60;
+
+                appState.studySessions[sessionIndex].date = document.getElementById('edit-date').value;
+                appState.studySessions[sessionIndex].duration = duration;
+                appState.studySessions[sessionIndex].notes = document.getElementById('edit-notes').value;
+
+                saveState();
+                closeModal('edit-session-modal');
+                render();
+                alert('Session updated successfully');
+            });
+
+            document.getElementById('delete-session-btn').addEventListener('click', () => {
+                if (confirm('Delete this session?')) {
+                    const sessionIndex = parseInt(document.getElementById('edit-session-form').dataset.sessionIndex);
+                    appState.studySessions.splice(sessionIndex, 1);
+                    saveState();
+                    closeModal('edit-session-modal');
                     render();
                 }
             });
