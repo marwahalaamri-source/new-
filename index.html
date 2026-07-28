@@ -719,6 +719,23 @@
             border: 1px solid var(--light-beige);
             padding: 1.25rem;
             color: var(--dark-navy);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-card-illustration {
+            position: absolute;
+            right: 0.5rem;
+            bottom: -0.5rem;
+            width: 92px;
+            height: auto;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .activity-card > *:not(.activity-card-illustration) {
+            position: relative;
+            z-index: 2;
         }
 
         .activity-header {
@@ -1416,6 +1433,15 @@
             'Interview': 'illustrations/activity_interview_practice.png',
         };
 
+        const ACTIVITY_ILLUSTRATIONS_FULL = {
+            'Reading': 'illustrations/activity_reading_book_full.png',
+            'Grammar': 'illustrations/activity_laptop_study_full.png',
+            'Listening': 'illustrations/activity_listening_headphones_full.png',
+            'Writing': 'illustrations/activity_writing_desk_full.png',
+            'Speaking': 'illustrations/journey_speaking_bravely_full.png',
+            'Interview': 'illustrations/activity_interview_practice_full.png',
+        };
+
         const DAY_PLANS = [
             { day: 1, title: 'Sentence Building', focus: 'Sentence Building + Speaking + Present/Past', topics: ['Basic sentence building', 'Present Simple', 'Past Simple', 'Answering questions', 'Speaking practice'], interview: 'Tell me about yourself', tasks: ['Speaking practice - 45 min', 'Present Simple exercises', 'Past Simple exercises', 'Self introduction', 'Answer questions', 'Interview practice'] },
             { day: 2, title: 'Calendar & Scheduling', focus: 'Questions & Answers + Listening', topics: ['Common interview questions', 'Short conversations', 'Correct answers'], interview: 'Calendar & Scheduling', tasks: ['Listening practice - 45 min', 'Questions exercises', 'Conversation practice', 'Q&A', 'Calendar vocab', 'Interview practice'] },
@@ -1804,6 +1830,7 @@
             }
 
             card.innerHTML = `
+                <img class="activity-card-illustration" src="${ACTIVITY_ILLUSTRATIONS_FULL[activity]}" alt="">
                 <div class="activity-header">
                     <img class="activity-icon-img" src="${ACTIVITY_ILLUSTRATIONS[activity]}" alt="">
                     <div class="activity-title">${ACTIVITY_LABELS[activity] || activity}</div>
