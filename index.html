@@ -1626,7 +1626,7 @@
             if (!plan) return;
             const skills = getDaySkills(plan).filter(s => (appState.targets[s] || 0) > 0);
             if (skills.length === 0) return;
-            const allDone = skills.every(s => getActivityCurrentTime(s) >= appState.targets[s] * 60);
+            const allDone = skills.every(s => getSkillSecondsForDay(appState.currentDay, s) >= appState.targets[s] * 60);
             if (allDone) {
                 appState.completedDays.add(appState.currentDay);
             }
@@ -1818,6 +1818,22 @@
             });
         }
 
+        // Seconds logged for ONE specific skill on ONE specific day only - never the
+        // cumulative/global total. Finished sessions come straight from studySessions
+        // (each one is stamped with the day it was logged on). A session still actively
+        // running counts toward the day it belongs to (appState.currentDay) as well,
+        // since it hasn't been pushed into studySessions yet.
+        function getSkillSecondsForDay(day, skill) {
+            let seconds = appState.studySessions
+                .filter(s => s.day === day && s.activity === skill)
+                .reduce((sum, s) => sum + s.duration, 0);
+            if (day === appState.currentDay) {
+                const liveElapsed = getActivityCurrentTime(skill) - (appState.activityTimers[skill] || 0);
+                if (liveElapsed > 0) seconds += liveElapsed;
+            }
+            return seconds;
+        }
+
         function updateSevenDay() {
             const allComplete = appState.completedDays.size >= DAY_PLANS.length;
             document.getElementById('all-complete-banner').style.display = allComplete ? 'flex' : 'none';
@@ -1828,7 +1844,7 @@
             DAY_PLANS.forEach(plan => {
                 const skills = getDaySkills(plan).filter(s => (appState.targets[s] || 0) > 0);
                 const targetSeconds = skills.reduce((sum, s) => sum + appState.targets[s] * 60, 0);
-                const completedSeconds = skills.reduce((sum, s) => sum + Math.min(getActivityCurrentTime(s), appState.targets[s] * 60), 0);
+                const completedSeconds = skills.reduce((sum, s) => sum + Math.min(getSkillSecondsForDay(plan.day, s), appState.targets[s] * 60), 0);
                 const pct = targetSeconds > 0 ? Math.min((completedSeconds / targetSeconds) * 100, 100) : 0;
                 const isCompleted = appState.completedDays.has(plan.day);
                 const isCurrent = plan.day === appState.currentDay;
