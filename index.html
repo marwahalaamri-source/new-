@@ -621,12 +621,18 @@
             border-width: 2px;
         }
 
+        /* Decorative sticker anchored to the card's own bottom-right corner.
+           Sized by HEIGHT (illustrations are tall portrait crops), positioned
+           so its top edge stays below the remaining-time row, and allowed to
+           bleed only DOWN and RIGHT past the card's own edge into the grid
+           gap - never far enough to reach a neighboring card. */
         .day-card-sticker {
             position: absolute;
-            top: -1.75rem;
-            right: -0.75rem;
-            width: 92px;
-            height: auto;
+            bottom: -30px;
+            right: -5px;
+            height: 46px;
+            width: auto;
+            max-width: 30px;
             pointer-events: none;
             z-index: 5;
             filter: drop-shadow(0 4px 6px rgba(26, 31, 58, 0.12));
@@ -644,26 +650,6 @@
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 0.75rem;
-        }
-
-        /* Per-day fine-tuning so each sticker sits well next to its card's
-           own content (badge/title) instead of one fixed position for all. */
-        .day-card-sticker.day-1 {
-            top: -1.5rem;
-            right: -1.5rem;
-        }
-
-        .day-card-sticker.day-2 {
-            top: -1.5rem;
-            right: -1.75rem;
-        }
-
-        .day-card-sticker.day-5 {
-            top: -1.25rem;
-        }
-
-        .day-card-sticker.day-6 {
-            top: -1.25rem;
         }
 
         .day-number {
@@ -734,24 +720,10 @@
             }
 
             .day-card-sticker {
-                width: 74px;
-                top: -1.5rem;
-                right: -0.5rem;
-            }
-
-            .day-card-sticker.day-1 {
-                top: -1.25rem;
-                right: -1.1rem;
-            }
-
-            .day-card-sticker.day-2 {
-                top: -1.25rem;
-                right: -1.35rem;
-            }
-
-            .day-card-sticker.day-5,
-            .day-card-sticker.day-6 {
-                top: -1rem;
+                height: 38px;
+                max-width: 26px;
+                bottom: -26px;
+                right: -4px;
             }
         }
 
@@ -1257,24 +1229,10 @@
             }
 
             .day-card-sticker {
-                width: 104px;
-                top: -2rem;
-                right: -0.85rem;
-            }
-
-            .day-card-sticker.day-1 {
-                top: -1.75rem;
-                right: -1.6rem;
-            }
-
-            .day-card-sticker.day-2 {
-                top: -1.75rem;
-                right: -1.9rem;
-            }
-
-            .day-card-sticker.day-5,
-            .day-card-sticker.day-6 {
-                top: -1.4rem;
+                height: 50px;
+                max-width: 33px;
+                bottom: -34px;
+                right: -6px;
             }
 
             .activities-grid {
@@ -1322,24 +1280,10 @@
             }
 
             .day-card-sticker {
-                width: 100px;
-                top: -1.9rem;
-                right: -0.75rem;
-            }
-
-            .day-card-sticker.day-1 {
-                top: -1.6rem;
-                right: -1.5rem;
-            }
-
-            .day-card-sticker.day-2 {
-                top: -1.6rem;
-                right: -1.75rem;
-            }
-
-            .day-card-sticker.day-5,
-            .day-card-sticker.day-6 {
-                top: -1.3rem;
+                height: 54px;
+                max-width: 36px;
+                bottom: -38px;
+                right: -8px;
             }
 
             .activities-grid {
@@ -1382,24 +1326,10 @@
             }
 
             .day-card-sticker {
-                width: 118px;
-                top: -2.1rem;
-                right: -0.9rem;
-            }
-
-            .day-card-sticker.day-1 {
-                top: -1.8rem;
-                right: -1.75rem;
-            }
-
-            .day-card-sticker.day-2 {
-                top: -1.8rem;
-                right: -2rem;
-            }
-
-            .day-card-sticker.day-5,
-            .day-card-sticker.day-6 {
-                top: -1.5rem;
+                height: 58px;
+                max-width: 38px;
+                bottom: -42px;
+                right: -8px;
             }
 
             .activity-card-illustration {
