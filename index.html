@@ -632,13 +632,38 @@
             filter: drop-shadow(0 4px 6px rgba(26, 31, 58, 0.12));
         }
 
+        /* Badges, titles, progress bars and remaining-time must always stay
+           above the character sticker so it can never visually cover them. */
+        .day-card > *:not(.day-card-sticker) {
+            position: relative;
+            z-index: 10;
+        }
+
         .day-card-top {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 0.75rem;
-            position: relative;
-            z-index: 1;
+        }
+
+        /* Per-day fine-tuning so each sticker sits well next to its card's
+           own content (badge/title) instead of one fixed position for all. */
+        .day-card-sticker.day-1 {
+            top: -1.5rem;
+            right: -1.5rem;
+        }
+
+        .day-card-sticker.day-2 {
+            top: -1.5rem;
+            right: -1.75rem;
+        }
+
+        .day-card-sticker.day-5 {
+            top: -1.25rem;
+        }
+
+        .day-card-sticker.day-6 {
+            top: -1.25rem;
         }
 
         .day-number {
@@ -712,6 +737,21 @@
                 width: 74px;
                 top: -1.5rem;
                 right: -0.5rem;
+            }
+
+            .day-card-sticker.day-1 {
+                top: -1.25rem;
+                right: -1.1rem;
+            }
+
+            .day-card-sticker.day-2 {
+                top: -1.25rem;
+                right: -1.35rem;
+            }
+
+            .day-card-sticker.day-5,
+            .day-card-sticker.day-6 {
+                top: -1rem;
             }
         }
 
@@ -1222,6 +1262,21 @@
                 right: -0.85rem;
             }
 
+            .day-card-sticker.day-1 {
+                top: -1.75rem;
+                right: -1.6rem;
+            }
+
+            .day-card-sticker.day-2 {
+                top: -1.75rem;
+                right: -1.9rem;
+            }
+
+            .day-card-sticker.day-5,
+            .day-card-sticker.day-6 {
+                top: -1.4rem;
+            }
+
             .activities-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1.1rem;
@@ -1272,6 +1327,21 @@
                 right: -0.75rem;
             }
 
+            .day-card-sticker.day-1 {
+                top: -1.6rem;
+                right: -1.5rem;
+            }
+
+            .day-card-sticker.day-2 {
+                top: -1.6rem;
+                right: -1.75rem;
+            }
+
+            .day-card-sticker.day-5,
+            .day-card-sticker.day-6 {
+                top: -1.3rem;
+            }
+
             .activities-grid {
                 gap: 1.25rem;
             }
@@ -1315,6 +1385,21 @@
                 width: 118px;
                 top: -2.1rem;
                 right: -0.9rem;
+            }
+
+            .day-card-sticker.day-1 {
+                top: -1.8rem;
+                right: -1.75rem;
+            }
+
+            .day-card-sticker.day-2 {
+                top: -1.8rem;
+                right: -2rem;
+            }
+
+            .day-card-sticker.day-5,
+            .day-card-sticker.day-6 {
+                top: -1.5rem;
             }
 
             .activity-card-illustration {
@@ -2116,7 +2201,7 @@
                 const remainingText = isCompleted ? 'All done' : `${formatHM(remainingSeconds)} left`;
 
                 card.innerHTML = `
-                    <img class="day-card-sticker" src="${DAY_ILLUSTRATIONS[plan.day]}" alt="">
+                    <img class="day-card-sticker day-${plan.day}" src="${DAY_ILLUSTRATIONS[plan.day]}" alt="">
                     <div class="day-card-top">
                         <div class="day-number">${plan.day}</div>
                         <div class="day-status-badge ${badgeClass}">${badgeText}</div>
