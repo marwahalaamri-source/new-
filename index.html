@@ -445,6 +445,27 @@
             font-size: 1.1rem;
         }
 
+        .study-time-hero {
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .study-time-illustration {
+            width: 34%;
+            max-width: 130px;
+            height: auto;
+            flex-shrink: 0;
+            margin-bottom: -0.5rem;
+        }
+
+        .study-time-content {
+            flex: 1;
+            min-width: 0;
+        }
+
         @media (max-width: 480px) {
             .study-time-block {
                 padding: 2rem 1rem;
@@ -1151,15 +1172,17 @@
                 </div>
 
                 <div class="study-time-block">
-                    <div class="study-time-label">Today's Study Time</div>
-                    <div class="study-time-display"><span id="timer-display">00:00:00</span></div>
-                    <div class="streak-inline">
-                        <span class="streak-icon">◆</span>
-                        <span id="streak-display">0 Day Streak</span>
-                    </div>
-                    <div class="mood-thumb-row" style="margin-bottom: 1.25rem;">
-                        <img class="mood-thumb" src="illustrations/journey_starting_journey.png" alt="">
-                        <div class="label" style="color: var(--peach);">Ready when you are</div>
+                    <div class="study-time-hero" style="margin-bottom: 1.5rem;">
+                        <img class="study-time-illustration" src="illustrations/journey_starting_journey_full.png" alt="">
+                        <div class="study-time-content">
+                            <div class="study-time-label">Today's Study Time</div>
+                            <div class="study-time-display"><span id="timer-display">00:00:00</span></div>
+                            <div class="streak-inline">
+                                <span class="streak-icon">◆</span>
+                                <span id="streak-display">0 Day Streak</span>
+                            </div>
+                            <div class="label" style="color: var(--peach);">Ready when you are</div>
+                        </div>
                     </div>
                     <button class="btn btn-primary btn-block" id="start-studying-btn">Start Studying</button>
                 </div>
