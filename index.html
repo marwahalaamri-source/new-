@@ -598,7 +598,7 @@
         .days-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
+            gap: 2.25rem 1rem;
         }
 
         .day-card {
@@ -608,6 +608,8 @@
             cursor: pointer;
             transition: all 0.25s;
             color: var(--dark-navy);
+            position: relative;
+            overflow: visible;
         }
 
         .day-card:hover {
@@ -619,11 +621,24 @@
             border-width: 2px;
         }
 
+        .day-card-sticker {
+            position: absolute;
+            top: -1.75rem;
+            right: -0.75rem;
+            width: 92px;
+            height: auto;
+            pointer-events: none;
+            z-index: 5;
+            filter: drop-shadow(0 4px 6px rgba(26, 31, 58, 0.12));
+        }
+
         .day-card-top {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 0.75rem;
+            position: relative;
+            z-index: 1;
         }
 
         .day-number {
@@ -686,11 +701,17 @@
 
             .days-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 0.75rem;
+                gap: 2rem 0.75rem;
             }
 
             .day-card {
                 padding: 1rem;
+            }
+
+            .day-card-sticker {
+                width: 74px;
+                top: -1.5rem;
+                right: -0.5rem;
             }
         }
 
@@ -1443,6 +1464,16 @@
             'Interview': 'illustrations/activity_interview_practice_full.png',
         };
 
+        const DAY_ILLUSTRATIONS = {
+            1: 'illustrations/day_dont_understand.png',
+            2: 'illustrations/day_made_mistake.png',
+            3: 'illustrations/day_correcting_mistake.png',
+            4: 'illustrations/day_vocab_unlocked.png',
+            5: 'illustrations/day_thinking.png',
+            6: 'illustrations/day_seeing_progress.png',
+            7: 'illustrations/day_on_streak.png',
+        };
+
         const DAY_PLANS = [
             { day: 1, title: 'Sentence Building', focus: 'Sentence Building + Speaking + Present/Past', topics: ['Basic sentence building', 'Present Simple', 'Past Simple', 'Answering questions', 'Speaking practice'], interview: 'Tell me about yourself', tasks: ['Speaking practice - 45 min', 'Present Simple exercises', 'Past Simple exercises', 'Self introduction', 'Answer questions', 'Interview practice'] },
             { day: 2, title: 'Calendar & Scheduling', focus: 'Questions & Answers + Listening', topics: ['Common interview questions', 'Short conversations', 'Correct answers'], interview: 'Calendar & Scheduling', tasks: ['Listening practice - 45 min', 'Questions exercises', 'Conversation practice', 'Q&A', 'Calendar vocab', 'Interview practice'] },
@@ -1909,6 +1940,7 @@
                 const remainingText = isCompleted ? 'All done' : `${formatHM(remainingSeconds)} left`;
 
                 card.innerHTML = `
+                    <img class="day-card-sticker" src="${DAY_ILLUSTRATIONS[plan.day]}" alt="">
                     <div class="day-card-top">
                         <div class="day-number">${plan.day}</div>
                         <div class="day-status-badge ${badgeClass}">${badgeText}</div>
