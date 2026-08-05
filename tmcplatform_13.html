@@ -819,18 +819,56 @@ function seedCompanies(){
 }
 
 /* ============ Storage (Supabase) ============ */
+/* ------------------------------------------------------------------
+   PROJECT CONFIG — the only place the project URL is defined.
+   Copy it from: Supabase Dashboard → Project Settings → Data API
+                 → "Project URL"  (https://<project-ref>.supabase.co)
+   The <project-ref> is 20 characters. Everything else — REST calls and
+   Storage URLs alike — is derived from this value, so correcting it
+   here fixes the whole app, including attachments saved earlier.
+   ------------------------------------------------------------------ */
 const SUPABASE_URL = 'https://tabtlieieayvmvmzhiky.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_y7tQWy9A2Hf7EktHcY4pqQ_S2IdMZPs';
 const COMPANIES_TABLE = 'tmc_companies';
 const LOCAL_CACHE_KEY = 'tmc:companies';        // local backup + migration source
 const INIT_FLAG_KEY = 'tmc:supabase-initialized';
 
+// Normalise (strip trailing slash) and sanity-check the project URL shape.
+const SUPABASE_ORIGIN = String(SUPABASE_URL||'').trim().replace(/\/+$/,'');
+const PROJECT_REF = (SUPABASE_ORIGIN.match(/^https:\/\/([a-z0-9]+)\.supabase\.(co|in)$/i)||[])[1] || null;
+if(!/^https:\/\//i.test(SUPABASE_ORIGIN)){
+  console.error('[Supabase config] SUPABASE_URL must start with https:// — got:', SUPABASE_URL);
+} else if(PROJECT_REF && PROJECT_REF.length !== 20){
+  console.warn('[Supabase config] Project ref "'+PROJECT_REF+'" is '+PROJECT_REF.length+
+               ' characters; Supabase refs are 20. Double-check the Project URL in the dashboard.');
+}
+
 let db = null;
 try{
   if(window.supabase && typeof window.supabase.createClient === 'function'){
-    db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    db = window.supabase.createClient(SUPABASE_ORIGIN, SUPABASE_KEY);
+  } else {
+    console.error('[Supabase] Client library did not load — check the CDN <script> tag.');
   }
 }catch(e){ console.error('Supabase client init failed', e); }
+
+// Turns a low-level failure into something actionable in the UI/console.
+function describeDbError(e){
+  const msg = (e && (e.message || e.error_description || e.error)) ? String(e.message || e.error_description || e.error) : String(e||'');
+  if(/failed to fetch|networkerror|load failed|err_name_not_resolved|nxdomain|dns/i.test(msg)){
+    return 'Cannot reach '+SUPABASE_ORIGIN+' — the project URL looks wrong or the project is unavailable';
+  }
+  if(/bucket not found|bucket.*does not exist/i.test(msg)){
+    return 'Storage bucket "'+ATTACHMENTS_BUCKET+'" is missing — run supabase_setup.sql';
+  }
+  if(/object not found|key not found/i.test(msg)) return 'File is missing from Storage';
+  if(/relation .* does not exist|pgrst205|could not find the table|not found/i.test(msg)){
+    return 'Database reached, but table "'+COMPANIES_TABLE+'" is missing — run supabase_setup.sql';
+  }
+  if(/jwt|api key|unauthorized|invalid.*key|401|403/i.test(msg)) return 'Supabase rejected the API key — check the publishable key';
+  if(/row-level security|policy|violates/i.test(msg)) return 'Blocked by row-level security — run the policies in supabase_setup.sql';
+  return msg || 'Unknown database error';
+}
 
 let lastSyncedRows = new Map(); // id -> serialized row, so persist() only sends what changed
 function rowFor(c, idx){ return { id: c.id, position: idx, data: c }; }
@@ -869,7 +907,7 @@ async function readLegacyStorage(){
 async function loadData(){
   const status = document.getElementById('syncStatus');
   status.textContent = 'Syncing…';
-  let loaded = false;
+  let loaded = false, loadError = null;
 
   if(db){
     try{
@@ -906,8 +944,11 @@ async function loadData(){
         loaded = true;
       }
     }catch(e){
+      loadError = e;
       console.error('Supabase load failed', e);
     }
+  } else {
+    loadError = { message: 'Supabase client unavailable' };
   }
 
   if(!loaded){
@@ -916,7 +957,9 @@ async function loadData(){
     companies = local || seedCompanies();
     lastSyncedRows = new Map(); // nothing confirmed remote — next successful save pushes everything
     status.textContent = 'Sync failed';
-    toast('Could not connect to the database — working from local backup', false);
+    const why = describeDbError(loadError);
+    console.error('[Supabase] ' + why + '  (SUPABASE_URL = ' + SUPABASE_ORIGIN + ')');
+    toast(why + ' — working from local backup', false);
   }
   renderAll();
   if(loaded) migrateInlineFilesToStorage(); // background: move inline attachments to Storage
@@ -948,8 +991,8 @@ async function persist(showToast){
     return true;
   }catch(e){
     document.getElementById('syncStatus').textContent = 'Sync failed';
-    toast('Could not sync — changes kept locally', false);
-    console.error(e);
+    toast(describeDbError(e) + ' — changes kept locally', false);
+    console.error('[Supabase] save failed', e);
     return false;
   }
 }
@@ -1286,7 +1329,7 @@ function renderFileList(c, scope){
         <div class="fi-meta">${fileSizeStr(f.size)} · ${fmtDateShort(f.date)}</div>
       </div>
       <div class="fi-actions">
-        ${(f.url || f.data) ? `<button class="fi-btn" title="Preview" onclick="previewFile('${f.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></button>` : ''}
+        ${(f.path || f.url || f.data) ? `<button class="fi-btn" title="Preview" onclick="previewFile('${f.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></button>` : ''}
         ${(f.path || f.url || f.data) ? `<button class="fi-btn" title="Download" onclick="downloadFile('${f.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg></button>` : ''}
         <button class="fi-btn" title="Replace" onclick="replaceFile('${f.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M4 9a9 9 0 0114.7-4.3M20 15a9 9 0 01-14.7 4.3"/></svg></button>
         <button class="fi-btn" title="Delete" onclick="deleteFile('${f.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/></svg></button>
@@ -1300,14 +1343,35 @@ function storagePathFor(companyId, fileName){
   const safe = (fileName||'file').replace(/[^\w.\-]+/g,'_').slice(-80);
   return companyId + '/' + uid('att') + '_' + safe;
 }
+// Build the public URL from the CURRENT project origin every time it is needed.
+// Nothing absolute is persisted, so fixing SUPABASE_URL instantly repairs every
+// attachment that was saved earlier against a wrong/old project domain.
+function publicUrlFor(path){
+  if(!path) return null;
+  if(db){
+    try{
+      const { data } = db.storage.from(ATTACHMENTS_BUCKET).getPublicUrl(path);
+      if(data && data.publicUrl) return data.publicUrl;
+    }catch(e){ console.error('getPublicUrl failed', e); }
+  }
+  return SUPABASE_ORIGIN + '/storage/v1/object/public/' + ATTACHMENTS_BUCKET + '/' +
+         path.split('/').map(encodeURIComponent).join('/');
+}
+// Resolves the best URL for a stored file record. Prefers the derived URL;
+// only falls back to a legacy stored URL if the record has no path at all.
+function fileUrlFor(f){
+  if(!f) return null;
+  if(f.path) return publicUrlFor(f.path);
+  if(f.url && f.url.indexOf(SUPABASE_ORIGIN) === 0) return f.url; // same project — safe to reuse
+  return f.data || null;
+}
 async function uploadToStorage(companyId, file){
   if(!db) return null;
   const path = storagePathFor(companyId, file.name);
   const { error } = await db.storage.from(ATTACHMENTS_BUCKET)
     .upload(path, file, { contentType: file.type || 'application/octet-stream', upsert: false });
   if(error) throw error;
-  const { data } = db.storage.from(ATTACHMENTS_BUCKET).getPublicUrl(path);
-  return { path, url: data.publicUrl };
+  return { path };   // URL is derived on demand, never stored
 }
 async function removeFromStorage(paths){
   if(!db) return;
@@ -1330,7 +1394,7 @@ async function migrateInlineFilesToStorage(){
         try{
           const blob = await (await fetch(f.data)).blob();
           const stored = await uploadToStorage(c.id, new File([blob], f.name || 'file', { type: f.type || blob.type }));
-          if(stored){ f.path = stored.path; f.url = stored.url; f.data = null; changed = true; }
+          if(stored){ f.path = stored.path; f.url = null; f.data = null; changed = true; }
         }catch(e){
           console.error('Attachment migration to Storage failed for', f.name, e);
           if(changed) await persist();
@@ -1357,10 +1421,12 @@ document.getElementById('fileInput').addEventListener('change', async function(e
   for(const file of files){
     // Upload the actual file to Supabase Storage; if that fails (offline),
     // fall back to inline storage for small files so nothing is lost.
-    let stored = null, dataUrl = null;
+    let stored = null, dataUrl = null, uploadErr = null;
     try{
       stored = await uploadToStorage(c.id, file);
+      if(!stored) uploadErr = { message: 'Supabase client unavailable' };
     }catch(err){
+      uploadErr = err;
       console.error('Storage upload failed', err);
     }
     if(!stored && file.size <= MAX_EMBED){
@@ -1377,19 +1443,19 @@ document.getElementById('fileInput').addEventListener('change', async function(e
         const oldPath = c.files[idx].path;
         if(oldPath && (!stored || stored.path !== oldPath)) removeFromStorage(oldPath);
         c.files[idx] = {...c.files[idx], name:file.name, size:file.size, date: nowISO(), type:file.type,
-                        data:dataUrl, path: stored?stored.path:null, url: stored?stored.url:null};
+                        data:dataUrl, path: stored?stored.path:null, url: null};
       }
       c.activity.unshift({id:uid('a'), type:'note', text:'File replaced: '+file.name, date: nowISO()});
     } else {
       c.files.unshift({id:uid('fl'), name:file.name, size:file.size, type:file.type, date: nowISO(),
-                       data:dataUrl, path: stored?stored.path:null, url: stored?stored.url:null,
+                       data:dataUrl, path: stored?stored.path:null, url: null,
                        scope: editingFileFor?.scope || 'design'});
       c.activity.unshift({id:uid('a'), type:'note', text:'File uploaded: '+file.name, date: nowISO()});
     }
     if(!stored && dataUrl){
-      toast('Cloud upload failed — '+file.name+' kept locally', false);
+      toast(describeDbError(uploadErr) + ' — '+file.name+' kept locally', false);
     } else if(!stored && !dataUrl){
-      toast(file.name+' is large — metadata saved, content not stored inline', false);
+      toast(file.name+' is too large to keep locally and the upload failed — metadata only', false);
     }
   }
   touch(c);
@@ -1401,9 +1467,9 @@ document.getElementById('fileInput').addEventListener('change', async function(e
 function findFile(fid){ const c = findCompany(activePanelId); return (c.files||[]).find(f=>f.id===fid); }
 function previewFile(fid){
   const f = findFile(fid);
-  if(f && f.url){ window.open(f.url, '_blank'); return; }
-  if(!f || !f.data){ toast('No preview available for this file', false); return; }
-  window.open(f.data, '_blank');
+  const url = fileUrlFor(f);
+  if(!url){ toast('No preview available for this file', false); return; }
+  window.open(url, '_blank');
 }
 async function downloadFile(fid){
   const f = findFile(fid);
@@ -1419,14 +1485,18 @@ async function downloadFile(fid){
       return;
     }catch(e){
       console.error('Storage download failed', e);
-      if(f.url){ window.open(f.url, '_blank'); return; }
-      toast('Could not download file — check your connection', false);
+      toast(describeDbError(e), false);
       return;
     }
   }
-  if(f.url){ window.open(f.url, '_blank'); return; }
-  const a = document.createElement('a');
-  a.href = f.data; a.download = f.name; a.click();
+  const url = fileUrlFor(f);
+  if(!url){ toast('No content stored for this file', false); return; }
+  if(f.data){
+    const a = document.createElement('a');
+    a.href = f.data; a.download = f.name; a.click();
+  } else {
+    window.open(url, '_blank');
+  }
 }
 function deleteFile(fid){
   if(!confirm('Delete this file? This cannot be undone.')) return;
